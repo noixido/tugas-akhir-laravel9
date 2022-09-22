@@ -1,0 +1,108 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.container-menu {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    background-color: #111827;
+    width: 300px;
+    padding: 30px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+}
+
+.main-content {
+    background-color: #eeeeee;
+    flex-grow: 1;
+}
+
+.sidebar a {
+    text-decoration: none;
+}
+
+.sidebar .header-sidebar {
+    margin-bottom: 20px;
+}
+
+.sidebar .header-sidebar .illustration {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    margin: 0 0 10px 0;
+    box-sizing: border-box;
+}
+
+.sidebar .header-sidebar .illustration img {
+    width: 140px;
+    margin: 0 auto;
+}
+
+.sidebar .header-sidebar .desc-header {
+    color: #fff;
+    text-align: center;
+    margin: 20px auto 0 auto;
+}
+
+.sidebar .main-sidebar .list-item .desc-main {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 16px;
+    text-align: center;
+    color: #fff;
+    transition: all ease-in 0.2s;
+}
+
+.sidebar .main-sidebar .list-item .icon {
+    width: 16px;
+    margin-right: 12px;
+}
+
+.sidebar .main-sidebar .list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: all ease-in 0.2s;
+    margin: 5px 0;
+}
+
+.sidebar .main-sidebar .spacer {
+    margin-top: 25px;
+}
+
+.sidebar .main-sidebar .desc-spacer {
+    padding: 10px 0 0 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    color: rgb(197, 181, 181);
+}
+.sidebar .main-sidebar hr {
+    margin-top: 8px;
+}
+
+.sidebar .main-sidebar .logout {
+    background-color: #ff0000;
+    margin-top: 30px;
+}
+
+.sidebar .main-sidebar .list-item a {
+    padding: 12px 10px;
+    width: 212px;
+}
+
+.sidebar .main-sidebar .list-item:hover {
+    background-color: #ff9900;
+    transition: all ease-in 0.2s;
+}
