@@ -9,7 +9,7 @@
             </a>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="height: 580px">
         <form action="{{ route('proses-edit-mahasiswa', $data->id) }}" class="row" style="margin: 0%" method="POST">
             @csrf
             @method('put')
@@ -24,7 +24,8 @@
             <div class="col-md-6">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                    name="password" value="{{ old('password') }}" placeholder="Biarkan kosong jika tidak mau dirubah">
+                    name="password" value="{{ old('password') }}"
+                    placeholder="Biarkan kosong jika tidak ingin merubah password">
                 @error('password')
                 <span class=" invalid-feedback">{{ $message }}</span>
                 @enderror

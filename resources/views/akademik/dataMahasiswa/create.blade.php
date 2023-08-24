@@ -9,7 +9,7 @@
             </a>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="height: 580px">
         <form action="{{ route('proses-tambah-mahasiswa') }}" class="row" style="margin: 0%" method="POST">
             @csrf
             <div class="col-md-6">

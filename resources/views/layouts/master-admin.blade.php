@@ -110,7 +110,7 @@
                     <span class="desc-spacer">Lain-Lain</span>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('data-ruangan') }}">
                         <i class="fa-solid fa-shuffle icon"></i>
                         <span class="desc-main">Data Ruangan</span>
                     </a>

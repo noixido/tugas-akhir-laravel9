@@ -9,6 +9,7 @@ use App\Http\Controllers\DataDosenController;
 use App\Http\Controllers\DataJurusan;
 use App\Http\Controllers\DataJurusanController;
 use App\Http\Controllers\DataMahasiswaController;
+use App\Http\Controllers\DataRuanganController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffProdiController;
 
@@ -60,7 +61,6 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::put('/edit-admin/{id}', [DataAdminController::class, 'update'])->name('proses-edit-admin');
     Route::delete('/hapus-admin/{id}', [DataAdminController::class, 'destroy'])->name('hapus-admin');
 
-
     // ========== DATA Program Studi ========
     Route::get('/data-jurusan', [DataJurusanController::class, 'index'])->name('data-jurusan');
     Route::get('/tambah-jurusan', [DataJurusanController::class, 'create'])->name('tambah-jurusan');
@@ -68,6 +68,14 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::get('/edit-jurusan/{id}/edit', [DataJurusanController::class, 'edit'])->name('edit-jurusan');
     Route::put('/edit-jurusan/{id}', [DataJurusanController::class, 'update'])->name('proses-edit-jurusan');
     Route::delete('/hapus-jurusan/{id}', [DataJurusanController::class, 'destroy'])->name('hapus-jurusan');
+
+    // ========== DATA RUANGAN ========
+    Route::get('/data-ruangan', [DataRuanganController::class, 'index'])->name('data-ruangan');
+    Route::get('/tambah-ruangan', [DataRuanganController::class, 'create'])->name('tambah-ruangan');
+    Route::post('/tambah-ruangan', [DataRuanganController::class, 'store'])->name('proses-tambah-ruangan');
+    Route::get('/edit-ruangan/{id}/edit', [DataRuanganController::class, 'edit'])->name('edit-ruangan');
+    Route::put('/edit-ruangan/{id}', [DataRuanganController::class, 'update'])->name('proses-edit-ruangan');
+    Route::delete('/hapus-ruangan/{id}', [DataRuanganController::class, 'destroy'])->name('hapus-ruangan');
 });
 
 

@@ -50,7 +50,7 @@
                 @enderror
             </div>
             <div class="col-12" style="margin-top: 50px">
-                <button type="submit" class="btn btn-primary">Perbarui</button>
+                <button type="submit" class="btn btn-warning">Perbarui</button>
             </div>
         </form>
     </div>
