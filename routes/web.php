@@ -56,6 +56,9 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::get('/data-admin', [DataAdminController::class, 'index'])->name('data-admin');
     Route::get('/tambah-admin', [DataAdminController::class, 'create'])->name('tambah-admin');
     Route::post('/tambah-admin', [DataAdminController::class, 'store'])->name('proses-tambah-admin');
+    Route::get('/edit-admin/{id}/edit', [DataAdminController::class, 'edit'])->name('edit-admin');
+    Route::put('/edit-admin/{id}', [DataAdminController::class, 'update'])->name('proses-edit-admin');
+    Route::delete('/hapus-admin/{id}', [DataAdminController::class, 'destroy'])->name('hapus-admin');
 
 
     // ========== DATA Program Studi ========

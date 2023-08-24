@@ -121,12 +121,6 @@
                         <span class="desc-main">Data Prodi</span>
                     </a>
                 </div>
-                <div class="list-item">
-                    <a href="#">
-                        <i class="fa-solid fa-shuffle icon"></i>
-                        <span class="desc-main">Data Periode Sidang</span>
-                    </a>
-                </div>
 
                 {{-- buat logout,, ini paling terakhir ya!!! --}}
                 <div class="list-item logout">

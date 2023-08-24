@@ -19,7 +19,6 @@ class DataAdminController extends Controller
         //
         if ($request->has('search')) {
             $data = User::orderBy('created_at', 'desc')
-                // ->where('role', 'akademik')
                 ->where('nama', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('username', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10);
@@ -96,6 +95,8 @@ class DataAdminController extends Controller
     public function edit($id)
     {
         //
+        $data = User::find($id);
+        return view('akademik.dataAdmin.edit', compact('data'));
     }
 
     /**
@@ -108,6 +109,33 @@ class DataAdminController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if ($request->password == null) {
+            $request->validate([
+                'nama' => ['required', 'min:3'],
+                'username' => ['required'],
+            ]);
+            $data = User::find($id)
+                ->update([
+                    'nama' => $request->nama,
+                    'username' => $request->username,
+                ]);
+        } else {
+            $request->validate([
+                'nama' => ['required', 'min:3'],
+                'username' => ['required'],
+                'password' => ['min:8'],
+            ]);
+            $data = User::find($id)
+                ->update([
+                    'nama' => $request->nama,
+                    'username' => $request->username,
+                    'password' => bcrypt($request->password),
+                ]);
+        }
+        if (session('halaman_url')) {
+            return redirect(session('halaman_url'));
+        }
+        return redirect()->route('data-mahasiswa');
     }
 
     /**
@@ -119,5 +147,7 @@ class DataAdminController extends Controller
     public function destroy($id)
     {
         //
+        User::find($id)->delete();
+        return back();
     }
 }
