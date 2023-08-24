@@ -52,7 +52,7 @@ class MahasiswaController extends Controller
         //
         $user = Auth::user()->id;
         $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
-            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.program_studi_id')
+            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->where('user_id', $user)->first();
         return view('mahasiswa.profile', compact('data'));
     }

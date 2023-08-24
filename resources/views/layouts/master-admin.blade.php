@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/fonts.css">
     <link rel="stylesheet" href="/css/style-sidebar.css">
     <link rel="stylesheet" href="/css/style-main.css">
+    <script src="https://kit.fontawesome.com/8914371a49.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -22,14 +23,16 @@
                     <img src="/images/logo-tedc.png" alt="logo tedc">
                     <a href="{{ route('akademik_profile', Auth::user()->username) }}" class="desc-header">{{
                         Auth::user()->nama
-                        }}</a>
+                        }}<br />
+                        <p style="font-size: 10px; margin-bottom:0px">lihat profil ></p>
+                    </a>
                 </div>
             </div>
             <div class="main-sidebar">
                 {{-- dashboard aja --}}
                 <div class="list-item">
                     <a href="/akademik">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-gauge icon"></i>
                         <span class="desc-main">Dashboard</span>
                     </a>
                 </div>
@@ -40,7 +43,7 @@
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-pen-nib icon"></i>
                         <span class="desc-main">Data Pendaftaran</span>
                     </a>
                 </div>
@@ -51,14 +54,14 @@
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-calendar-days icon"></i>
                         <span class="desc-main">Draft Jadwal</span>
                     </a>
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
-                        <span class="desc-main">Jadwal Jadi</span>
+                        <i class="fa-solid fa-calendar-days icon"></i>
+                        <span class="desc-main">Jadwal</span>
                     </a>
                 </div>
 
@@ -68,7 +71,7 @@
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-square-check icon"></i>
                         <span class="desc-main">Data Nilai</span>
                     </a>
                 </div>
@@ -79,25 +82,25 @@
                 </div>
                 <div class="list-item">
                     <a href="{{ route('data-mahasiswa') }}">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-user icon"></i>
                         <span class="desc-main">Data Mahasiswa</span>
                     </a>
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-user icon"></i>
                         <span class="desc-main">Data Dosen</span>
                     </a>
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-user icon"></i>
                         <span class="desc-main">Data Staff Prodi</span>
                     </a>
                 </div>
                 <div class="list-item">
-                    <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                    <a href="{{ route('data-admin') }}">
+                        <i class="fa-solid fa-user icon"></i>
                         <span class="desc-main">Data Admin</span>
                     </a>
                 </div>
@@ -108,19 +111,19 @@
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-shuffle icon"></i>
                         <span class="desc-main">Data Ruangan</span>
                     </a>
                 </div>
                 <div class="list-item">
-                    <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                    <a href="{{ route('data-jurusan') }}">
+                        <i class="fa-solid fa-shuffle icon"></i>
                         <span class="desc-main">Data Prodi</span>
                     </a>
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-shuffle icon"></i>
                         <span class="desc-main">Data Periode Sidang</span>
                     </a>
                 </div>
@@ -128,7 +131,7 @@
                 {{-- buat logout,, ini paling terakhir ya!!! --}}
                 <div class="list-item logout">
                     <a href="/logout">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-right-from-bracket icon"></i>
                         <span class="desc-main">Logout</span>
                     </a>
                 </div>

@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('program_studis', function (Blueprint $table) {
             $table->id();
 
+            $table->string('kode_prodi')->unique();
+            $table->string('jenjang');
             $table->string('nama_prodi');
             $table->string('konsentrasi')->nullable();
-            $table->string('jenjang');
 
             $table->timestamps();
         });

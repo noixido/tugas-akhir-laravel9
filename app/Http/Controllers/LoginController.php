@@ -48,16 +48,10 @@ class LoginController extends Controller
         // dd($request->all());
         $request->validate([
             'nama' => ['required', 'min:3'],
-            'username' => ['required'],
-            'password' => ['required', 'min:6'],
             'nim' => ['required'],
-            'angkatan' => ['required'],
-            'email' => ['required'],
-            'tempat_lahir' => ['required'],
-            'tanggal_lahir' => ['required'],
-            'no_telepon' => ['required'],
-            'judul_tugas_akhir' => ['required'],
-            'pembimbing' => ['required'],
+            'username' => ['required'],
+            'password' =>
+            ['required', 'min:6', 'password'],
         ]);
         // dd($request->all());
         $user = User::create([
@@ -70,14 +64,6 @@ class LoginController extends Controller
         Mahasiswa::create([
             'user_id' => $user->id,
             'nim' => $request->nim,
-            'angkatan' => $request->angkatan,
-            'program_studi_id' => $request->program_studi,
-            'email' => $request->email,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'no_telepon' => $request->no_telepon,
-            'judul_tugas_akhir' => $request->judul_tugas_akhir,
-            'pembimbing' => $request->pembimbing
         ]);
         return redirect('/');
     }

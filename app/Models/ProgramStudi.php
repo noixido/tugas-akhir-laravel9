@@ -9,7 +9,8 @@ class ProgramStudi extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nama_prodi', 'konsentrasi', 'jenjang'
-    ];
+    // protected $fillable = [
+    //     'kode_prodi', 'jenjang', 'nama_prodi', 'konsentrasi'
+    // ];
+    protected $guarded = [];
 }

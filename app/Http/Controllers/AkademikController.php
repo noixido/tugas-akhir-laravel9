@@ -50,7 +50,7 @@ class AkademikController extends Controller
     {
         //
         $user = Auth::user()->id;
-        $data = User::where('id', $user)->first();
+        $data = User::find($user);
         return view('akademik.profile', compact('data'));
     }
 
@@ -63,6 +63,9 @@ class AkademikController extends Controller
     public function edit($id)
     {
         //
+        $user = Auth::user()->id;
+        $data = User::find($user);
+        return view('akademik.edit-profile', compact('data'));
     }
 
     /**
@@ -75,6 +78,30 @@ class AkademikController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = Auth::user()->id;
+        if ($request->password == null) {
+            $request->validate([
+                'nama' => ['required', 'min:3'],
+            ]);
+            $data = User::find($user)
+                ->update([
+                    'nama' => $request->nama,
+                    'username' => $request->username,
+                ]);
+        } else {
+            $request->validate([
+                'nama' => ['required', 'min:3'],
+                'username' => ['required'],
+                'password' => ['min:8'],
+            ]);
+            $data = User::find($user)
+                ->update([
+                    'nama' => $request->nama,
+                    'username' => $request->username,
+                    'password' => bcrypt($request->password),
+                ]);
+        }
+        return redirect()->route('akademik_profile', $request->username);
     }
 
     /**

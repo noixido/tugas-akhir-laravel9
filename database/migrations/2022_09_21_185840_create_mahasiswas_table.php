@@ -19,13 +19,10 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('nim')->unique();
             $table->year('angkatan');
-            $table->integer('program_studi_id');
+            $table->integer('jurusan_id');
             $table->string('email')->unique();
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->bigInteger('no_telepon');
-            $table->string('judul_tugas_akhir');
-            $table->string('pembimbing');
+            $table->string('telepon');
+
 
             $table->timestamps();
         });

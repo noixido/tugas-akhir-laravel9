@@ -30,9 +30,9 @@
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" class="form-control">
                     </div>
-                    <div class="button-container">
+                    <div class="button-container" style="gap: 10px">
                         <button class="btn btn-class">Login</button>
-                        <a href="/daftar" class="signup">daftar akun untuk mahasiswa</a>
+                        <a href="/daftar" class="btn btn-secondary">Daftar</a>
                     </div>
                     @if ($message = Session::get('login-error'))
                     <br>

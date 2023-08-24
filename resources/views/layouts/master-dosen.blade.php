@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/fonts.css">
     <link rel="stylesheet" href="/css/style-sidebar.css">
     <link rel="stylesheet" href="/css/style-main.css">
+    <script src="https://kit.fontawesome.com/8914371a49.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -27,7 +28,7 @@
                 {{-- dashboard aja --}}
                 <div class="list-item">
                     <a href="/dosen">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-pen-nib icon"></i>
                         <span class="desc-main">Dashboard</span>
                     </a>
                 </div>
@@ -38,7 +39,7 @@
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-pen-nib icon"></i>
                         <span class="desc-main">Bimbingan</span>
                     </a>
                 </div>
@@ -49,7 +50,7 @@
                 </div>
                 <div class="list-item">
                     <a href="#">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-square-check icon"></i>
                         <span class="desc-main">Nilai</span>
                     </a>
                 </div>
@@ -57,7 +58,7 @@
                 {{-- buat logout,, ini paling terakhir ya!!! --}}
                 <div class="list-item logout">
                     <a href="/logout">
-                        <img class="icon" src="/images/gauge.svg" alt="icon">
+                        <i class="fa-solid fa-right-from-bracket icon"></i>
                         <span class="desc-main">Logout</span>
                     </a>
                 </div>
