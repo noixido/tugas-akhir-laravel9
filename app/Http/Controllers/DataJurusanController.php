@@ -17,20 +17,22 @@ class DataJurusanController extends Controller
     {
         //
         if ($request->has('search')) {
-            $data = ProgramStudi::orderBy('created_at', 'desc')
+            $data = ProgramStudi::sortable()->orderBy('created_at', 'desc')
                 ->where('kode_prodi', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('jenjang', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('konsentrasi', 'LIKE', '%' . $request->search . '%')
-                ->paginate(10);
+                ->paginate(10)
+                ->onEachSide('3');
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,
             //tapi di page tempat terakhir kita edit data
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = ProgramStudi::orderBy('created_at', 'desc')
-                ->paginate(10);
+            $data = ProgramStudi::sortable()->orderBy('created_at', 'desc')
+                ->paginate(10)
+                ->onEachSide('3');
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,

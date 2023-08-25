@@ -1,18 +1,16 @@
 @extends('layouts.master-admin')
-@section('title', 'Edit Akademik Profile')
+@section('title', 'Tambah Data Staff Prodi')
 @section('content')
 <div class="container">
     <div class="menu-header">
         <div class="input-group col-md-8">
-            <a href="{{ route('akademik_profile', Auth::user()->username) }}" class="btn btn-light"
-                style="height: 40px;">
+            <a href="{{ route('data-staffprodi') }}" class="btn btn-light" style="height: 40px;">
                 <i class="fa-solid fa-arrow-left-long icon"></i> Kembali
             </a>
         </div>
     </div>
-    <div class="row">
-        <form action="{{ route('proses_edit_akademik_profil', Auth::user()->id) }}" class="row" style="margin: 0%"
-            method="POST">
+    <div class="row" style="height: 580px">
+        <form action="{{ route('proses-edit-staffprodi', $data->id) }}" class="row" style="margin: 0%" method="POST">
             @csrf
             @method('put')
             <div class="col-md-6">
@@ -26,9 +24,10 @@
             <div class="col-md-6">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                    name="password" placeholder="Biarkan kosong jika tidak ingin merubah password">
+                    name="password" value="{{ old('password') }}"
+                    placeholder="Biarkan kosong jika tidak ingin merubah password">
                 @error('password')
-                <span class="invalid-feedback">{{ $message }}</span>
+                <span class=" invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
             <div class="col-md-6">
@@ -36,18 +35,28 @@
                 <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
                     value="{{ old('nama', $data->nama) }}">
                 @error('nama')
-                <span class="invalid-feedback">{{ $message }}</span>
+                <span class=" invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
             <div class="col-md-6">
-                <label for="role" class="form-label">Role</label>
-                <input type="text" class="form-control @error('role') is-invalid @enderror" id="role" name="role"
-                    value="{{ old('username', $data->role) }}" disabled>
-                @error('username')
+                <label for="jurusan" class="form-label">Program Studi</label>
+                <select id="jurusan" class="form-select form-control @error('jurusan') is-invalid @enderror"
+                    name="jurusan">
+
+                    @foreach ($prodis as $row)
+                    @if ( old('jurusan', $data->jurusan_id) == $row->id)
+                    <option value="{{ $row->id }}" selected>{{ $row->jenjang }} {{ $row->nama_prodi }}</option>
+                    @else
+                    <option value="{{ $row->id }}">{{ $row->jenjang }} {{ $row->nama_prodi }}</option>
+                    @endif
+                    @endforeach
+
+                </select>
+                @error('jurusan')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="col-12" style="margin-top: 50px; text-align:center">
+            <div class="col-12" style="margin-top: 50px">
                 <button type="submit" class="btn btn-warning">Perbarui</button>
             </div>
         </form>

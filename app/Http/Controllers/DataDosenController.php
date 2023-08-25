@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Mahasiswa;
-use Illuminate\Support\Str;
+use App\Models\Dosen;
 use App\Models\ProgramStudi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
-class DataMahasiswaController extends Controller
+class DataDosenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,32 +19,30 @@ class DataMahasiswaController extends Controller
     public function index(Request $request)
     {
         //
-        // $data = Mahasiswa::all();
-        // dd($request->all());
         if ($request->has('search')) {
-            $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
-                ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
-                ->sortable()
-                ->orderBy('mahasiswas.created_at', 'desc')
+            $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+                ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
+                // ->sortable()
+                ->orderBy('dosens.created_at', 'desc')
                 ->where('nama', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('nim', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('angkatan', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('nidn', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('email', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('telepon', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('alamat', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
                 ->onEachSide('3');
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
-                ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
-                ->sortable()
-                ->orderBy('mahasiswas.created_at', 'desc')
+            $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+                ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
+                // ->sortable()
+                ->orderBy('dosens.created_at', 'desc')
                 ->paginate(10)
                 ->onEachSide('3');
             Session::put('halaman_url', request()->fullUrl());
         }
-        return view('akademik.dataMahasiswa.index', compact('data'));
+        return view('akademik.dataDosen.index', compact('data'));
     }
 
     /**
@@ -56,7 +54,7 @@ class DataMahasiswaController extends Controller
     {
         //
         $data = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
-        return view('akademik.dataMahasiswa.create', compact('data'));
+        return view('akademik.dataDosen.create', compact('data'));
     }
 
     /**
@@ -73,29 +71,29 @@ class DataMahasiswaController extends Controller
             'nama' => ['required', 'min:3'],
             'username' => ['required'],
             'password' => ['required', 'min:8'],
-            'nim' => ['required'],
-            'angkatan' => ['required', 'integer', 'min:1900', 'max:2222'],
+            'nidn' => ['required'],
             'jurusan' => ['required', 'integer'],
             'email' => ['nullable'],
             'telepon' => ['nullable', 'numeric', 'min:10'],
+            'alamat' => ['nullable']
         ]);
         // dd($request->all());
         $data = User::create([
             'nama' => $request->nama,
             'username' => $request->username,
             'password' => bcrypt($request->password),
-            'role' => "mahasiswa",
+            'role' => "dosen",
             'remember_token' => Str::random(60),
         ]);
-        Mahasiswa::create([
+        Dosen::create([
             'user_id' => $data->id,
-            'nim' => $request->nim,
-            'angkatan' => $request->angkatan,
+            'nidn' => $request->nidn,
             'jurusan_id' => $request->jurusan,
             'email' => $request->email,
             'telepon' => $request->telepon,
+            'alamat' => $request->alamat,
         ]);
-        return redirect()->route('data-mahasiswa');
+        return redirect()->route('data-dosen');
     }
 
     /**
@@ -107,14 +105,13 @@ class DataMahasiswaController extends Controller
     public function show($id)
     {
         //
-        // dd($id);
-        $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
-            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
-            ->orderBy('mahasiswas.created_at', 'desc')
+        $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+            ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
+            ->orderBy('dosens.created_at', 'desc')
             ->where('user_id', $id)
             ->first();
         // dd($data);
-        return view('akademik.dataMahasiswa.show', compact('data'));
+        return view('akademik.dataDosen.show', compact('data'));
     }
 
     /**
@@ -127,12 +124,12 @@ class DataMahasiswaController extends Controller
     {
         //
         $prodis = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
-        $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
-            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
-            ->orderBy('mahasiswas.created_at', 'desc')
+        $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+            // ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
+            ->orderBy('dosens.created_at', 'desc')
             ->where('user_id', $id)
             ->first();
-        return view('akademik.dataMahasiswa.edit', compact('data', 'prodis'));
+        return view('akademik.dataDosen.edit', compact('data', 'prodis'));
     }
 
     /**
@@ -149,36 +146,36 @@ class DataMahasiswaController extends Controller
             $request->validate([
                 'nama' => ['required', 'min:3'],
                 'username' => ['required'],
-                'nim' => ['required'],
-                'angkatan' => ['required', 'integer', 'min:1900', 'max:2222'],
+                'nidn' => ['required'],
                 'jurusan' => ['required', 'integer'],
-                'email' => ['required'],
-                'telepon' => ['required', 'numeric', 'min:10'],
+                'email' => ['nullable'],
+                'telepon' => ['nullable', 'numeric', 'min:10'],
+                'alamat' => ['nullable'],
             ]);
             $data = User::find($id)
                 ->update([
                     'nama' => $request->nama,
                     'username' => $request->username,
                 ]);
-            Mahasiswa::where('user_id', $id)
+            Dosen::where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
-                    'nim' => $request->nim,
-                    'angkatan' => $request->angkatan,
+                    'nidn' => $request->nidn,
                     'jurusan_id' => $request->jurusan,
                     'email' => $request->email,
                     'telepon' => $request->telepon,
+                    'alamat' => $request->alamat,
                 ]);
         } else {
             $request->validate([
                 'nama' => ['required', 'min:3'],
                 'username' => ['required'],
                 'password' => ['min:8'],
-                'nim' => ['required'],
-                'angkatan' => ['required', 'integer', 'min:1900', 'max:2222'],
+                'nidm' => ['required'],
                 'jurusan' => ['required', 'integer'],
-                'email' => ['required'],
-                'telepon' => ['required', 'numeric', 'min:10'],
+                'email' => ['nullable'],
+                'telepon' => ['nullable', 'numeric', 'min:10'],
+                'alamat' => ['nullable'],
             ]);
             $data = User::find($id)
                 ->update([
@@ -186,20 +183,20 @@ class DataMahasiswaController extends Controller
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
-            Mahasiswa::where('user_id', $id)
+            Dosen::where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
-                    'nim' => $request->nim,
-                    'angkatan' => $request->angkatan,
+                    'nidn' => $request->nidn,
                     'jurusan_id' => $request->jurusan,
                     'email' => $request->email,
                     'telepon' => $request->telepon,
+                    'alamat' => $request->alamat,
                 ]);
         }
         if (session('halaman_url')) {
             return redirect(session('halaman_url'));
         }
-        return redirect()->route('data-mahasiswa');
+        return redirect()->route('data-dosen');
     }
 
     /**
@@ -211,7 +208,7 @@ class DataMahasiswaController extends Controller
     public function destroy($id)
     {
         //
-        Mahasiswa::where('user_id', $id)->delete();
+        Dosen::where('user_id', $id)->delete();
         User::find($id)->delete();
         return back();
     }

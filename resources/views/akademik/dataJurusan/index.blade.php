@@ -23,10 +23,10 @@
             <thead>
                 <tr>
                     <th scope="col" class="col-1">No</th>
-                    <th scope="col" class="col-2">Kode Program Studi</th>
-                    <th scope="col" class="col-1">Jenjang</th>
-                    <th scope="col">Nama Program Studi</th>
-                    <th scope="col">Konsentrasi</th>
+                    <th scope="col" class="col-2">@sortablelink('kode_prodi', 'Kode Program Studi')</th>
+                    <th scope="col" class="col-1">@sortablelink('jenjang', 'Jenjang')</th>
+                    <th scope="col">@sortablelink('nama_prodi', 'Nama Program Studi')</th>
+                    <th scope="col">@sortablelink('konsentrasi', 'Konsentrasi')</th>
                     <th scope="col" class="col-1">aksi</th>
                 </tr>
             </thead>
@@ -55,7 +55,8 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $data->links() }}
+        {{-- {{ $data->links() }} --}}
+        {!! $data->appends(\Request::except('page'))->render() !!}
     </div>
 </div>
 @endsection

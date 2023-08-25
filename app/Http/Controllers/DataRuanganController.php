@@ -17,18 +17,22 @@ class DataRuanganController extends Controller
     {
         //
         if ($request->has('search')) {
-            $data = Ruangan::orderBy('created_at', 'desc')
+            $data = Ruangan::sortable()
+                ->orderBy('created_at', 'desc')
                 ->where('lantai', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('ruangan', 'LIKE', '%' . $request->search . '%')
-                ->paginate(10);
+                ->paginate(10)
+                ->onEachSide('3');
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,
             //tapi di page tempat terakhir kita edit data
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = Ruangan::orderBy('created_at', 'desc')
-                ->paginate(10);
+            $data = Ruangan::sortable()
+                ->orderBy('created_at', 'desc')
+                ->paginate(10)
+                ->onEachSide('3');
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,

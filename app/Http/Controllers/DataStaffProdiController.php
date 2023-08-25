@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProgramStudi;
+use App\Models\StaffProdi;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
-class DataAdminController extends Controller
+class DataStaffProdiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,27 +20,25 @@ class DataAdminController extends Controller
     {
         //
         if ($request->has('search')) {
-            $data = User::sortable()->orderBy('created_at', 'desc')
+            $data = StaffProdi::join('users', 'users.id', '=', 'staff_prodis.user_id')
+                ->join('program_studis', 'program_studis.id', '=', 'staff_prodis.jurusan_id')
+                // ->sortable()
+                ->orderBy('staff_prodis.created_at', 'desc')
                 ->where('nama', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('username', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
                 ->onEachSide('3');
-
-            //ini bikin session biar kalo update data,
-            //user gk akan dibawa ke page paling petama,
-            //tapi di page tempat terakhir kita edit data
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = User::sortable()->orderBy('created_at', 'desc')->where('role', 'akademik')
+            $data = StaffProdi::join('users', 'users.id', '=', 'staff_prodis.user_id')
+                ->join('program_studis', 'program_studis.id', '=', 'staff_prodis.jurusan_id')
+                // ->sortable()
+                ->orderBy('staff_prodis.created_at', 'desc')
                 ->paginate(10)
                 ->onEachSide('3');
-
-            //ini bikin session biar kalo update data,
-            //user gk akan dibawa ke page paling petama,
-            //tapi di page tempat terakhir kita edit data
             Session::put('halaman_url', request()->fullUrl());
         }
-        return view('akademik.dataAdmin.index', compact('data'));
+        return view('akademik.dataStaffProdi.index', compact('data'));
     }
 
     /**
@@ -49,7 +49,8 @@ class DataAdminController extends Controller
     public function create()
     {
         //
-        return view('akademik.dataAdmin.create');
+        $data = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
+        return view('akademik.dataStaffProdi.create', compact('data'));
     }
 
     /**
@@ -64,17 +65,23 @@ class DataAdminController extends Controller
         // dd($request->all());
         $request->validate([
             'nama' => ['required', 'min:3'],
-            'username' => ['required', 'min:5'],
-            'password' => ['required', 'min:8']
+            'username' => ['required'],
+            'password' => ['required', 'min:8'],
+            'jurusan' => ['required', 'integer'],
         ]);
+        // dd($request->all());
         $data = User::create([
             'nama' => $request->nama,
             'username' => $request->username,
             'password' => bcrypt($request->password),
-            'role' => 'akademik',
+            'role' => "staffprodi",
             'remember_token' => Str::random(60),
         ]);
-        return redirect()->route('data-admin');
+        StaffProdi::create([
+            'user_id' => $data->id,
+            'jurusan_id' => $request->jurusan,
+        ]);
+        return redirect()->route('data-staffprodi');
     }
 
     /**
@@ -97,8 +104,13 @@ class DataAdminController extends Controller
     public function edit($id)
     {
         //
-        $data = User::find($id);
-        return view('akademik.dataAdmin.edit', compact('data'));
+        $prodis = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
+        $data = StaffProdi::join('users', 'users.id', '=', 'staff_prodis.user_id')
+            // ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
+            ->orderBy('staff_prodis.created_at', 'desc')
+            ->where('user_id', $id)
+            ->first();
+        return view('akademik.dataStaffProdi.edit', compact('data', 'prodis'));
     }
 
     /**
@@ -115,17 +127,24 @@ class DataAdminController extends Controller
             $request->validate([
                 'nama' => ['required', 'min:3'],
                 'username' => ['required'],
+                'jurusan' => ['required', 'integer'],
             ]);
             $data = User::find($id)
                 ->update([
                     'nama' => $request->nama,
                     'username' => $request->username,
                 ]);
+            StaffProdi::where('user_id', $id)
+                ->update([
+                    // 'user_id' => $data->id,
+                    'jurusan_id' => $request->jurusan,
+                ]);
         } else {
             $request->validate([
                 'nama' => ['required', 'min:3'],
                 'username' => ['required'],
                 'password' => ['min:8'],
+                'jurusan' => ['required', 'integer'],
             ]);
             $data = User::find($id)
                 ->update([
@@ -133,11 +152,16 @@ class DataAdminController extends Controller
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
+            StaffProdi::where('user_id', $id)
+                ->update([
+                    // 'user_id' => $data->id,
+                    'jurusan_id' => $request->jurusan,
+                ]);
         }
         if (session('halaman_url')) {
             return redirect(session('halaman_url'));
         }
-        return redirect()->route('data-mahasiswa');
+        return redirect()->route('data-staffprodi');
     }
 
     /**
@@ -149,6 +173,7 @@ class DataAdminController extends Controller
     public function destroy($id)
     {
         //
+        StaffProdi::where('user_id', $id)->delete();
         User::find($id)->delete();
         return back();
     }

@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Kyslik\ColumnSortable\Sortable;
+
 class Mahasiswa extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
     // protected $fillable = [
     //     'user_id',
     //     'nim',
@@ -21,4 +23,7 @@ class Mahasiswa extends Model
     //     'pembimbing'
     // ];
     protected $guarded = [];
+    public $sortable = [
+        'nim', 'angkatan', 'jurusan_id', 'email', 'telepon'
+    ];
 }

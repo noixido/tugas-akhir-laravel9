@@ -10,6 +10,7 @@ use App\Http\Controllers\DataJurusan;
 use App\Http\Controllers\DataJurusanController;
 use App\Http\Controllers\DataMahasiswaController;
 use App\Http\Controllers\DataRuanganController;
+use App\Http\Controllers\DataStaffProdiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffProdiController;
 
@@ -53,6 +54,15 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::delete('/hapus-mahasiswa/{id}', [DataMahasiswaController::class, 'destroy'])->name('hapus-mahasiswa');
     Route::get('/lihat-mahasiswa/{id}', [DataMahasiswaController::class, 'show'])->name('lihat-mahasiswa');
 
+    // ========== DATA DOSEN ========
+    Route::get('/data-dosen', [DataDosenController::class, 'index'])->name('data-dosen');
+    Route::get('/tambah-dosen', [DataDosenController::class, 'create'])->name('tambah-dosen');
+    Route::post('/tambah-dosen', [DataDosenController::class, 'store'])->name('proses-tambah-dosen');
+    Route::get('/lihat-dosen/{id}', [DataDosenController::class, 'show'])->name('lihat-dosen');
+    Route::get('/edit-dosen/{id}/edit', [DataDosenController::class, 'edit'])->name('edit-dosen');
+    Route::put('/edit-dosen/{id}', [DataDosenController::class, 'update'])->name('proses-edit-dosen');
+    Route::delete('/hapus-dosen/{id}', [DataDosenController::class, 'destroy'])->name('hapus-dosen');
+
     // ========== DATA ADMIN AKADEMIK ========
     Route::get('/data-admin', [DataAdminController::class, 'index'])->name('data-admin');
     Route::get('/tambah-admin', [DataAdminController::class, 'create'])->name('tambah-admin');
@@ -60,6 +70,14 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::get('/edit-admin/{id}/edit', [DataAdminController::class, 'edit'])->name('edit-admin');
     Route::put('/edit-admin/{id}', [DataAdminController::class, 'update'])->name('proses-edit-admin');
     Route::delete('/hapus-admin/{id}', [DataAdminController::class, 'destroy'])->name('hapus-admin');
+
+    // ========== DATA STAFF PRODI ========
+    Route::get('/data-staffprodi', [DataStaffProdiController::class, 'index'])->name('data-staffprodi');
+    Route::get('/tambah-staffprodi', [DataStaffProdiController::class, 'create'])->name('tambah-staffprodi');
+    Route::post('/tambah-staffprodi', [DataStaffProdiController::class, 'store'])->name('proses-tambah-staffprodi');
+    Route::get('/edit-staffprodi/{id}/edit', [DataStaffProdiController::class, 'edit'])->name('edit-staffprodi');
+    Route::put('/edit-staffprodi/{id}', [DataStaffProdiController::class, 'update'])->name('proses-edit-staffprodi');
+    Route::delete('/hapus-staffprodi/{id}', [DataStaffProdiController::class, 'destroy'])->name('hapus-staffprodi');
 
     // ========== DATA Program Studi ========
     Route::get('/data-jurusan', [DataJurusanController::class, 'index'])->name('data-jurusan');

@@ -23,8 +23,8 @@
             <thead>
                 <tr>
                     <th scope="col" class="col-1">No</th>
-                    <th scope="col" class="col-1">Lantai</th>
-                    <th scope="col" class="col-1">Ruangan</th>
+                    <th scope="col" class="col-1">@sortablelink('lantai','Lantai')</th>
+                    <th scope="col" class="col-1">@sortablelink('ruangan','Ruangan')</th>
                     <th scope="col" class="col-1">aksi</th>
                 </tr>
             </thead>
@@ -51,7 +51,8 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $data->links() }}
+        {{-- {{ $data->links() }} --}}
+        {!! $data->appends(\Request::except('page'))->render() !!}
     </div>
 </div>
 @endsection

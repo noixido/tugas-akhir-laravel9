@@ -87,13 +87,13 @@
                     </a>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('data-dosen') }}">
                         <i class="fa-solid fa-user icon"></i>
                         <span class="desc-main">Data Dosen</span>
                     </a>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('data-staffprodi') }}">
                         <i class="fa-solid fa-user icon"></i>
                         <span class="desc-main">Data Staff Prodi</span>
                     </a>

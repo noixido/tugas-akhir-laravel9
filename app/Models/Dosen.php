@@ -5,14 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-use Kyslik\ColumnSortable\Sortable;
-
-class Ruangan extends Model
+class Dosen extends Model
 {
-    use HasFactory, Sortable;
+    use HasFactory;
     protected $guarded = [];
-    public $sortable = [
-        'lantai', 'ruangan'
-    ];
 }
