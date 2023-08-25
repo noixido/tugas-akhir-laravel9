@@ -21,14 +21,17 @@
             <div class="header-sidebar">
                 <div class="illustration">
                     <img src="/images/logo-tedc.png" alt="logo tedc">
-                    <a href="{{ route('akademik_profile', Auth::user()->username) }}" class="desc-header">{{
-                        Auth::user()->nama
-                        }}<br />
-                        <p style="font-size: 10px; margin-bottom:0px">lihat profil ></p>
-                    </a>
                 </div>
             </div>
             <div class="main-sidebar">
+                <div class="list-item">
+                    <a href="{{ route('akademik_profile', Auth::user()->username) }}" class="desc-header">
+                        <i class="fa-solid fa-user icon"></i>
+                        <span class="desc-main">{{
+                            Auth::user()->username
+                            }}</span>
+                    </a>
+                </div>
                 {{-- dashboard aja --}}
                 <div class="list-item">
                     <a href="/akademik">

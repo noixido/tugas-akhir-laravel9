@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bimbingans', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->id();
-
-            $table->integer('tugas_akhir_id');
-            $table->date('tanggal_bimbingan');
-            $table->string('deskripsi_bimbingan');
-            $table->string('status_bimbingan')->default('ditolak');
-            $table->string('status_sidang')->default('tidak diijinkan');
-
+            $table->integer('user_id');
+            $table->string('nama_admin');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bimbingans');
+        Schema::dropIfExists('admins');
     }
 };

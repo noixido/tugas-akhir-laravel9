@@ -102,10 +102,10 @@ class MahasiswaController extends Controller
             $data = User::find($user)
                 ->update([
                     'username' => $request->username,
-                    'nama' => $request->nama,
                 ]);
             Mahasiswa::where('user_id', $user)->update([
                 'nim' => $request->nim,
+                'nama_mahasiswa' => $request->nama,
                 'angkatan' => $request->angkatan,
                 'jurusan_id' => $request->jurusan,
                 'email' => $request->email,
@@ -124,12 +124,12 @@ class MahasiswaController extends Controller
             ]);
             $data = User::find($user)
                 ->update([
-                    'nama' => $request->nama,
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
             Mahasiswa::where('user_id', $user)->update([
                 'nim' => $request->nim,
+                'nama_mahasiswa' => $request->nama,
                 'angkatan' => $request->angkatan,
                 'jurusan' => $request->jurusan,
                 'email' => $request->email,

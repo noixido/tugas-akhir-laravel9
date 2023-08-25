@@ -32,7 +32,7 @@
                 @foreach($data as $index => $row)
                 <tr>
                     <td>{{ $data->firstItem() + $index }}</td>
-                    <td>{{ $row->nama}}</td>
+                    <td>{{ $row->nama_admin}}</td>
                     <td>{{ $row->username}}</td>
                     <td style="text-align: center;">
                         <div style="display: inline-flex; gap:5px">

@@ -24,12 +24,9 @@ class DataDosenController extends Controller
                 ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
                 // ->sortable()
                 ->orderBy('dosens.created_at', 'desc')
-                ->where('nama', 'LIKE', '%' . $request->search . '%')
+                ->where('nama_dosen', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nidn', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('email', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('telepon', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('alamat', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
                 ->onEachSide('3');
             Session::put('halaman_url', request()->fullUrl());
@@ -79,7 +76,6 @@ class DataDosenController extends Controller
         ]);
         // dd($request->all());
         $data = User::create([
-            'nama' => $request->nama,
             'username' => $request->username,
             'password' => bcrypt($request->password),
             'role' => "dosen",
@@ -88,6 +84,7 @@ class DataDosenController extends Controller
         Dosen::create([
             'user_id' => $data->id,
             'nidn' => $request->nidn,
+            'nama_dosen' => $request->nama,
             'jurusan_id' => $request->jurusan,
             'email' => $request->email,
             'telepon' => $request->telepon,
@@ -154,13 +151,13 @@ class DataDosenController extends Controller
             ]);
             $data = User::find($id)
                 ->update([
-                    'nama' => $request->nama,
                     'username' => $request->username,
                 ]);
             Dosen::where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
                     'nidn' => $request->nidn,
+                    'nama_dosen' => $request->nama,
                     'jurusan_id' => $request->jurusan,
                     'email' => $request->email,
                     'telepon' => $request->telepon,
@@ -179,7 +176,6 @@ class DataDosenController extends Controller
             ]);
             $data = User::find($id)
                 ->update([
-                    'nama' => $request->nama,
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
@@ -187,6 +183,7 @@ class DataDosenController extends Controller
                 ->update([
                     // 'user_id' => $data->id,
                     'nidn' => $request->nidn,
+                    'nama_dosen' => $request->nama,
                     'jurusan_id' => $request->jurusan,
                     'email' => $request->email,
                     'telepon' => $request->telepon,

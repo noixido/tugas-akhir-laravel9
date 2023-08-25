@@ -51,10 +51,13 @@
                     <option value="" selected disabled>=== Pilih ===</option>
                     @foreach ($data as $row)
                     @if (old('jurusan') == $row->id)
-                    <option value="{{ $row->id }}" selected>{{ $row->jenjang }} {{ $row->nama_prodi }}
+                    <option value="{{ $row->id }}" selected>{{ $row->jenjang }} {{ $row->nama_prodi }}, {{
+                        $row->konsentrasi ??
+                        "" }}
                     </option>
                     @else
-                    <option value="{{ $row->id }}">{{ $row->jenjang }} {{ $row->nama_prodi }}
+                    <option value="{{ $row->id }}">{{ $row->jenjang }} {{ $row->nama_prodi }}, {{ $row->konsentrasi ??
+                        "" }}
                     </option>
                     @endif
                     @endforeach

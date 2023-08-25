@@ -33,7 +33,7 @@
             <div class="col-md-6">
                 <label for="nama" class="form-label">Nama Lengkap</label>
                 <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
-                    value="{{ old('nama', $data->nama) }}">
+                    value="{{ old('nama', $data->nama_mahasiswa) }}">
                 @error('nama')
                 <span class=" invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -61,9 +61,12 @@
 
                     @foreach ($prodis as $row)
                     @if ( old('jurusan', $data->jurusan_id) == $row->id)
-                    <option value="{{ $row->id }}" selected>{{ $row->jenjang }} {{ $row->nama_prodi }}</option>
+                    <option value="{{ $row->id }}" selected>{{ $row->jenjang }} {{ $row->nama_prodi }}, {{
+                        $row->konsentrasi ??
+                        "" }}</option>
                     @else
-                    <option value="{{ $row->id }}">{{ $row->jenjang }} {{ $row->nama_prodi }}</option>
+                    <option value="{{ $row->id }}">{{ $row->jenjang }} {{ $row->nama_prodi }}, {{ $row->konsentrasi ??
+                        "" }}</option>
                     @endif
                     @endforeach
 

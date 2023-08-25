@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>Nama Lengkap</th>
-                <td>{{ $data->nama }}</td>
+                <td>{{ $data->nama_mahasiswa }}</td>
             </tr>
             <tr>
                 <th>Nomor Induk Mahasiswa</th>

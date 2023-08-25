@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Admin;
 use App\Models\ProgramStudi;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -24,11 +25,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        User::create([
-            'nama' => 'Super Admin',
+        $data = User::create([
             'username' => 'admin',
             'password' => bcrypt('admin'),
             'role' => 'akademik'
+        ]);
+        Admin::create([
+            'user_id' => $data->id,
+            'nama_admin' => 'Super Admin'
         ]);
         ProgramStudi::create([
             'kode_prodi' => '1234',

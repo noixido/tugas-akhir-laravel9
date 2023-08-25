@@ -27,6 +27,7 @@
                     <th scope="col" class="col-1">No</th>
                     <th scope="col" class="col-2">Nomor Induk Dosen</th>
                     <th scope="col" class="col-2">Nama</th>
+                    <th scope="col" class="col-1">jenjang</th>
                     <th scope="col" class="col-2">Program Studi</th>
                     <th scope="col" class="col-2">aksi</th>
                 </tr>
@@ -36,8 +37,9 @@
                 <tr>
                     <td>{{ $data->firstItem() + $index }}</td>
                     <td>{{ $row->nidn }}</td>
-                    <td>{{ $row->nama }}</td>
-                    <td>{{ $row->jenjang }} {{ $row->nama_prodi }}</td>
+                    <td>{{ $row->nama_dosen }}</td>
+                    <td>{{ $row->jenjang }}</td>
+                    <td>{{ $row->nama_prodi }}</td>
                     <td>
                         <div class="kumpulan-tombol">
                             <a href="/akademik/lihat-dosen/{{ $row->user_id }}" class="btn btn-primary"><i

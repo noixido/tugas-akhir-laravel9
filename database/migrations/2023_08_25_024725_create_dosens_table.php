@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->integer('user_id');
+            $table->string('nama_dosen');
             $table->string('nidn')->unique();
             $table->integer('jurusan_id');
             $table->string('email')->unique();

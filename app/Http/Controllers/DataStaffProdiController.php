@@ -24,7 +24,8 @@ class DataStaffProdiController extends Controller
                 ->join('program_studis', 'program_studis.id', '=', 'staff_prodis.jurusan_id')
                 // ->sortable()
                 ->orderBy('staff_prodis.created_at', 'desc')
-                ->where('nama', 'LIKE', '%' . $request->search . '%')
+                ->where('username', 'LIKE', '%' . $request->search . '%')
+                ->where('nama_staffprodi', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
                 ->onEachSide('3');
@@ -71,7 +72,6 @@ class DataStaffProdiController extends Controller
         ]);
         // dd($request->all());
         $data = User::create([
-            'nama' => $request->nama,
             'username' => $request->username,
             'password' => bcrypt($request->password),
             'role' => "staffprodi",
@@ -79,6 +79,7 @@ class DataStaffProdiController extends Controller
         ]);
         StaffProdi::create([
             'user_id' => $data->id,
+            'nama_staffprodi' => $request->nama,
             'jurusan_id' => $request->jurusan,
         ]);
         return redirect()->route('data-staffprodi');
@@ -131,12 +132,12 @@ class DataStaffProdiController extends Controller
             ]);
             $data = User::find($id)
                 ->update([
-                    'nama' => $request->nama,
                     'username' => $request->username,
                 ]);
             StaffProdi::where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
+                    'nama_staffprodi' => $request->nama,
                     'jurusan_id' => $request->jurusan,
                 ]);
         } else {
@@ -148,13 +149,13 @@ class DataStaffProdiController extends Controller
             ]);
             $data = User::find($id)
                 ->update([
-                    'nama' => $request->nama,
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
             StaffProdi::where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
+                    'nama_staffprodi' => $request->nama,
                     'jurusan_id' => $request->jurusan,
                 ]);
         }

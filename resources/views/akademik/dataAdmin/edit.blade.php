@@ -16,7 +16,7 @@
             <div class="col-md-6">
                 <label for="nama" class="form-label">Nama Lengkap</label>
                 <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
-                    value="{{ old('nama', $data->nama) }}">
+                    value="{{ old('nama', $data->nama_admin) }}">
                 @error('nama')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror

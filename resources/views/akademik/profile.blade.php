@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>Nama Lengkap</th>
-                <td>{{ $data->nama }}</td>
+                <td>{{ $data->nama_admin }}</td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align: center   ">

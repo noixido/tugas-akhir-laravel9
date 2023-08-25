@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -18,8 +19,10 @@ class DataAdminController extends Controller
     {
         //
         if ($request->has('search')) {
-            $data = User::sortable()->orderBy('created_at', 'desc')
-                ->where('nama', 'LIKE', '%' . $request->search . '%')
+            $data = Admin::join('users', 'users.id', '=', 'admins.user_id')
+                // ->sortable()
+                ->orderBy('admins.created_at', 'desc')
+                ->where('nama_admin', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('username', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
                 ->onEachSide('3');
@@ -29,7 +32,9 @@ class DataAdminController extends Controller
             //tapi di page tempat terakhir kita edit data
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = User::sortable()->orderBy('created_at', 'desc')->where('role', 'akademik')
+            $data = Admin::join('users', 'users.id', '=', 'admins.user_id')
+                // sortable()
+                ->orderBy('admins.created_at', 'desc')
                 ->paginate(10)
                 ->onEachSide('3');
 
@@ -68,11 +73,14 @@ class DataAdminController extends Controller
             'password' => ['required', 'min:8']
         ]);
         $data = User::create([
-            'nama' => $request->nama,
             'username' => $request->username,
             'password' => bcrypt($request->password),
             'role' => 'akademik',
             'remember_token' => Str::random(60),
+        ]);
+        Admin::create([
+            'user_id' => $data->id,
+            'nama_admin' => $request->nama,
         ]);
         return redirect()->route('data-admin');
     }
@@ -97,7 +105,10 @@ class DataAdminController extends Controller
     public function edit($id)
     {
         //
-        $data = User::find($id);
+        $data = Admin::join('users', 'users.id', '=', 'admins.user_id')
+            ->orderBy('admins.created_at', 'desc')
+            ->where('user_id', $id)
+            ->first();
         return view('akademik.dataAdmin.edit', compact('data'));
     }
 
@@ -118,9 +129,11 @@ class DataAdminController extends Controller
             ]);
             $data = User::find($id)
                 ->update([
-                    'nama' => $request->nama,
                     'username' => $request->username,
                 ]);
+            Admin::where('user_id', $id)->update([
+                'nama_admin' => $request->nama,
+            ]);
         } else {
             $request->validate([
                 'nama' => ['required', 'min:3'],
@@ -129,15 +142,17 @@ class DataAdminController extends Controller
             ]);
             $data = User::find($id)
                 ->update([
-                    'nama' => $request->nama,
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
+            Admin::where('user_id', $id)->update([
+                'nama_admin' => $request->nama,
+            ]);
         }
         if (session('halaman_url')) {
             return redirect(session('halaman_url'));
         }
-        return redirect()->route('data-mahasiswa');
+        return redirect()->route('data-admin');
     }
 
     /**
@@ -149,6 +164,7 @@ class DataAdminController extends Controller
     public function destroy($id)
     {
         //
+        Admin::where('user_id', $id)->delete();
         User::find($id)->delete();
         return back();
     }

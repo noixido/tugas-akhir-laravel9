@@ -55,7 +55,6 @@ class LoginController extends Controller
         ]);
         // dd($request->all());
         $user = User::create([
-            'nama' => $request->nama,
             'username' => $request->username,
             'password' => bcrypt($request->password),
             'role' => "mahasiswa",
@@ -64,6 +63,7 @@ class LoginController extends Controller
         Mahasiswa::create([
             'user_id' => $user->id,
             'nim' => $request->nim,
+            'nama' => $request->nama,
         ]);
         return redirect('/');
     }

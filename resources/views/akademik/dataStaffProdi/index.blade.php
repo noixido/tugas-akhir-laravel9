@@ -27,6 +27,7 @@
                     <th scope="col" class="col-1">No</th>
                     <th scope="col" class="col-1">Username</th>
                     <th scope="col" class="col-2">Nama</th>
+                    <th scope="col" class="col-2">Jenjang</th>
                     <th scope="col" class="col-2">Program Studi</th>
                     <th scope="col" class="col-1">aksi</th>
                 </tr>
@@ -36,8 +37,9 @@
                 <tr>
                     <td>{{ $data->firstItem() + $index }}</td>
                     <td>{{ $row->username }}</td>
-                    <td>{{ $row->nama }}</td>
-                    <td>{{ $row->jenjang }} {{ $row->nama_prodi }}</td>
+                    <td>{{ $row->nama_staffprodi }}</td>
+                    <td>{{ $row->jenjang }}</td>
+                    <td>{{ $row->nama_prodi }}</td>
                     <td style="text-align: center">
                         <div style="display: inline-flex; gap: 5px">
                             <a href="/akademik/edit-staffprodi/{{ $row->user_id }}/edit" class="btn btn-warning"><i
