@@ -128,7 +128,7 @@ class DataMahasiswaController extends Controller
         //
         $prodis = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
         $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
-            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
+            // ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->orderBy('mahasiswas.created_at', 'desc')
             ->where('user_id', $id)
             ->first();

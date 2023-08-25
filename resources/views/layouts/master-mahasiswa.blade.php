@@ -43,7 +43,7 @@
                     <span class="desc-spacer">Sidang Tugas Akhir</span>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('bimbingan', Auth::user()->username) }}">
                         <i class="fa-solid fa-pen-nib icon"></i>
                         <span class="desc-main">Bimbingan</span>
                     </a>

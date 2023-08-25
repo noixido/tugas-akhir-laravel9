@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AkademikController;
+use App\Http\Controllers\BimbinganController;
 use App\Http\Controllers\DataAdminController;
 use App\Http\Controllers\DataDosenController;
 use App\Http\Controllers\DataJurusan;
@@ -13,6 +14,7 @@ use App\Http\Controllers\DataRuanganController;
 use App\Http\Controllers\DataStaffProdiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffProdiController;
+use App\Http\Controllers\TugasAkhirController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,22 +41,25 @@ Route::post('registrasi', [LoginController::class, 'registrasi'])->name('registr
 
 Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(function () {
     // Route::resource('/akademik', AkademikController::class)->middleware(['auth', 'hakakses:akademik']);
+
+    // ========== PROFILE AKADEMIK ==========
     Route::get('/profile/{user}', [AkademikController::class, 'show'])->name('akademik_profile');
     Route::get('/edit-profile/{user}/edit', [AkademikController::class, 'edit'])->name('edit_akademik_profil');
     Route::put('/edit-profile/{user}/', [AkademikController::class, 'update'])->name('proses_edit_akademik_profil');
 
+    // ========== DASHBOARD ==========
     Route::get('/', [AkademikController::class, 'index'])->name('dashboard');
 
-    // ========== DATA MAHASISWA ========
+    // ========== DATA MAHASISWA ==========
     Route::get('/data-mahasiswa', [DataMahasiswaController::class, 'index'])->name('data-mahasiswa');
     Route::get('/tambah-mahasiswa', [DataMahasiswaController::class, 'create'])->name('tambah-mahasiswa');
     Route::post('/tambah-mahasiswa', [DataMahasiswaController::class, 'store'])->name('proses-tambah-mahasiswa');
+    Route::get('/lihat-mahasiswa/{id}', [DataMahasiswaController::class, 'show'])->name('lihat-mahasiswa');
     Route::get('/edit-mahasiswa/{id}/edit', [DataMahasiswaController::class, 'edit'])->name('edit-mahasiswa');
     Route::put('/edit-mahasiswa/{id}', [DataMahasiswaController::class, 'update'])->name('proses-edit-mahasiswa');
     Route::delete('/hapus-mahasiswa/{id}', [DataMahasiswaController::class, 'destroy'])->name('hapus-mahasiswa');
-    Route::get('/lihat-mahasiswa/{id}', [DataMahasiswaController::class, 'show'])->name('lihat-mahasiswa');
 
-    // ========== DATA DOSEN ========
+    // ========== DATA DOSEN ==========
     Route::get('/data-dosen', [DataDosenController::class, 'index'])->name('data-dosen');
     Route::get('/tambah-dosen', [DataDosenController::class, 'create'])->name('tambah-dosen');
     Route::post('/tambah-dosen', [DataDosenController::class, 'store'])->name('proses-tambah-dosen');
@@ -63,7 +68,7 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::put('/edit-dosen/{id}', [DataDosenController::class, 'update'])->name('proses-edit-dosen');
     Route::delete('/hapus-dosen/{id}', [DataDosenController::class, 'destroy'])->name('hapus-dosen');
 
-    // ========== DATA ADMIN AKADEMIK ========
+    // ========== DATA ADMIN AKADEMIK ==========
     Route::get('/data-admin', [DataAdminController::class, 'index'])->name('data-admin');
     Route::get('/tambah-admin', [DataAdminController::class, 'create'])->name('tambah-admin');
     Route::post('/tambah-admin', [DataAdminController::class, 'store'])->name('proses-tambah-admin');
@@ -71,7 +76,7 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::put('/edit-admin/{id}', [DataAdminController::class, 'update'])->name('proses-edit-admin');
     Route::delete('/hapus-admin/{id}', [DataAdminController::class, 'destroy'])->name('hapus-admin');
 
-    // ========== DATA STAFF PRODI ========
+    // ========== DATA STAFF PRODI ==========
     Route::get('/data-staffprodi', [DataStaffProdiController::class, 'index'])->name('data-staffprodi');
     Route::get('/tambah-staffprodi', [DataStaffProdiController::class, 'create'])->name('tambah-staffprodi');
     Route::post('/tambah-staffprodi', [DataStaffProdiController::class, 'store'])->name('proses-tambah-staffprodi');
@@ -79,7 +84,7 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::put('/edit-staffprodi/{id}', [DataStaffProdiController::class, 'update'])->name('proses-edit-staffprodi');
     Route::delete('/hapus-staffprodi/{id}', [DataStaffProdiController::class, 'destroy'])->name('hapus-staffprodi');
 
-    // ========== DATA Program Studi ========
+    // ========== DATA Program Studi ==========
     Route::get('/data-jurusan', [DataJurusanController::class, 'index'])->name('data-jurusan');
     Route::get('/tambah-jurusan', [DataJurusanController::class, 'create'])->name('tambah-jurusan');
     Route::post('/tambah-jurusan', [DataJurusanController::class, 'store'])->name('proses-tambah-jurusan');
@@ -87,7 +92,7 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::put('/edit-jurusan/{id}', [DataJurusanController::class, 'update'])->name('proses-edit-jurusan');
     Route::delete('/hapus-jurusan/{id}', [DataJurusanController::class, 'destroy'])->name('hapus-jurusan');
 
-    // ========== DATA RUANGAN ========
+    // ========== DATA RUANGAN ==========
     Route::get('/data-ruangan', [DataRuanganController::class, 'index'])->name('data-ruangan');
     Route::get('/tambah-ruangan', [DataRuanganController::class, 'create'])->name('tambah-ruangan');
     Route::post('/tambah-ruangan', [DataRuanganController::class, 'store'])->name('proses-tambah-ruangan');
@@ -100,9 +105,22 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
 
 Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(function () {
     // Route::resource('/mahasiswa', MahasiswaController::class)->middleware(['auth', 'hakakses:mahasiswa']);
-    Route::get('/profile/{user}', [MahasiswaController::class, 'show'])->name('mahasiswa_profile');
 
+    // ========== PROFILE MAHASISWA ==========
+    Route::get('/profile/{user}', [MahasiswaController::class, 'show'])->name('mahasiswa_profile');
+    Route::get('/edit-profile/{user}/edit', [MahasiswaController::class, 'edit'])->name('edit_mahasiswa_profil');
+    Route::put('/edit-profile/{user}/', [MahasiswaController::class, 'update'])->name('proses_edit_mahasiswa_profil');
+
+    // ========== DASHBOARD MAHASISWA ==========
     Route::get('/', [MahasiswaController::class, 'index'])->name('dashboard');
+
+    // ========== DATA TUGAS AKHIR==========
+    Route::get('/bimbingan/{user}', [TugasAkhirController::class, 'show'])->name('bimbingan');
+    Route::get('/tambah-tugas-akhir', [TugasAkhirController::class, 'create'])->name('tambah-tugas-akhir');
+
+    // ========== DATA BERITA ACARA BIMBINGAN MAHASISWA==========
+    // Route::get('/bimbingan/{user}', [BimbinganController::class, 'show'])->name('bimbingan');
+    Route::get('/tambah-bimbingan', [BimbinganController::class, 'create'])->name('tambah-bimbingan');
 });
 
 
