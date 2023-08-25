@@ -50,8 +50,7 @@ class LoginController extends Controller
             'nama' => ['required', 'min:3'],
             'nim' => ['required'],
             'username' => ['required'],
-            'password' =>
-            ['required', 'min:6', 'password'],
+            'password' => ['required', 'min:8'],
         ]);
         // dd($request->all());
         $user = User::create([
@@ -63,7 +62,7 @@ class LoginController extends Controller
         Mahasiswa::create([
             'user_id' => $user->id,
             'nim' => $request->nim,
-            'nama' => $request->nama,
+            'nama_mahasiswa' => $request->nama,
         ]);
         return redirect('/');
     }

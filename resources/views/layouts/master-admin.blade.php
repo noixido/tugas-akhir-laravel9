@@ -126,7 +126,7 @@
                 </div>
 
                 {{-- buat logout,, ini paling terakhir ya!!! --}}
-                <div class="list-item logout">
+                <div class="list-item logout" onclick="return confirm('Apakah anda yakin ingin menghapus item ini?')">
                     <a href="/logout">
                         <i class="fa-solid fa-right-from-bracket icon"></i>
                         <span class="desc-main">Logout</span>
