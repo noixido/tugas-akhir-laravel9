@@ -115,12 +115,9 @@ Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(fu
     Route::get('/', [MahasiswaController::class, 'index'])->name('dashboard');
 
     // ========== DATA TUGAS AKHIR==========
-    Route::get('/bimbingan/{user}', [TugasAkhirController::class, 'show'])->name('bimbingan');
-    Route::get('/tambah-tugas-akhir', [TugasAkhirController::class, 'create'])->name('tambah-tugas-akhir');
-
-    // ========== DATA BERITA ACARA BIMBINGAN MAHASISWA==========
-    // Route::get('/bimbingan/{user}', [BimbinganController::class, 'show'])->name('bimbingan');
-    Route::get('/tambah-bimbingan', [BimbinganController::class, 'create'])->name('tambah-bimbingan');
+    Route::get('/tugas-akhir/{user}', [TugasAkhirController::class, 'show'])->name('tugas-akhir');
+    Route::get('/edit-tugas-akhir/{id}/edit', [TugasAkhirController::class, 'edit'])->name('edit-tugas-akhir');
+    Route::put('/edit-tugas-akhir/{id}', [TugasAkhirController::class, 'update'])->name('proses-edit-tugas-akhir');
 });
 
 
