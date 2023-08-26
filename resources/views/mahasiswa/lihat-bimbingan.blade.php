@@ -9,7 +9,7 @@
             </a>
         </div>
     </div>
-    <div class="row" style="height: 580px">
+    <div class="row" style="height: 620px">
         <table class="table table-bordered">
             <tr>
                 <th scope="col" class="col-6">Nama Mahasiswa</th>
@@ -20,8 +20,12 @@
                 <td>{{ $data->nim }}</td>
             </tr>
             <tr>
-                <th>Tanggal Bimbingan</th>
-                <td>{{ $data->tanggal_bimbingan }}</td>
+                <th>Dosen Pembimbing</th>
+                <td>{{ $ta->nama_dosen }}</td>
+            </tr>
+            <tr>
+                <th>Judul Tugas Akhir</th>
+                <td>{{ $ta->judul_tugas_akhir }}</td>
             </tr>
             <tr>
                 <th>Tanggal Bimbingan</th>

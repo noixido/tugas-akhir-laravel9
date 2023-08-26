@@ -8,7 +8,7 @@
                 TambahData
             </a>
         </div>
-        <div class="input-group col-md-4 goes-right" style="margin-top: 10px; margin-left: 150px">
+        <div class="input-group col-md-4 goes-right" style="margin-top: 10px; margin-left: 70px">
             <div class="input-group mb-3">
                 <h5>bimbingan diterima : {{ $dataCount }}</h5>
             </div>
@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th scope="col" class="col-1">No</th>
-                    <th scope="col">Tanggal</th>
+                    <th scope="col" class="col-2">Tanggal</th>
                     <th scope="col">Deskripsi Bimbingan</th>
                     <th scope="col" class="col-2">Status</th>
                     <th scope="col" class="col-2">aksi</th>

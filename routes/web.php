@@ -15,6 +15,7 @@ use App\Http\Controllers\DataStaffProdiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffProdiController;
 use App\Http\Controllers\TugasAkhirController;
+use App\Models\Bimbingan;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,6 +127,8 @@ Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(fu
     Route::get('/tambah-bimbingan', [BimbinganController::class, 'create'])->name('tambah-bimbingan');
     Route::post('/tambah-bimbingan', [BimbinganController::class, 'store'])->name('proses-tambah-bimbingan');
     Route::get('/lihat-bimbingan/{id}', [BimbinganController::class, 'show'])->name('lihat-bimbingan');
+    Route::get('/edit-bimbingan/{id}/edit', [BimbinganController::class, 'edit'])->name('edit-bimbingan');
+    Route::put('/edit-bimbingan/{id}', [BimbinganController::class, 'update'])->name('proses-edit-bimbingan');
     Route::delete('/hapus-bimbingan/{id}', [BimbinganController::class, 'destroy'])->name('hapus-bimbingan');
 });
 
