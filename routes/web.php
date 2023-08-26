@@ -115,9 +115,18 @@ Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(fu
     Route::get('/', [MahasiswaController::class, 'index'])->name('dashboard');
 
     // ========== DATA TUGAS AKHIR==========
-    Route::get('/tugas-akhir/{user}', [TugasAkhirController::class, 'show'])->name('tugas-akhir');
+    // Route::get('/tugas-akhir/{user}', [TugasAkhirController::class, 'show'])->name('tugas-akhir');
+    Route::get('/tugas-akhir', [TugasAkhirController::class, 'index'])->name('tugas-akhir');
     Route::get('/edit-tugas-akhir/{id}/edit', [TugasAkhirController::class, 'edit'])->name('edit-tugas-akhir');
     Route::put('/edit-tugas-akhir/{id}', [TugasAkhirController::class, 'update'])->name('proses-edit-tugas-akhir');
+
+    // ========== DATA BERITA ACARA BIMBINGAN ==========
+    // Route::get('/bimbingan/{user}', [BimbinganController::class, 'show'])->name('bimbingan');
+    Route::get('/bimbingan', [BimbinganController::class, 'index'])->name('bimbingan');
+    Route::get('/tambah-bimbingan', [BimbinganController::class, 'create'])->name('tambah-bimbingan');
+    Route::post('/tambah-bimbingan', [BimbinganController::class, 'store'])->name('proses-tambah-bimbingan');
+    Route::get('/lihat-bimbingan/{id}', [BimbinganController::class, 'show'])->name('lihat-bimbingan');
+    Route::delete('/hapus-bimbingan/{id}', [BimbinganController::class, 'destroy'])->name('hapus-bimbingan');
 });
 
 
