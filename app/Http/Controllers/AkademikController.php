@@ -52,8 +52,10 @@ class AkademikController extends Controller
         //
         $user = Auth::user()->id;
         // $data = User::find($user);
-        $data = Admin::join('users', 'users.id', '=', 'admins.user_id')
-            ->where('user_id', $user)->first();
+        $data = Admin::query()
+            ->join('users', 'users.id', '=', 'admins.user_id')
+            ->where('user_id', $user)
+            ->first();
         return view('akademik.profile', compact('data'));
     }
 
@@ -67,7 +69,8 @@ class AkademikController extends Controller
     {
         //
         $user = Auth::user()->id;
-        $data = Admin::join('users', 'users.id', '=', 'admins.user_id')
+        $data = Admin::query()
+            ->join('users', 'users.id', '=', 'admins.user_id')
             ->orderBy('admins.created_at', 'desc')
             ->where('user_id', $user)
             ->first();
@@ -90,26 +93,32 @@ class AkademikController extends Controller
                 'username' => ['required'],
                 'nama' => ['required'],
             ]);
-            $data = User::find($user)
+            $data = User::query()
+                ->find($user)
                 ->update([
                     'username' => $request->username,
                 ]);
-            Admin::where('user_id', $user)->update([
-                'nama_admin' => $request->nama,
-            ]);
+            Admin::query()
+                ->where('user_id', $user)
+                ->update([
+                    'nama_admin' => $request->nama,
+                ]);
         } else {
             $request->validate([
                 'username' => ['required'],
                 'password' => ['min:8'],
             ]);
-            $data = User::find($user)
+            $data = User::query()
+                ->find($user)
                 ->update([
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
-            Admin::where('user_id', $user)->update([
-                'nama_admin' => $request->nama,
-            ]);
+            Admin::query()
+                ->where('user_id', $user)
+                ->update([
+                    'nama_admin' => $request->nama,
+                ]);
         }
         return redirect()->route('akademik_profile', $request->username);
     }

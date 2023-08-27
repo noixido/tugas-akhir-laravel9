@@ -20,7 +20,8 @@ class DataStaffProdiController extends Controller
     {
         //
         if ($request->has('search')) {
-            $data = StaffProdi::join('users', 'users.id', '=', 'staff_prodis.user_id')
+            $data = StaffProdi::query()
+                ->join('users', 'users.id', '=', 'staff_prodis.user_id')
                 ->join('program_studis', 'program_studis.id', '=', 'staff_prodis.jurusan_id')
                 // ->sortable()
                 ->orderBy('staff_prodis.created_at', 'desc')
@@ -28,15 +29,16 @@ class DataStaffProdiController extends Controller
                 ->where('nama_staffprodi', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = StaffProdi::join('users', 'users.id', '=', 'staff_prodis.user_id')
+            $data = StaffProdi::query()
+                ->join('users', 'users.id', '=', 'staff_prodis.user_id')
                 ->join('program_studis', 'program_studis.id', '=', 'staff_prodis.jurusan_id')
                 // ->sortable()
                 ->orderBy('staff_prodis.created_at', 'desc')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
             Session::put('halaman_url', request()->fullUrl());
         }
         return view('akademik.dataStaffProdi.index', compact('data'));
@@ -50,7 +52,10 @@ class DataStaffProdiController extends Controller
     public function create()
     {
         //
-        $data = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
+        $data = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
         return view('akademik.dataStaffProdi.create', compact('data'));
     }
 
@@ -105,8 +110,12 @@ class DataStaffProdiController extends Controller
     public function edit($id)
     {
         //
-        $prodis = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
-        $data = StaffProdi::join('users', 'users.id', '=', 'staff_prodis.user_id')
+        $prodis = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
+        $data = StaffProdi::query()
+            ->join('users', 'users.id', '=', 'staff_prodis.user_id')
             // ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->orderBy('staff_prodis.created_at', 'desc')
             ->where('user_id', $id)
@@ -130,11 +139,13 @@ class DataStaffProdiController extends Controller
                 'username' => ['required'],
                 'jurusan' => ['required', 'integer'],
             ]);
-            $data = User::find($id)
+            $data = User::query()
+                ->find($id)
                 ->update([
                     'username' => $request->username,
                 ]);
-            StaffProdi::where('user_id', $id)
+            StaffProdi::query()
+                ->where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
                     'nama_staffprodi' => $request->nama,
@@ -147,12 +158,14 @@ class DataStaffProdiController extends Controller
                 'password' => ['min:8'],
                 'jurusan' => ['required', 'integer'],
             ]);
-            $data = User::find($id)
+            $data = User::query()
+                ->find($id)
                 ->update([
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
-            StaffProdi::where('user_id', $id)
+            StaffProdi::query()
+                ->where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
                     'nama_staffprodi' => $request->nama,
@@ -174,8 +187,12 @@ class DataStaffProdiController extends Controller
     public function destroy($id)
     {
         //
-        StaffProdi::where('user_id', $id)->delete();
-        User::find($id)->delete();
+        StaffProdi::query()
+            ->where('user_id', $id)
+            ->delete();
+        User::query()
+            ->find($id)
+            ->delete();
         return back();
     }
 }

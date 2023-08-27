@@ -19,24 +19,26 @@ class DataAdminController extends Controller
     {
         //
         if ($request->has('search')) {
-            $data = Admin::join('users', 'users.id', '=', 'admins.user_id')
+            $data = Admin::query()
+                ->join('users', 'users.id', '=', 'admins.user_id')
                 // ->sortable()
                 ->orderBy('admins.created_at', 'desc')
                 ->where('nama_admin', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('username', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,
             //tapi di page tempat terakhir kita edit data
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = Admin::join('users', 'users.id', '=', 'admins.user_id')
+            $data = Admin::query()
+                ->join('users', 'users.id', '=', 'admins.user_id')
                 // sortable()
                 ->orderBy('admins.created_at', 'desc')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,
@@ -105,7 +107,8 @@ class DataAdminController extends Controller
     public function edit($id)
     {
         //
-        $data = Admin::join('users', 'users.id', '=', 'admins.user_id')
+        $data = Admin::query()
+            ->join('users', 'users.id', '=', 'admins.user_id')
             ->orderBy('admins.created_at', 'desc')
             ->where('user_id', $id)
             ->first();
@@ -127,27 +130,33 @@ class DataAdminController extends Controller
                 'nama' => ['required', 'min:3'],
                 'username' => ['required'],
             ]);
-            $data = User::find($id)
+            $data = User::query()
+                ->find($id)
                 ->update([
                     'username' => $request->username,
                 ]);
-            Admin::where('user_id', $id)->update([
-                'nama_admin' => $request->nama,
-            ]);
+            Admin::query()
+                ->where('user_id', $id)
+                ->update([
+                    'nama_admin' => $request->nama,
+                ]);
         } else {
             $request->validate([
                 'nama' => ['required', 'min:3'],
                 'username' => ['required'],
                 'password' => ['min:8'],
             ]);
-            $data = User::find($id)
+            $data = User::query()
+                ->find($id)
                 ->update([
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
-            Admin::where('user_id', $id)->update([
-                'nama_admin' => $request->nama,
-            ]);
+            Admin::query()
+                ->where('user_id', $id)
+                ->update([
+                    'nama_admin' => $request->nama,
+                ]);
         }
         if (session('halaman_url')) {
             return redirect(session('halaman_url'));
@@ -164,8 +173,12 @@ class DataAdminController extends Controller
     public function destroy($id)
     {
         //
-        Admin::where('user_id', $id)->delete();
-        User::find($id)->delete();
+        Admin::query()
+            ->where('user_id', $id)
+            ->delete();
+        User::query()
+            ->find($id)
+            ->delete();
         return back();
     }
 }

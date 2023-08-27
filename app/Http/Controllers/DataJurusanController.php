@@ -17,22 +17,26 @@ class DataJurusanController extends Controller
     {
         //
         if ($request->has('search')) {
-            $data = ProgramStudi::sortable()->orderBy('created_at', 'desc')
+            $data = ProgramStudi::query()
+                ->sortable()
+                ->orderBy('created_at', 'desc')
                 ->where('kode_prodi', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('jenjang', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('konsentrasi', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,
             //tapi di page tempat terakhir kita edit data
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = ProgramStudi::sortable()->orderBy('created_at', 'desc')
+            $data = ProgramStudi::query()
+                ->sortable()
+                ->orderBy('created_at', 'desc')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,
@@ -120,7 +124,8 @@ class DataJurusanController extends Controller
             'nama_prodi' => ['required'],
             'konsentrasi' => ['nullable'],
         ]);
-        ProgramStudi::find($id)
+        ProgramStudi::query()
+            ->find($id)
             ->update([
                 'kode_prodi' => $request->kode_prodi,
                 'jenjang' => $request->jenjang,
@@ -142,7 +147,9 @@ class DataJurusanController extends Controller
     public function destroy($id)
     {
         //
-        ProgramStudi::find($id)->delete();
+        ProgramStudi::query()
+            ->find($id)
+            ->delete();
         return back();
     }
 }

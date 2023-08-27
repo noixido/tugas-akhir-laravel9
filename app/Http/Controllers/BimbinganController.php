@@ -21,11 +21,19 @@ class BimbinganController extends Controller
     {
         //
         $user = Auth::user()->id;
-        $mhs = Mahasiswa::where('user_id', $user)->first();
-        $data = Bimbingan::where('mahasiswa_id', $mhs->id)
+        $mhs = Mahasiswa::query()
+            ->where('user_id', $user)
+            ->first();
+        $data = Bimbingan::query()
+            ->where('mahasiswa_id', $mhs->id)
             ->orderBy('tanggal_bimbingan', 'desc')
-            ->paginate(8);
-        $dataCount = $data->where('status_bimbingan', 'diterima')->count();
+            ->orderBy('created_at', 'desc')
+            ->paginate(5)
+            ->onEachSide(2);
+        $dataCount = Bimbingan::query()
+            ->where('mahasiswa_id', $mhs->id)
+            ->where('status_bimbingan', 'diterima')
+            ->count();
         return view('mahasiswa.bimbingan', compact('data', 'dataCount'));
     }
 
@@ -51,8 +59,12 @@ class BimbinganController extends Controller
         //
         // dd($request->all());
         $user = Auth::user()->id;
-        $mhs = Mahasiswa::where('user_id', $user)->first();
-        $ta = TugasAkhir::where('mahasiswa_id', $mhs->id)->first();
+        $mhs = Mahasiswa::query()
+            ->where('user_id', $user)
+            ->first();
+        $ta = TugasAkhir::query()
+            ->where('mahasiswa_id', $mhs->id)
+            ->first();
         $request->validate([
             'tanggal' => ['required'],
             'isi' => ['required']
@@ -77,12 +89,16 @@ class BimbinganController extends Controller
     {
         //
         $user = Auth::user()->id;
-        $mhs = Mahasiswa::where('user_id', $user)->first();
-        $data = Bimbingan::join('mahasiswas', 'mahasiswas.id', '=', 'bimbingans.mahasiswa_id')
+        $mhs = Mahasiswa::query()
+            ->where('user_id', $user)
+            ->first();
+        $data = Bimbingan::query()
+            ->join('mahasiswas', 'mahasiswas.id', '=', 'bimbingans.mahasiswa_id')
             ->join('tugas_akhirs', 'tugas_akhirs.id', '=', 'bimbingans.tugas_akhir_id')
             ->where('bimbingans.id', $id)
             ->first();
-        $ta = TugasAkhir::join('dosens', 'dosens.id', '=', 'tugas_akhirs.dosen_id')
+        $ta = TugasAkhir::query()
+            ->join('dosens', 'dosens.id', '=', 'tugas_akhirs.dosen_id')
             ->where('mahasiswa_id', $mhs->id)
             ->first();
         return view('mahasiswa.lihat-bimbingan', compact('data', 'ta'));
@@ -97,7 +113,9 @@ class BimbinganController extends Controller
     public function edit($id)
     {
         //
-        $data = Bimbingan::where('bimbingans.id', $id)->first();
+        $data = Bimbingan::query()
+            ->where('bimbingans.id', $id)
+            ->first();
         return view('mahasiswa.edit-bimbingan', compact('data'));
     }
 
@@ -114,9 +132,11 @@ class BimbinganController extends Controller
         $request->validate([
             'isi' => ['required']
         ]);
-        Bimbingan::where('id', $id)->update([
-            'isi_bimbingan' => $request->isi
-        ]);
+        Bimbingan::query()
+            ->where('id', $id)
+            ->update([
+                'isi_bimbingan' => $request->isi
+            ]);
         return redirect()->route('bimbingan');
     }
 
@@ -129,7 +149,9 @@ class BimbinganController extends Controller
     public function destroy($id)
     {
         //
-        Bimbingan::find($id)->delete();
+        Bimbingan::query()
+            ->find($id)
+            ->delete();
         return back();
     }
 }

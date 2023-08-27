@@ -49,17 +49,17 @@
                     <td>{{ $row->status_bimbingan }}</td>
                     <td style="text-align: center;">
                         <div style="display: inline-flex; gap:5px">
-                            {{-- <form action="/dosen/diterima/{{ $row->id }}" method="POST">
+                            <form action="/dosen/diterima/{{ $row->bimbingan_id }}" method="POST">
                                 @csrf
                                 @method('put')
-                                <button type="submit" class="btn btn-success">Tolak</button>
-                            </form> --}}
-                            <a href="/dosen/diterima/{{ $row->id }}">test</a>
-                            {{-- <form action="/dosen/ditolak/{{ $row->id }}" method="POST">
+                                <button type="submit" class="btn btn-success">Terima</button>
+                            </form>
+                            {{-- <a href="/dosen/diterima/{{ $row->bimbingan_id }}">test</a> --}}
+                            <form action="/dosen/ditolak/{{ $row->bimbingan_id }}" method="POST">
                                 @csrf
                                 @method('put')
-                                <button type="submit" class="btn btn-danger">Terima</button>
-                            </form> --}}
+                                <button type="submit" class="btn btn-danger">Tolak</button>
+                            </form>
                         </div>
                     </td>
                 </tr>

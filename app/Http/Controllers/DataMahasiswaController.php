@@ -22,7 +22,8 @@ class DataMahasiswaController extends Controller
         // $data = Mahasiswa::all();
         // dd($request->all());
         if ($request->has('search')) {
-            $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
+            $data = Mahasiswa::query()
+                ->join('users', 'users.id', '=', 'mahasiswas.user_id')
                 ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
                 // ->sortable()
                 ->orderBy('mahasiswas.created_at', 'desc')
@@ -33,15 +34,16 @@ class DataMahasiswaController extends Controller
                 ->orWhere('jenjang', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
+            $data = Mahasiswa::query()
+                ->join('users', 'users.id', '=', 'mahasiswas.user_id')
                 ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
                 // ->sortable()
                 ->orderBy('mahasiswas.created_at', 'desc')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
             Session::put('halaman_url', request()->fullUrl());
         }
         return view('akademik.dataMahasiswa.index', compact('data'));
@@ -55,7 +57,10 @@ class DataMahasiswaController extends Controller
     public function create()
     {
         //
-        $data = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
+        $data = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
         return view('akademik.dataMahasiswa.create', compact('data'));
     }
 
@@ -108,7 +113,8 @@ class DataMahasiswaController extends Controller
     {
         //
         // dd($id);
-        $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
+        $data = Mahasiswa::query()
+            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
             ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->orderBy('mahasiswas.created_at', 'desc')
             ->where('user_id', $id)
@@ -126,8 +132,12 @@ class DataMahasiswaController extends Controller
     public function edit($id)
     {
         //
-        $prodis = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
-        $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
+        $prodis = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
+        $data = Mahasiswa::query()
+            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
             // ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->orderBy('mahasiswas.created_at', 'desc')
             ->where('user_id', $id)
@@ -155,11 +165,13 @@ class DataMahasiswaController extends Controller
                 'email' => ['required'],
                 'telepon' => ['required', 'numeric', 'min:10'],
             ]);
-            $data = User::find($id)
+            $data = User::query()
+                ->find($id)
                 ->update([
                     'username' => $request->username,
                 ]);
-            Mahasiswa::where('user_id', $id)
+            Mahasiswa::query()
+                ->where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
                     'nim' => $request->nim,
@@ -180,12 +192,14 @@ class DataMahasiswaController extends Controller
                 'email' => ['required'],
                 'telepon' => ['required', 'numeric', 'min:10'],
             ]);
-            $data = User::find($id)
+            $data = User::query()
+                ->find($id)
                 ->update([
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
-            Mahasiswa::where('user_id', $id)
+            Mahasiswa::query()
+                ->where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
                     'nim' => $request->nim,
@@ -211,8 +225,12 @@ class DataMahasiswaController extends Controller
     public function destroy($id)
     {
         //
-        Mahasiswa::where('user_id', $id)->delete();
-        User::find($id)->delete();
+        Mahasiswa::query()
+            ->where('user_id', $id)
+            ->delete();
+        User::query()
+            ->find($id)
+            ->delete();
         return back();
     }
 }

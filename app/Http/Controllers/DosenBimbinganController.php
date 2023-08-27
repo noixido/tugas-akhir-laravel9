@@ -20,7 +20,9 @@ class DosenBimbinganController extends Controller
         //
         $user = Auth::user()->id;
         $dosen = Dosen::where('user_id', $user)->first();
-        $bimbingan = Bimbingan::select('bimbingans.mahasiswa_id', 'nama_mahasiswa', 'nim', 'judul_tugas_akhir')->join('tugas_akhirs', 'tugas_akhirs.id', '=', 'bimbingans.tugas_akhir_id')
+        $bimbingan = Bimbingan::query()
+            ->select('bimbingans.mahasiswa_id', 'nama_mahasiswa', 'nim', 'judul_tugas_akhir')
+            ->join('tugas_akhirs', 'tugas_akhirs.id', '=', 'bimbingans.tugas_akhir_id')
             ->join('mahasiswas', 'mahasiswas.id', '=', 'bimbingans.mahasiswa_id')
             ->where('tugas_akhirs.dosen_id', $dosen->id)
             ->groupBy('bimbingans.mahasiswa_id', 'nama_mahasiswa', 'nim', 'judul_tugas_akhir')
@@ -61,17 +63,21 @@ class DosenBimbinganController extends Controller
         //
         $user = Auth::user()->id;
         $dosen = Dosen::where('user_id', $user)->first();
-        $ta = TugasAkhir::join('dosens', 'dosens.id', '=', 'tugas_akhirs.dosen_id')
+        $ta = TugasAkhir::query()
+            ->join('dosens', 'dosens.id', '=', 'tugas_akhirs.dosen_id')
             ->join('mahasiswas', 'mahasiswas.id', '=', 'tugas_akhirs.mahasiswa_id')
             ->where('dosen_id', $dosen->id)
             ->where('mahasiswa_id', $id)
             ->first();
-        $bimbingan = Bimbingan::join('tugas_akhirs', 'tugas_akhirs.id', '=', 'bimbingans.tugas_akhir_id')
+        $bimbingan = Bimbingan::query()
+            ->select('bimbingans.id as bimbingan_id', 'tanggal_bimbingan', 'isi_bimbingan', 'status_bimbingan')
+            ->join('tugas_akhirs', 'tugas_akhirs.id', '=', 'bimbingans.tugas_akhir_id')
             ->join('mahasiswas', 'mahasiswas.id', '=', 'bimbingans.mahasiswa_id')
             ->where('tugas_akhirs.dosen_id', $dosen->id)
             ->where('bimbingans.mahasiswa_id', $id)
             ->orderBy('bimbingans.created_at', 'desc')
-            ->paginate(8);
+            ->paginate(8)
+            ->onEachSide(2);
         // dd($bimbingan);
         return view('dosen.bimbingan.lihat', compact('bimbingan', 'ta'));
     }
@@ -101,12 +107,20 @@ class DosenBimbinganController extends Controller
 
     public function diterima(Request $request, $id)
     {
-        return 'diterima';
+        // return 'diterima';
+        Bimbingan::find($id)->update([
+            'status_bimbingan' => 'diterima',
+        ]);
+        return back();
     }
 
     public function ditolak(Request $request, $id)
     {
-        return 'ditolak';
+        // return 'ditolak';
+        Bimbingan::find($id)->update([
+            'status_bimbingan' => 'ditolak',
+        ]);
+        return back();
     }
 
     /**

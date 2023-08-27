@@ -149,8 +149,9 @@ Route::middleware(['auth', 'hakakses:dosen'])->prefix('dosen')->group(function (
     // ========== BIMBINGAN DOSEN ==========
     Route::get('/bimbingan', [DosenBimbinganController::class, 'index'])->name('dosen-bimbingan');
     Route::get('/bimbingan/{id}', [DosenBimbinganController::class, 'show'])->name('lihat-dosen-bimbingan');
-    // Route::put('/diterima/{id}', [DosenBimbinganController::class, 'diterima'])->name('diterima');
-    Route::get('/diterima/{id}', [DosenBimbinganController::class, 'diterima'])->name('diterima');
+    //--- ubah status sidang mahasiswa ---
+    Route::put('/diterima/{id}', [DosenBimbinganController::class, 'diterima'])->name('diterima');
+    Route::put('/ditolak/{id}', [DosenBimbinganController::class, 'ditolak'])->name('ditolak');
 });
 
 

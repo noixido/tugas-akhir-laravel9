@@ -20,10 +20,12 @@ class TugasAkhirController extends Controller
     {
         //
         $user = Auth::user()->id;
-        $mhs = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
+        $mhs = Mahasiswa::query()
+            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
             ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->where('user_id', $user)->first();
-        $data = TugasAkhir::join('dosens', 'dosens.id', '=', 'tugas_akhirs.dosen_id')
+        $data = TugasAkhir::query()
+            ->join('dosens', 'dosens.id', '=', 'tugas_akhirs.dosen_id')
             ->join('mahasiswas', 'mahasiswas.id', '=', 'tugas_akhirs.mahasiswa_id')
             ->where('mahasiswas.user_id', $user)
             ->first();
@@ -74,10 +76,18 @@ class TugasAkhirController extends Controller
     {
         //
         $user = Auth::user()->id;
-        $mhs = Mahasiswa::where('user_id', $user)->first();
-        $data = TugasAkhir::join('mahasiswas', 'mahasiswas.id', '=', 'tugas_akhirs.mahasiswa_id')
-            ->where('mahasiswas.user_id', $user)->first();
-        $dosen = Dosen::where('jurusan_id', $mhs->jurusan_id)->orderBy('jurusan_id', 'asc')->orderBy('nama_dosen', 'asc')->get();
+        $mhs = Mahasiswa::query()
+            ->where('user_id', $user)
+            ->first();
+        $data = TugasAkhir::query()
+            ->join('mahasiswas', 'mahasiswas.id', '=', 'tugas_akhirs.mahasiswa_id')
+            ->where('mahasiswas.user_id', $user)
+            ->first();
+        $dosen = Dosen::query()
+            ->where('jurusan_id', $mhs->jurusan_id)
+            ->orderBy('jurusan_id', 'asc')
+            ->orderBy('nama_dosen', 'asc')
+            ->get();
         return view('mahasiswa.edit-tugas-akhir', compact('data', 'dosen'));
     }
 
@@ -96,7 +106,9 @@ class TugasAkhirController extends Controller
             'judul_tugas_akhir' => ['nullable']
         ]);
         $user = Auth::user()->id;
-        $mhs = Mahasiswa::where('user_id', $user)->first();
+        $mhs = Mahasiswa::query()
+            ->where('user_id', $user)
+            ->first();
         TugasAkhir::updateOrCreate(
             [
                 'mahasiswa_id' => $mhs->id,

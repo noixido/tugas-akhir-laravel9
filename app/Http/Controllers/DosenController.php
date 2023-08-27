@@ -52,7 +52,8 @@ class DosenController extends Controller
     {
         //
         $user = Auth::user()->id;
-        $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+        $data = Dosen::query()
+            ->join('users', 'users.id', '=', 'dosens.user_id')
             ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
             ->where('user_id', $user)
             ->first();
@@ -69,8 +70,12 @@ class DosenController extends Controller
     {
         //
         $user = Auth::user()->id;
-        $prodis = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
-        $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+        $prodis = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
+        $data = Dosen::query()
+            ->join('users', 'users.id', '=', 'dosens.user_id')
             ->orderBy('dosens.created_at', 'desc')
             ->where('user_id', $user)
             ->first();
@@ -98,18 +103,21 @@ class DosenController extends Controller
                 'telepon' => ['required', 'numeric', 'min:10'],
                 'alamat' => ['required'],
             ]);
-            User::find($user)
+            User::query()
+                ->find($user)
                 ->update([
                     'username' => $request->username,
                 ]);
-            Dosen::where('user_id', $user)->update([
-                'nidn' => $request->nidn,
-                'nama_dosen' => $request->nama,
-                'jurusan_id' => $request->jurusan,
-                'email' => $request->email,
-                'telepon' => $request->telepon,
-                'alamat' => $request->alamat,
-            ]);
+            Dosen::query()
+                ->where('user_id', $user)
+                ->update([
+                    'nidn' => $request->nidn,
+                    'nama_dosen' => $request->nama,
+                    'jurusan_id' => $request->jurusan,
+                    'email' => $request->email,
+                    'telepon' => $request->telepon,
+                    'alamat' => $request->alamat,
+                ]);
         } else {
             $request->validate([
                 'username' => ['required'],
@@ -121,19 +129,22 @@ class DosenController extends Controller
                 'telepon' => ['required', 'numeric', 'min:10'],
                 'alamat' => ['required'],
             ]);
-            User::find($user)
+            User::query()
+                ->find($user)
                 ->update([
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
-            Dosen::where('user_id', $user)->update([
-                'nidn' => $request->nidn,
-                'nama_dosen' => $request->nama,
-                'jurusan_id' => $request->jurusan,
-                'email' => $request->email,
-                'telepon' => $request->telepon,
-                'alamat' => $request->alamat,
-            ]);
+            Dosen::query()
+                ->where('user_id', $user)
+                ->update([
+                    'nidn' => $request->nidn,
+                    'nama_dosen' => $request->nama,
+                    'jurusan_id' => $request->jurusan,
+                    'email' => $request->email,
+                    'telepon' => $request->telepon,
+                    'alamat' => $request->alamat,
+                ]);
         }
         return redirect()->route('dosen_profile', $request->username);
     }

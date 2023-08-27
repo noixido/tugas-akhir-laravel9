@@ -17,22 +17,24 @@ class DataRuanganController extends Controller
     {
         //
         if ($request->has('search')) {
-            $data = Ruangan::sortable()
+            $data = Ruangan::query()
+                ->sortable()
                 ->orderBy('created_at', 'desc')
                 ->where('lantai', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('ruangan', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,
             //tapi di page tempat terakhir kita edit data
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = Ruangan::sortable()
+            $data = Ruangan::query()
+                ->sortable()
                 ->orderBy('created_at', 'desc')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
 
             //ini bikin session biar kalo update data,
             //user gk akan dibawa ke page paling petama,
@@ -114,7 +116,8 @@ class DataRuanganController extends Controller
             'lantai' => ['required', 'numeric'],
             'ruangan' => ['required', 'numeric'],
         ]);
-        Ruangan::find($id)
+        Ruangan::query()
+            ->find($id)
             ->update([
                 'lantai' => $request->lantai,
                 'ruangan' => $request->ruangan,
@@ -134,7 +137,9 @@ class DataRuanganController extends Controller
     public function destroy($id)
     {
         //
-        Ruangan::find($id)->delete();
+        Ruangan::query()
+            ->find($id)
+            ->delete();
         return back();
     }
 }

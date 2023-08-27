@@ -20,7 +20,8 @@ class DataDosenController extends Controller
     {
         //
         if ($request->has('search')) {
-            $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+            $data = Dosen::query()
+                ->join('users', 'users.id', '=', 'dosens.user_id')
                 ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
                 // ->sortable()
                 ->orderBy('dosens.created_at', 'desc')
@@ -28,15 +29,16 @@ class DataDosenController extends Controller
                 ->orWhere('nidn', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
             Session::put('halaman_url', request()->fullUrl());
         } else {
-            $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+            $data = Dosen::query()
+                ->join('users', 'users.id', '=', 'dosens.user_id')
                 ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
                 // ->sortable()
                 ->orderBy('dosens.created_at', 'desc')
                 ->paginate(10)
-                ->onEachSide('3');
+                ->onEachSide(2);
             Session::put('halaman_url', request()->fullUrl());
         }
         return view('akademik.dataDosen.index', compact('data'));
@@ -50,7 +52,10 @@ class DataDosenController extends Controller
     public function create()
     {
         //
-        $data = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
+        $data = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
         return view('akademik.dataDosen.create', compact('data'));
     }
 
@@ -102,7 +107,8 @@ class DataDosenController extends Controller
     public function show($id)
     {
         //
-        $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+        $data = Dosen::query()
+            ->join('users', 'users.id', '=', 'dosens.user_id')
             ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
             ->orderBy('dosens.created_at', 'desc')
             ->where('user_id', $id)
@@ -120,8 +126,12 @@ class DataDosenController extends Controller
     public function edit($id)
     {
         //
-        $prodis = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
-        $data = Dosen::join('users', 'users.id', '=', 'dosens.user_id')
+        $prodis = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
+        $data = Dosen::query()
+            ->join('users', 'users.id', '=', 'dosens.user_id')
             // ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
             ->orderBy('dosens.created_at', 'desc')
             ->where('user_id', $id)
@@ -149,11 +159,13 @@ class DataDosenController extends Controller
                 'telepon' => ['nullable', 'numeric', 'min:10'],
                 'alamat' => ['nullable'],
             ]);
-            $data = User::find($id)
+            $data = User::query()
+                ->find($id)
                 ->update([
                     'username' => $request->username,
                 ]);
-            Dosen::where('user_id', $id)
+            Dosen::query()
+                ->where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
                     'nidn' => $request->nidn,
@@ -174,12 +186,14 @@ class DataDosenController extends Controller
                 'telepon' => ['nullable', 'numeric', 'min:10'],
                 'alamat' => ['nullable'],
             ]);
-            $data = User::find($id)
+            $data = User::query()
+                ->find($id)
                 ->update([
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
-            Dosen::where('user_id', $id)
+            Dosen::query()
+                ->where('user_id', $id)
                 ->update([
                     // 'user_id' => $data->id,
                     'nidn' => $request->nidn,
@@ -205,8 +219,12 @@ class DataDosenController extends Controller
     public function destroy($id)
     {
         //
-        Dosen::where('user_id', $id)->delete();
-        User::find($id)->delete();
+        Dosen::query()
+            ->where('user_id', $id)
+            ->delete();
+        User::query()
+            ->find($id)
+            ->delete();
         return back();
     }
 }

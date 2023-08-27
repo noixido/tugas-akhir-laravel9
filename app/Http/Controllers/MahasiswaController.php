@@ -52,9 +52,11 @@ class MahasiswaController extends Controller
     {
         //
         $user = Auth::user()->id;
-        $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
+        $data = Mahasiswa::query()
+            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
             ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
-            ->where('user_id', $user)->first();
+            ->where('user_id', $user)
+            ->first();
         return view('mahasiswa.profile', compact('data'));
     }
 
@@ -69,8 +71,12 @@ class MahasiswaController extends Controller
         //
 
         $user = Auth::user()->id;
-        $prodis = ProgramStudi::orderBy('jenjang', 'asc')->orderBy('nama_prodi', 'asc')->get();
-        $data = Mahasiswa::join('users', 'users.id', '=', 'mahasiswas.user_id')
+        $prodis = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
+        $data = Mahasiswa::query()
+            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
             ->orderBy('mahasiswas.created_at', 'desc')
             ->where('user_id', $user)
             ->first();
@@ -99,18 +105,21 @@ class MahasiswaController extends Controller
                 'email' => ['required', 'min:3'],
                 'telepon' => ['required', 'numeric', 'min:10'],
             ]);
-            $data = User::find($user)
+            $data = User::query()
+                ->find($user)
                 ->update([
                     'username' => $request->username,
                 ]);
-            Mahasiswa::where('user_id', $user)->update([
-                'nim' => $request->nim,
-                'nama_mahasiswa' => $request->nama,
-                'angkatan' => $request->angkatan,
-                'jurusan_id' => $request->jurusan,
-                'email' => $request->email,
-                'telepon' => $request->telepon
-            ]);
+            Mahasiswa::query()
+                ->where('user_id', $user)
+                ->update([
+                    'nim' => $request->nim,
+                    'nama_mahasiswa' => $request->nama,
+                    'angkatan' => $request->angkatan,
+                    'jurusan_id' => $request->jurusan,
+                    'email' => $request->email,
+                    'telepon' => $request->telepon
+                ]);
         } else {
             $request->validate([
                 'username' => ['required'],
@@ -122,19 +131,22 @@ class MahasiswaController extends Controller
                 'email' => ['required', 'min:3'],
                 'telepon' => ['required', 'numeric', 'min:10'],
             ]);
-            User::find($user)
+            User::query()
+                ->find($user)
                 ->update([
                     'username' => $request->username,
                     'password' => bcrypt($request->password),
                 ]);
-            Mahasiswa::where('user_id', $user)->update([
-                'nim' => $request->nim,
-                'nama_mahasiswa' => $request->nama,
-                'angkatan' => $request->angkatan,
-                'jurusan' => $request->jurusan,
-                'email' => $request->email,
-                'telepon' => $request->telepon
-            ]);
+            Mahasiswa::query()
+                ->where('user_id', $user)
+                ->update([
+                    'nim' => $request->nim,
+                    'nama_mahasiswa' => $request->nama,
+                    'angkatan' => $request->angkatan,
+                    'jurusan' => $request->jurusan,
+                    'email' => $request->email,
+                    'telepon' => $request->telepon
+                ]);
         }
         return redirect()->route('mahasiswa_profile', $request->username);
     }
