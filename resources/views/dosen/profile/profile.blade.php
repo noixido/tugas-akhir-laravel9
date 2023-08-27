@@ -1,10 +1,10 @@
-@extends('layouts.master-mahasiswa')
+@extends('layouts.master-dosen')
 @section('title', 'Profile')
 @section('content')
 <div class="container">
     <div class="menu-header">
         <div class="input-group col-md-8">
-            <a href="/mahasiswa" class="btn btn-light" style="height: 40px;">
+            <a href="/dosen" class="btn btn-light" style="height: 40px;">
                 <i class="fa-solid fa-arrow-left-long icon"></i> Kembali
             </a>
         </div>
@@ -17,23 +17,19 @@
             </tr>
             <tr>
                 <th>Nama Lengkap</th>
-                <td>{{ $data->nama_mahasiswa }}</td>
+                <td>{{ $data->nama_dosen }}</td>
             </tr>
             <tr>
-                <th>Nomor Induk Mahasiswa</th>
-                <td>{{ $data->nim }}</td>
-            </tr>
-            <tr>
-                <th>Angkatan</th>
-                <td>{{ $data->jenjang }} {{ $data->angkatan }}</td>
+                <th>Nomor Induk Dosen</th>
+                <td>{{ $data->nidn }}</td>
             </tr>
             <tr>
                 <th>Program Studi</th>
-                <td>{{ $data->nama_prodi }}</td>
+                <td>{{ $data->jenjang }} {{ $data->nama_prodi }}</td>
             </tr>
             <tr>
                 <th>Konsentrasi</th>
-                <td>{{ $data->Konsentrasi ?? '-' }}</td>
+                <td>{{ $data->konsentrasi ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Email</th>
@@ -44,8 +40,12 @@
                 <td>{{ $data->telepon }}</td>
             </tr>
             <tr>
+                <th>Alamat</th>
+                <td style="style=" white-space: pre-wrap;"">{{ $data->alamat }}</td>
+            </tr>
+            <tr>
                 <td colspan="2" style="text-align: center   ">
-                    <a href="/mahasiswa/edit-profile/{{ $data->id }}/edit" class="btn btn-warning">Perbarui
+                    <a href="/dosen/edit-profile/{{ $data->id }}/edit" class="btn btn-warning">Perbarui
                         Data</a>
                 </td>
             </tr>

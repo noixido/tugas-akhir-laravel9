@@ -12,6 +12,7 @@ use App\Http\Controllers\DataJurusanController;
 use App\Http\Controllers\DataMahasiswaController;
 use App\Http\Controllers\DataRuanganController;
 use App\Http\Controllers\DataStaffProdiController;
+use App\Http\Controllers\DosenBimbinganController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffProdiController;
 use App\Http\Controllers\TugasAkhirController;
@@ -134,9 +135,23 @@ Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(fu
 
 
 
-// Route::middleware(['auth', 'hakakses:dosen'])->prefix('dosen')->group(function () {
-Route::resource('/dosen', DosenController::class)->middleware(['auth', 'hakakses:dosen']);
-// });
+Route::middleware(['auth', 'hakakses:dosen'])->prefix('dosen')->group(function () {
+    // Route::resource('/dosen', DosenController::class)->middleware(['auth', 'hakakses:dosen']);
+
+    // ========== PROFILE DOSEN ==========
+    Route::get('/profile/{user}', [DosenController::class, 'show'])->name('dosen_profile');
+    Route::get('/edit-profile/{user}/edit', [DosenController::class, 'edit'])->name('edit_dosen_profil');
+    Route::put('/edit-profile/{user}/', [DosenController::class, 'update'])->name('proses_edit_dosen_profil');
+
+    // ========== DASHBOARD DOSEN ==========
+    Route::get('/', [DosenController::class, 'index'])->name('dashboard');
+
+    // ========== BIMBINGAN DOSEN ==========
+    Route::get('/bimbingan', [DosenBimbinganController::class, 'index'])->name('dosen-bimbingan');
+    Route::get('/bimbingan/{id}', [DosenBimbinganController::class, 'show'])->name('lihat-dosen-bimbingan');
+    // Route::put('/diterima/{id}', [DosenBimbinganController::class, 'diterima'])->name('diterima');
+    Route::get('/diterima/{id}', [DosenBimbinganController::class, 'diterima'])->name('diterima');
+});
 
 
 

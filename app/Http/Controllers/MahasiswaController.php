@@ -122,7 +122,7 @@ class MahasiswaController extends Controller
                 'email' => ['required', 'min:3'],
                 'telepon' => ['required', 'numeric', 'min:10'],
             ]);
-            $data = User::find($user)
+            User::find($user)
                 ->update([
                     'username' => $request->username,
                     'password' => bcrypt($request->password),

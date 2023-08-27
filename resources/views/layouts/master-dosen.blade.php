@@ -25,6 +25,14 @@
                 </div>
             </div>
             <div class="main-sidebar">
+                <div class="list-item">
+                    <a href="{{ route('dosen_profile', Auth::user()->username) }}" class="desc-header">
+                        <i class="fa-solid fa-user icon"></i>
+                        <span class="desc-main">{{
+                            Auth::user()->username
+                            }}</span>
+                    </a>
+                </div>
                 {{-- dashboard aja --}}
                 <div class="list-item">
                     <a href="/dosen">
@@ -38,7 +46,7 @@
                     <span class="desc-spacer">Pembimbing</span>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('dosen-bimbingan') }}">
                         <i class="fa-solid fa-pen-nib icon"></i>
                         <span class="desc-main">Bimbingan</span>
                     </a>

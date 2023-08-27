@@ -1,17 +1,16 @@
-@extends('layouts.master-mahasiswa')
-@section('title', 'Edit Mahasiswa Profile')
+@extends('layouts.master-dosen')
+@section('title', 'Edit Dosen Profile')
 @section('content')
 <div class="container">
     <div class="menu-header">
         <div class="input-group col-md-8">
-            <a href="{{ route('mahasiswa_profile', Auth::user()->username) }}" class="btn btn-light"
-                style="height: 40px;">
+            <a href="{{ route('dosen_profile', Auth::user()->username) }}" class="btn btn-light" style="height: 40px;">
                 <i class="fa-solid fa-arrow-left-long icon"></i> Kembali
             </a>
         </div>
     </div>
     <div class="row">
-        <form action="{{ route('proses_edit_mahasiswa_profil', Auth::user()->id) }}" class="row" style="margin: 0%"
+        <form action="{{ route('proses_edit_dosen_profil', Auth::user()->id) }}" class="row" style="margin: 0%"
             method="POST">
             @csrf
             @method('put')
@@ -34,24 +33,16 @@
             <div class="col-md-6">
                 <label for="nama" class="form-label">Nama Lengkap</label>
                 <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
-                    value="{{ old('nama', $data->nama_mahasiswa) }}">
+                    value="{{ old('nama', $data->nama_dosen) }}">
                 @error('nama')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
             <div class="col-md-6">
-                <label for="nim" class="form-label">Nomor Induk Mahasiswa</label>
-                <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim"
-                    value="{{ old('nim', $data->nim) }}">
-                @error('nim')
-                <span class="invalid-feedback">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="col-md-6">
-                <label for="angkatan" class="form-label">Angkatan</label>
-                <input type="number" class="form-control @error('angkatan') is-invalid @enderror" id="angkatan"
-                    name="angkatan" value="{{ old('angkatan', $data->angkatan) }}">
-                @error('nama')
+                <label for="nidn" class="form-label">Nomor Induk Dosen</label>
+                <input type="text" class="form-control @error('nidn') is-invalid @enderror" id="nidn" name="nidn"
+                    value="{{ old('nidn', $data->nidn) }}">
+                @error('nidn')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
@@ -89,6 +80,16 @@
                 <input type="number" class="form-control @error('telepon') is-invalid @enderror" id="telepon"
                     name="telepon" value="{{ old('telepon', $data->telepon) }}">
                 @error('telepon')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-6">
+                <label for="alamat" class="form-label">Alamat</label>
+                <textarea style="height: 40px" name="alamat" id="alamat" cols="30" rows="10"
+                    class="form-control @error('alamat') is-invalid @enderror">
+                {{ old('alamat', $data->alamat) }}
+                </textarea>
+                @error('alamat')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
