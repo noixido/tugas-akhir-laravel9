@@ -25,11 +25,11 @@
             </tr>
             <tr>
                 <th>Angkatan</th>
-                <td>{{ $data->jenjang }} {{ $data->angkatan }}</td>
+                <td>{{ $data->angkatan }}</td>
             </tr>
             <tr>
                 <th>Program Studi</th>
-                <td>{{ $data->nama_prodi }}</td>
+                <td>{{ $data->jenjang }} {{ $data->nama_prodi }}</td>
             </tr>
             <tr>
                 <th>Konsentrasi</th>
@@ -45,7 +45,7 @@
             </tr>
             <tr>
                 <td colspan="2" style="text-align: center   ">
-                    <a href="/mahasiswa/edit-profile/{{ $data->id }}/edit" class="btn btn-warning">Perbarui
+                    <a href="/mahasiswa/edit-profile/{{ Auth::user()->username }}/edit" class="btn btn-warning">Perbarui
                         Data</a>
                 </td>
             </tr>

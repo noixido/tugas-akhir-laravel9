@@ -24,6 +24,11 @@ class Mahasiswa extends Model
     // ];
     protected $guarded = [];
     public $sortable = [
-        'nim', 'angkatan', 'jurusan_id', 'email', 'telepon'
+        'nama_mahasiswa', 'nim', 'angkatan', 'jurusan_id', 'email', 'telepon'
     ];
+
+    public function program_studi()
+    {
+        return $this->belongsTo(ProgramStudi::class, 'jurusan_id');
+    }
 }

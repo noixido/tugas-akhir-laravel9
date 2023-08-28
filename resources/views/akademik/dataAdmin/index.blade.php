@@ -23,8 +23,8 @@
             <thead>
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Username</th>
+                    <th scope="col">@sortablelink('user.username', 'Username')</th>
+                    <th scope="col">@sortablelink('nama_admin', 'Nama')</th>
                     <th scope="col">aksi</th>
                 </tr>
             </thead>
@@ -32,13 +32,13 @@
                 @foreach($data as $index => $row)
                 <tr>
                     <td>{{ $data->firstItem() + $index }}</td>
-                    <td>{{ $row->nama_admin}}</td>
-                    <td>{{ $row->username}}</td>
+                    <td>{{ $row->user->username }}</td>
+                    <td>{{ $row->nama_admin }}</td>
                     <td style="text-align: center;">
                         <div style="display: inline-flex; gap:5px">
-                            <a href="/akademik/edit-admin/{{ $row->id }}/edit" class="btn btn-warning"><i
+                            <a href="/akademik/edit-admin/{{ $row->user_id }}/edit" class="btn btn-warning"><i
                                     class="fa-solid fa-pencil icon"></i></a>
-                            <form action="/akademik/hapus-admin/{{ $row->id }}" method="POST">
+                            <form action="/akademik/hapus-admin/{{ $row->user_id }}" method="POST">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger"
@@ -51,7 +51,8 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $data->links() }}
+        {{-- {{ $data->links() }} --}}
+        {!! $data->appends(\Request::except('page'))->render() !!}
     </div>
 </div>
 @endsection

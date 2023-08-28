@@ -24,23 +24,29 @@ class DataMahasiswaController extends Controller
         if ($request->has('search')) {
             $data = Mahasiswa::query()
                 ->join('users', 'users.id', '=', 'mahasiswas.user_id')
-                ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
-                // ->sortable()
+                // ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
+                ->sortable()
                 ->orderBy('mahasiswas.created_at', 'desc')
                 ->orWhere('nama_mahasiswa', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('username', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nim', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('angkatan', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('jenjang', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
+                // ->orWhere('program_studis.jenjang', 'LIKE', '%' . $request->search . '%')
+                // ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
+                ->orWhereHas('program_studi', function ($q) use ($request) {
+                    $q->where('jenjang', 'LIKE', '%' . $request->search . '%');
+                })
+                ->orWhereHas('program_studi', function ($q) use ($request) {
+                    $q->where('nama_prodi', 'LIKE', '%' . $request->search . '%');
+                })
                 ->paginate(10)
                 ->onEachSide(2);
             Session::put('halaman_url', request()->fullUrl());
         } else {
             $data = Mahasiswa::query()
                 ->join('users', 'users.id', '=', 'mahasiswas.user_id')
-                ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
-                // ->sortable()
+                //->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
+                ->sortable()
                 ->orderBy('mahasiswas.created_at', 'desc')
                 ->paginate(10)
                 ->onEachSide(2);

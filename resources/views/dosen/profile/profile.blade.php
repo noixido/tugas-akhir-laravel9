@@ -45,7 +45,7 @@
             </tr>
             <tr>
                 <td colspan="2" style="text-align: center   ">
-                    <a href="/dosen/edit-profile/{{ $data->id }}/edit" class="btn btn-warning">Perbarui
+                    <a href="/dosen/edit-profile/{{ Auth::user()->username }}/edit" class="btn btn-warning">Perbarui
                         Data</a>
                 </td>
             </tr>

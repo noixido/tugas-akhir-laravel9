@@ -52,6 +52,7 @@ class MahasiswaController extends Controller
     {
         //
         $user = Auth::user()->id;
+        // dd($user);
         $data = Mahasiswa::query()
             ->join('users', 'users.id', '=', 'mahasiswas.user_id')
             ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
@@ -71,6 +72,7 @@ class MahasiswaController extends Controller
         //
 
         $user = Auth::user()->id;
+        // dd($user);
         $prodis = ProgramStudi::query()
             ->orderBy('jenjang', 'asc')
             ->orderBy('nama_prodi', 'asc')

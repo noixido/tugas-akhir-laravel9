@@ -21,21 +21,30 @@ class DataStaffProdiController extends Controller
         //
         if ($request->has('search')) {
             $data = StaffProdi::query()
-                ->join('users', 'users.id', '=', 'staff_prodis.user_id')
-                ->join('program_studis', 'program_studis.id', '=', 'staff_prodis.jurusan_id')
-                // ->sortable()
+                // ->join('users', 'users.id', '=', 'staff_prodis.user_id')
+                // ->join('program_studis', 'program_studis.id', '=', 'staff_prodis.jurusan_id')
+                ->sortable()
                 ->orderBy('staff_prodis.created_at', 'desc')
-                ->where('username', 'LIKE', '%' . $request->search . '%')
+                // ->where('username', 'LIKE', '%' . $request->search . '%')
                 ->where('nama_staffprodi', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
+                ->orWhereHas('user', function ($q) use ($request) {
+                    $q->where('username', 'LIKE', '%' . $request->search . '%');
+                })
+                ->orWhereHas('program_studi', function ($q) use ($request) {
+                    $q->where('jenjang', 'LIKE', '%' . $request->search . '%');
+                })
+                // ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
+                ->orWhereHas('program_studi', function ($q) use ($request) {
+                    $q->where('nama_prodi', 'LIKE', '%' . $request->search . '%');
+                })
                 ->paginate(10)
                 ->onEachSide(2);
             Session::put('halaman_url', request()->fullUrl());
         } else {
             $data = StaffProdi::query()
-                ->join('users', 'users.id', '=', 'staff_prodis.user_id')
-                ->join('program_studis', 'program_studis.id', '=', 'staff_prodis.jurusan_id')
-                // ->sortable()
+                // ->join('users', 'users.id', '=', 'staff_prodis.user_id')
+                // ->join('program_studis', 'program_studis.id', '=', 'staff_prodis.jurusan_id')
+                ->sortable()
                 ->orderBy('staff_prodis.created_at', 'desc')
                 ->paginate(10)
                 ->onEachSide(2);

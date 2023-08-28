@@ -25,11 +25,11 @@
             <thead>
                 <tr>
                     <th scope="col" class="col-1">No</th>
-                    <th scope="col">NIM</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col" class="col-1">Angkatan</th>
-                    <th scope="col" class="col-1">Jenjang</th>
-                    <th scope="col" class="col-3">Program Studi</th>
+                    <th scope="col" class="col-1">@sortablelink('nim', 'Nomor Induk Mahasiswa')</th>
+                    <th scope="col" class="col-2">@sortablelink('nama_mahasiswa', 'Nama')</th>
+                    <th scope="col" class="col-1">@sortablelink('angkatan', 'Angkatan')</th>
+                    <th scope="col" class="col-1">@sortablelink('program_studi.jenjang', 'Jenjang')</th>
+                    <th scope="col" class="col-2">@sortablelink('program_studi.nama_prodi', 'Program Studi')</th>
                     <th scope="col" class="col-1">aksi</th>
                 </tr>
             </thead>
@@ -40,8 +40,8 @@
                     <td>{{ $row->nim }}</td>
                     <td>{{ $row->nama_mahasiswa }}</td>
                     <td>{{ $row->angkatan }}</td>
-                    <td>{{ $row->jenjang }}</td>
-                    <td>{{ $row->nama_prodi }}</td>
+                    <td>{{ $row->program_studi->jenjang }}</td>
+                    <td>{{ $row->program_studi->nama_prodi }}</td>
                     <td>
                         <div class="kumpulan-tombol">
                             <a href="/akademik/lihat-mahasiswa/{{ $row->user_id }}" class="btn btn-primary"><i
@@ -61,8 +61,8 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $data->links() }}
-        {{-- {!! $data->appends(\Request::except('page'))->render() !!} --}}
+        {{-- {{ $data->links() }} --}}
+        {!! $data->appends(\Request::except('page'))->render() !!}
     </div>
 </div>
 @endsection

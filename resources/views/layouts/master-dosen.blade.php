@@ -21,7 +21,7 @@
             <div class="header-sidebar">
                 <div class="illustration">
                     <img src="/images/logo-tedc.png" alt="logo tedc">
-                    <span class="desc-header">{{ Auth::user()->nama }}</span>
+                    {{-- <span class="desc-header">{{ Auth::user()->nama }}</span> --}}
                 </div>
             </div>
             <div class="main-sidebar">
@@ -65,7 +65,7 @@
 
                 {{-- buat logout,, ini paling terakhir ya!!! --}}
                 <div class="list-item logout">
-                    <a href="/logout">
+                    <a href="/logout" onclick="return confirm('Apakah anda yakin ingin keluar?')">
                         <i class="fa-solid fa-right-from-bracket icon"></i>
                         <span class="desc-main">Logout</span>
                     </a>

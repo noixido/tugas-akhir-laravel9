@@ -26,7 +26,7 @@ class User extends Authenticatable
         'role'
     ];
     public $sortable = [
-        'nama', 'username'
+        'username'
     ];
 
     /**
@@ -48,4 +48,14 @@ class User extends Authenticatable
     //     'email_verified_at' => 'datetime',
     // ];
 
+
+    public function admin()
+    {
+        return $this->hasMany(Admin::class);
+    }
+
+    public function staff_prodi()
+    {
+        return $this->hasMany(StaffProdi::class);
+    }
 }

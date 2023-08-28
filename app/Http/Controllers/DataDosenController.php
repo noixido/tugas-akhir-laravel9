@@ -22,20 +22,26 @@ class DataDosenController extends Controller
         if ($request->has('search')) {
             $data = Dosen::query()
                 ->join('users', 'users.id', '=', 'dosens.user_id')
-                ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
-                // ->sortable()
+                // ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
+                ->sortable()
                 ->orderBy('dosens.created_at', 'desc')
                 ->where('nama_dosen', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nidn', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
+                // ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
+                ->orWhereHas('program_studi', function ($q) use ($request) {
+                    $q->where('jenjang', 'LIKE', '%' . $request->search . '%');
+                })
+                ->orWhereHas('program_studi', function ($q) use ($request) {
+                    $q->where('nama_prodi', 'LIKE', '%' . $request->search . '%');
+                })
                 ->paginate(10)
                 ->onEachSide(2);
             Session::put('halaman_url', request()->fullUrl());
         } else {
             $data = Dosen::query()
                 ->join('users', 'users.id', '=', 'dosens.user_id')
-                ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
-                // ->sortable()
+                // ->join('program_studis', 'program_studis.id', '=', 'dosens.jurusan_id')
+                ->sortable()
                 ->orderBy('dosens.created_at', 'desc')
                 ->paginate(10)
                 ->onEachSide(2);

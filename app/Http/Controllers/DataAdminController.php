@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 
+
 class DataAdminController extends Controller
 {
     /**
@@ -20,11 +21,14 @@ class DataAdminController extends Controller
         //
         if ($request->has('search')) {
             $data = Admin::query()
-                ->join('users', 'users.id', '=', 'admins.user_id')
-                // ->sortable()
+                // ->join('users', 'users.id', '=', 'admins.user_id')
+                ->sortable()
                 ->orderBy('admins.created_at', 'desc')
                 ->where('nama_admin', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('username', 'LIKE', '%' . $request->search . '%')
+                // ->orWhere('username', 'LIKE', '%' . $request->search . '%')
+                ->orWhereHas('user', function ($q) use ($request) {
+                    $q->where('username', 'LIKE', '%' . $request->search . '%');
+                })
                 ->paginate(10)
                 ->onEachSide(2);
 
@@ -34,8 +38,8 @@ class DataAdminController extends Controller
             Session::put('halaman_url', request()->fullUrl());
         } else {
             $data = Admin::query()
-                ->join('users', 'users.id', '=', 'admins.user_id')
-                // sortable()
+                // ->join('users', 'users.id', '=', 'admins.user_id')
+                ->sortable()
                 ->orderBy('admins.created_at', 'desc')
                 ->paginate(10)
                 ->onEachSide(2);

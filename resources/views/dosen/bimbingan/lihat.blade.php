@@ -29,15 +29,15 @@
             </tr>
         </table>
     </div>
-    <div class="row">
+    <div class="row" style="height: 100%">
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th scope="col" class="col-1">No</th>
                     <th scope="col" class="col-1">Tanggal Bimbingan</th>
-                    <th scope="col" class="col-3">Deskripsi Bimbingan</th>
+                    <th scope="col" class="col-4">Deskripsi Bimbingan</th>
                     <th scope="col" class="col-1">Status</th>
-                    <th scope="col" class="col-2">aksi</th>
+                    <th scope="col" class="col-1">aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,7 +47,7 @@
                     <td>{{ $row->tanggal_bimbingan }}</td>
                     <td style="white-space: pre-wrap">{{ $row->isi_bimbingan }}</td>
                     <td>{{ $row->status_bimbingan }}</td>
-                    <td style="text-align: center;">
+                    <td style="text-align: center; ">
                         <div style="display: inline-flex; gap:5px">
                             <form action="/dosen/diterima/{{ $row->bimbingan_id }}" method="POST">
                                 @csrf

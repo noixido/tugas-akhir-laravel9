@@ -19,10 +19,10 @@
             <thead>
                 <tr>
                     <th scope="col" class="col-1">No</th>
-                    <th scope="col" class="col-2">Tanggal</th>
-                    <th scope="col" class="col-2">Deskripsi Bimbingan</th>
-                    <th scope="col" class="col-2">Status</th>
-                    <th scope="col" class="col-2">aksi</th>
+                    <th scope="col" class="col-1">Tanggal</th>
+                    <th scope="col" class="col-4">Deskripsi Bimbingan</th>
+                    <th scope="col" class="col-1">Status</th>
+                    <th scope="col" class="col-1">aksi</th>
                 </tr>
             </thead>
             <tbody>

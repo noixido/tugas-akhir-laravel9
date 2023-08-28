@@ -18,4 +18,20 @@ class ProgramStudi extends Model
     public $sortable = [
         'kode_prodi', 'jenjang', 'nama_prodi', 'konsentrasi'
     ];
+
+
+    public function mahasiswa()
+    {
+        return $this->hasMany(Mahasiswa::class);
+    }
+
+    public function dosen()
+    {
+        return $this->hasMany(Dosen::class);
+    }
+
+    public function staff_prodi()
+    {
+        return $this->hasMany(StaffProdi::class);
+    }
 }

@@ -28,7 +28,7 @@ class BimbinganController extends Controller
             ->where('mahasiswa_id', $mhs->id)
             ->orderBy('tanggal_bimbingan', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(5)
+            ->paginate(8)
             ->onEachSide(2);
         $dataCount = Bimbingan::query()
             ->where('mahasiswa_id', $mhs->id)
