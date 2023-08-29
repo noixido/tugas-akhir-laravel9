@@ -131,6 +131,8 @@ Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(fu
     Route::get('/edit-bimbingan/{id}/edit', [BimbinganController::class, 'edit'])->name('edit-bimbingan');
     Route::put('/edit-bimbingan/{id}', [BimbinganController::class, 'update'])->name('proses-edit-bimbingan');
     Route::delete('/hapus-bimbingan/{id}', [BimbinganController::class, 'destroy'])->name('hapus-bimbingan');
+
+    // ========== Pendaftaran Sidang Mahasiswa ==========
 });
 
 
