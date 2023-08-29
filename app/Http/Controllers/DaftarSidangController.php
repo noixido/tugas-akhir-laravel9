@@ -72,14 +72,6 @@ class DaftarSidangController extends Controller
     {
         //
         // ddd($request);
-        // $code = "1234";
-        // $product = "pas foto";
-        // $pas_fotoName = $code . "_" . $product . ".jpg";
-        // $pas_fotoCustomName = str_replace(" ", "-", $pas_fotoName);
-        // $pas_fotoPath = $request->file('pas_foto')->storeAs('images/pass-photo', $pas_fotoCustomName, 'public');
-        // return $pas_fotoPath;
-
-
         $request->validate(([
             'kelas' => ['required'],
             'tempat_lahir' => ['required'],
