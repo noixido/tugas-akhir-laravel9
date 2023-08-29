@@ -31,11 +31,32 @@
                     <td>{{ $data->firstItem() + $index }}</td>
                     <td>{{ $row->tanggal_bimbingan }}</td>
                     <td style="white-space: pre-wrap">{{ $row->isi_bimbingan }}</td>
-                    <td>{{ $row->status_bimbingan }}</td>
+                    <td>
+                        <div style="display: flex; justify-content:center">
+                            @if ($row->status_bimbingan == 'diterima')
+                            <span class="alert alert-success">{{ $row->status_bimbingan }}</span>
+                            @elseif($row->status_bimbingan == 'ditolak')
+                            <span class="alert alert-danger">{{ $row->status_bimbingan }}</span>
+                            @else
+                            {{ $row->status_bimbingan }}
+                            @endif
+                        </div>
+                    </td>
                     <td style="text-align: center;">
                         <div style="display: inline-flex; gap:5px">
                             {{-- <a href="/mahasiswa/lihat-bimbingan/{{ $row->id}}" class="btn btn-primary"><i
                                     class="fa-solid fa-eye icon"></i></a> --}}
+                            @if ($row->status_bimbingan == 'diterima' || $row->status_bimbingan == 'ditolak')
+                            <a href="/mahasiswa/edit-bimbingan/{{ $row->id }}/edit" class="btn btn-warning" hidden><i
+                                    class="fa-solid fa-pencil icon"></i></a>
+                            <form action="/mahasiswa/hapus-bimbingan/{{ $row->id }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Apakah anda yakin ingin menghapus item ini?')" hidden><i
+                                        class="fa-solid fa-trash icon"></i></button>
+                            </form>
+                            @else
                             <a href="/mahasiswa/edit-bimbingan/{{ $row->id }}/edit" class="btn btn-warning"><i
                                     class="fa-solid fa-pencil icon"></i></a>
                             <form action="/mahasiswa/hapus-bimbingan/{{ $row->id }}" method="POST">
@@ -45,6 +66,7 @@
                                     onclick="return confirm('Apakah anda yakin ingin menghapus item ini?')"><i
                                         class="fa-solid fa-trash icon"></i></button>
                             </form>
+                            @endif
                         </div>
                     </td>
                 </tr>

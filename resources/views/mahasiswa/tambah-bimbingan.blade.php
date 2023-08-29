@@ -30,9 +30,8 @@
                     <td class="col-3">
                         <div class="col-md-12">
                             <textarea name="isi" id="isi" cols="30" rows="10"
-                                class="form-control @error('isi') is-invalid @enderror" id="isi" name="isi">
-                                {{ old('isi') }}
-                            </textarea>
+                                class="form-control @error('isi') is-invalid @enderror" id="isi"
+                                name="isi">{{ old('isi') }}</textarea>
                             @error('isi')
                             <span class="invalid-feedback">{{ $message }}</span>
                             @enderror

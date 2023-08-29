@@ -36,9 +36,7 @@
                 <tr>
                     <th><label for="judul" class="form-label">Judul Tugas Akhir</label></th>
                     <td><textarea name="judul" id="judul" cols="30" rows="10"
-                            class="form-control @error('judul') is-invalid @enderror">
-                                    {{ old('judul', $data->judul_tugas_akhir ?? '') }}
-                                    </textarea>
+                            class="form-control @error('judul') is-invalid @enderror">{{ old('judul', $data->judul_tugas_akhir ?? '') }}</textarea>
                         @error('judul')
                         <span class="invalid-feedback">{{ $message }}</span>
                         @enderror

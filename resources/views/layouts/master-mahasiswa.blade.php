@@ -58,7 +58,7 @@
                     </a>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('daftar-sidang') }}">
                         <i class="fa-solid fa-clipboard icon"></i>
                         <span class="desc-main">Daftar Sidang</span>
                     </a>

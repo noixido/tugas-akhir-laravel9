@@ -17,9 +17,7 @@
                 <tr class="col-6">
                     <th scope="col" class="col-6"><label for="isi" class="form-label">Deskripsi Bimbingan</label></th>
                     <td><textarea name="isi" id="isi" cols="30" rows="10"
-                            class="form-control @error('password') is-invalid @enderror">
-                                    {{ old('isi', $data->isi_bimbingan) }}
-                                    </textarea>
+                            class="form-control @error('password') is-invalid @enderror">{{ old('isi', $data->isi_bimbingan) }}</textarea>
                         @error('isi')
                         <span class=" invalid-feedback">{{ $message }}</span>
                         @enderror

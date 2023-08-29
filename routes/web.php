@@ -5,6 +5,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AkademikController;
 use App\Http\Controllers\BimbinganController;
+use App\Http\Controllers\DaftarSidangController;
 use App\Http\Controllers\DataAdminController;
 use App\Http\Controllers\DataDosenController;
 use App\Http\Controllers\DataJurusan;
@@ -133,6 +134,9 @@ Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(fu
     Route::delete('/hapus-bimbingan/{id}', [BimbinganController::class, 'destroy'])->name('hapus-bimbingan');
 
     // ========== Pendaftaran Sidang Mahasiswa ==========
+    Route::get('/daftar-sidang', [DaftarSidangController::class, 'create'])->name('daftar-sidang');
+    Route::post('/daftar-sidang', [DaftarSidangController::class, 'store'])->name('proses-daftar-sidang');
+    Route::get('/daftar-sidang/{id}', [DaftarSidangController::class, 'show'])->name('lihat-daftar-sidang');
 });
 
 
