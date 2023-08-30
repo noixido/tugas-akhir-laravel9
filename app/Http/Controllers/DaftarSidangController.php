@@ -96,6 +96,10 @@ class DaftarSidangController extends Controller
         $mhs = Mahasiswa::query()
             ->where('user_id', $user)
             ->first();
+        $mahasiswa = Mahasiswa::query()
+            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
+            ->where('user_id', $user)
+            ->first();
         $ta = TugasAkhir::query()
             ->where('mahasiswa_id', $mhs->id)
             ->first();
@@ -134,6 +138,7 @@ class DaftarSidangController extends Controller
 
         DaftarSidang::create([
             'mahasiswa_id' => $mhs->id,
+            'jurusan_id' => $mahasiswa->jurusan_id,
             'kelas' => $request->kelas,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
@@ -168,7 +173,33 @@ class DaftarSidangController extends Controller
     {
         //
 
-        return "dapet id lu.. id pendaftaran sidang lu adalah " . $id;
+        // return "dapet id lu.. id pendaftaran sidang lu adalah " . $id;
+
+        $user = Auth::user()->id;
+        $mhs = Mahasiswa::query()
+            ->where('user_id', $user)
+            ->first();
+
+        $ta = TugasAkhir::query()
+            ->join('mahasiswas', 'mahasiswas.id', '=', 'tugas_akhirs.mahasiswa_id')
+            ->join('dosens', 'dosens.id', '=', 'tugas_akhirs.dosen_id')
+            ->where('tugas_akhirs.mahasiswa_id', $mhs->id)
+            ->first();
+        $bimbinganCount = Bimbingan::query()
+            ->where('mahasiswa_id', $mhs->id)
+            ->where('status_bimbingan', 'diterima')
+            ->count();
+        $data = DaftarSidang::query()
+            ->join('mahasiswas', 'mahasiswas.id', '=', 'daftar_sidangs.mahasiswa_id')
+            ->join('program_studis', 'program_studis.id', '=', 'daftar_sidangs.jurusan_id')
+            ->join('tugas_akhirs', 'tugas_akhirs.id', '=', 'daftar_sidangs.tugas_akhir_id')
+            ->where('daftar_sidangs.mahasiswa_id', $mhs->id)
+            ->first();
+        $create = DaftarSidang::query()
+            ->where('daftar_sidangs.mahasiswa_id', $mhs->id)
+            ->first();
+
+        return view('mahasiswa.daftar.lihat-daftar-sidang', compact('data', 'ta', 'bimbinganCount', 'create'));
     }
 
     /**

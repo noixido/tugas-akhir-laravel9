@@ -11,6 +11,7 @@ use App\Http\Controllers\DataDosenController;
 use App\Http\Controllers\DataJurusan;
 use App\Http\Controllers\DataJurusanController;
 use App\Http\Controllers\DataMahasiswaController;
+use App\Http\Controllers\DataPendaftaranController;
 use App\Http\Controllers\DataRuanganController;
 use App\Http\Controllers\DataStaffProdiController;
 use App\Http\Controllers\DosenBimbinganController;
@@ -102,6 +103,13 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::get('/edit-ruangan/{id}/edit', [DataRuanganController::class, 'edit'])->name('edit-ruangan');
     Route::put('/edit-ruangan/{id}', [DataRuanganController::class, 'update'])->name('proses-edit-ruangan');
     Route::delete('/hapus-ruangan/{id}', [DataRuanganController::class, 'destroy'])->name('hapus-ruangan');
+
+    // ========== DATA PENDAFTARAN SIDANG TUGAS AKHIR ==========
+    Route::get('/data-pendaftaran-sidang', [DataPendaftaranController::class, 'index'])->name('data-pendaftaran-sidang');
+    Route::get('/lihat-pendaftaran/{id}', [DataPendaftaranController::class, 'show'])->name('lihat-pendaftaran');
+    Route::delete('/hapus-pendaftaran/{id}', [DataPendaftaranController::class, 'destroy'])->name('hapus-pendaftaran');
+    //-------------- LIHAT BIMBINGAN MAHASISWA --------------
+    Route::get('/lihat-bimbingan-mahasiswa/{id}', [DataPendaftaranController::class, 'bimbingan'])->name('lihat-bimbingan-mahasiswa');
 });
 
 

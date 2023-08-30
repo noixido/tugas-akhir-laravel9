@@ -34,4 +34,9 @@ class ProgramStudi extends Model
     {
         return $this->hasMany(StaffProdi::class);
     }
+
+    public function daftar_sidang()
+    {
+        return $this->hasMany(DaftarSidang::class);
+    }
 }

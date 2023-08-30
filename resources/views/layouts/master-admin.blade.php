@@ -45,7 +45,7 @@
                     <span class="desc-spacer">Pendaftaran Sidang</span>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('data-pendaftaran-sidang') }}">
                         <i class="fa-solid fa-pen-nib icon"></i>
                         <span class="desc-main">Data Pendaftaran</span>
                     </a>

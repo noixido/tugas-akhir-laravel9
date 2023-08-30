@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->integer('mahasiswa_id');
+            $table->integer('jurusan_id');
             $table->string('kelas');
             $table->string('tempat_lahir');
             $table->string('tanggal_lahir');

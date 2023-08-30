@@ -2,7 +2,7 @@
 @section('title', 'Pendaftaran Sidang Tugas Akhir')
 @section('content')
 <div class="container">
-    <div class="row" style="height: auto;">
+    <div class="row" style="height: 100%">
         @if (session()->has('message'))
         <div class="alert alert-danger">
             {{ session()->get('message') }}
@@ -73,9 +73,9 @@
                 <label for="kelas" class="form-label">Kelas</label>
                 <select id="kelas" class="form-select form-control @error('kelas') is-invalid @enderror" name="kelas">
                     <option value="" selected disabled>=== Pilih ===</option>
-                    <option value="reguler">Reguler</option>
-                    <option value="karyawan">Karyawan</option>
-                    <option value="beasiswa">Beasiswa</option>
+                    <option value="Reguler">Reguler</option>
+                    <option value="Karyawan">Karyawan</option>
+                    <option value="Beasiswa">Beasiswa</option>
                 </select>
                 @error('kelas')
                 <span class="invalid-feedback">{{ $message }}</span>
@@ -134,7 +134,7 @@
                 <label for="bimbingan" class="form-label">Bimbingan</label><br>
                 <div style="display: flex; gap:30px">
                     <span>Total Bimbingan Diterima : <b>{{ $bimbinganCount }}</b></span>
-                    <a href="{{ route('bimbingan') }}" target="_blank">lihat di sini</a>
+                    <a href="{{ route('bimbingan') }}" target="_blank">lihat di sini ></a>
                 </div>
             </div>
             <div class="col-md-6">

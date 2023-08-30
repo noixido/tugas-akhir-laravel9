@@ -31,4 +31,9 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(ProgramStudi::class, 'jurusan_id');
     }
+
+    public function daftar_sidang()
+    {
+        return $this->hasMany(DaftarSidang::class);
+    }
 }
