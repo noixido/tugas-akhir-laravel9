@@ -56,7 +56,7 @@
                     <span class="desc-spacer">Penjadwalan Sidang</span>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('draft-jadwal') }}">
                         <i class="fa-solid fa-calendar-days icon"></i>
                         <span class="desc-main">Draft Jadwal</span>
                     </a>

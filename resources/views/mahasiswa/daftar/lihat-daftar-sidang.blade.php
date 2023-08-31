@@ -46,7 +46,7 @@
                 <td>{{ $data->tempat_lahir }}, {{ date('j F Y', strtotime($data->tanggal_lahir)) }}</td>
             </tr>
             <tr>
-                <th>alamat Mahasiswa</th>
+                <th>Alamat Mahasiswa</th>
                 <td style="white-space: pre-wrap">{{ $data->alamat }}</td>
             </tr>
             <tr>

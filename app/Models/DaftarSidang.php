@@ -25,4 +25,14 @@ class DaftarSidang extends Model
     {
         return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id');
     }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'dosen_id');
+    }
+
+    public function tugas_akhir()
+    {
+        return $this->belongsTo(TugasAkhir::class, 'tugas_akhir_id');
+    }
 }

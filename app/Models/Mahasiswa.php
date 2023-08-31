@@ -36,4 +36,9 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(DaftarSidang::class);
     }
+
+    public function tugas_akhir()
+    {
+        return $this->hasMany(TugasAkhir::class);
+    }
 }

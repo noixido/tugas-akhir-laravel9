@@ -9,4 +9,19 @@ class TugasAkhir extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'dosen_id');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id');
+    }
+
+    public function daftar_sidang()
+    {
+        return $this->hasMany(DaftarSidang::class);
+    }
 }

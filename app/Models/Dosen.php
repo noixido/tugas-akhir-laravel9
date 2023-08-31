@@ -20,4 +20,14 @@ class Dosen extends Model
     {
         return $this->belongsTo(ProgramStudi::class, 'jurusan_id');
     }
+
+    public function daftar_sidang()
+    {
+        return $this->hasMany(DaftarSidang::class);
+    }
+
+    public function tugas_akhir()
+    {
+        return $this->hasMany(TugasAkhir::class);
+    }
 }

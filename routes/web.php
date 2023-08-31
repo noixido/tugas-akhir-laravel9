@@ -15,6 +15,7 @@ use App\Http\Controllers\DataPendaftaranController;
 use App\Http\Controllers\DataRuanganController;
 use App\Http\Controllers\DataStaffProdiController;
 use App\Http\Controllers\DosenBimbinganController;
+use App\Http\Controllers\DraftJadwalController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffProdiController;
 use App\Http\Controllers\TugasAkhirController;
@@ -110,6 +111,16 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::delete('/hapus-pendaftaran/{id}', [DataPendaftaranController::class, 'destroy'])->name('hapus-pendaftaran');
     //-------------- LIHAT BIMBINGAN MAHASISWA --------------
     Route::get('/lihat-bimbingan-mahasiswa/{id}', [DataPendaftaranController::class, 'bimbingan'])->name('lihat-bimbingan-mahasiswa');
+
+    // ========== Pendaftaran Sidang Mahasiswa ==========
+    Route::get('/draft-jadwal', [DraftJadwalController::class, 'index'])->name('draft-jadwal');
+    Route::get('/tambah-draft', [DraftJadwalController::class, 'create'])->name('tambah-draft');
+    Route::post('/tambah-draft', [DraftJadwalController::class, 'store'])->name('proses-tambah-draft');
+    Route::get('/draft-jadwal/{id}', [DraftJadwalController::class, 'show'])->name('detail-draft-jadwal');
+    // Route::get('/edit-draft/{id}/edit', [DraftJadwalController::class, 'edit'])->name('edit-draft');
+    // Route::put('/edit-draft/{id}', [DraftJadwalController::class, 'update'])->name('proses-edit-draft');
+    Route::get('/detail-draft/{id}', [DraftJadwalController::class, 'show'])->name('detail-draft');
+    Route::delete('/hapus-draft/{id}', [DraftJadwalController::class, 'destroy'])->name('hapus-draft');
 });
 
 

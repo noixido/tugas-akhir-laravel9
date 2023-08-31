@@ -39,4 +39,9 @@ class ProgramStudi extends Model
     {
         return $this->hasMany(DaftarSidang::class);
     }
+
+    public function grup()
+    {
+        return $this->hasMany(Grup::class);
+    }
 }
