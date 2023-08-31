@@ -39,7 +39,7 @@
                     <td>P{{ $row->periode_ke }}Y{{ $row->yudisium_ke }}</td>
                     <td>{{ $row->program_studi->jenjang }}</td>
                     <td>{{ $row->program_studi->nama_prodi }}</td>
-                    <td>{{ $row->tahun_akademik }}</td>
+                    <td>{{ $row->tahun_akademik - 1 }}/{{ $row->tahun_akademik }}</td>
                     <td>
                         <div class="kumpulan-tombol" style="display: flex; justify-content:center">
                             <a href="{{ route('detail-draft-jadwal', $row->id) }}" class="btn btn-primary"><i

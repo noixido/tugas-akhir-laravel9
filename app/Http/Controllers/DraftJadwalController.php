@@ -37,7 +37,7 @@ class DraftJadwalController extends Controller
             ->orderBy('nama_prodi', 'asc')
             ->get();
         $data = DaftarSidang::query()
-            ->orderBy('daftar_sidangs.created_at', 'desc')
+            ->orderBy('daftar_sidangs.created_at', 'asc')
             ->where('grup_id', null)
             ->get();
         // dd($data);

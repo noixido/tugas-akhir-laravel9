@@ -127,9 +127,9 @@ class MahasiswaController extends Controller
                 'username' => ['required'],
                 'password' => ['min:8'],
                 'nama' => ['required', 'min:3'],
-                'nim' => ['required', 'min:3'],
-                'angkatan' => ['required', 'min:3'],
-                'jurusan' => ['required', 'min:3'],
+                'nim' => ['required'],
+                'angkatan' => ['required', 'integer', 'min:1900', 'max:2222'],
+                'jurusan' => ['required', 'integer'],
                 'email' => ['required', 'min:3'],
                 'telepon' => ['required', 'numeric', 'min:10'],
             ]);
@@ -145,7 +145,7 @@ class MahasiswaController extends Controller
                     'nim' => $request->nim,
                     'nama_mahasiswa' => $request->nama,
                     'angkatan' => $request->angkatan,
-                    'jurusan' => $request->jurusan,
+                    'jurusan_id' => $request->jurusan,
                     'email' => $request->email,
                     'telepon' => $request->telepon
                 ]);

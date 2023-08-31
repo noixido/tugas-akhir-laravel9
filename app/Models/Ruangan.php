@@ -11,7 +11,9 @@ use Kyslik\ColumnSortable\Sortable;
 class Ruangan extends Model
 {
     use HasFactory, Sortable;
+
     protected $guarded = [];
+
     public $sortable = [
         'lantai', 'ruangan'
     ];

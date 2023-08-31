@@ -112,7 +112,7 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     //-------------- LIHAT BIMBINGAN MAHASISWA --------------
     Route::get('/lihat-bimbingan-mahasiswa/{id}', [DataPendaftaranController::class, 'bimbingan'])->name('lihat-bimbingan-mahasiswa');
 
-    // ========== Pendaftaran Sidang Mahasiswa ==========
+    // ========== DRAFT JADWAL UNTUK AKADEMIK ==========
     Route::get('/draft-jadwal', [DraftJadwalController::class, 'index'])->name('draft-jadwal');
     Route::get('/tambah-draft', [DraftJadwalController::class, 'create'])->name('tambah-draft');
     Route::post('/tambah-draft', [DraftJadwalController::class, 'store'])->name('proses-tambah-draft');
@@ -181,6 +181,19 @@ Route::middleware(['auth', 'hakakses:dosen'])->prefix('dosen')->group(function (
 
 
 
-// Route::middleware(['auth', 'hakakses:staffprodi'])->prefix('staffprodi')->group(function () {
-Route::resource('/staffprodi', StaffProdiController::class)->middleware(['auth', 'hakakses:staffprodi']);
-// });
+Route::middleware(['auth', 'hakakses:staffprodi'])->prefix('staffprodi')->group(function () {
+    // Route::resource('/staffprodi', StaffProdiController::class)->middleware(['auth', 'hakakses:staffprodi']);
+
+
+
+    // ========== PROFILE STAFF PRODI ==========
+    Route::get('/profile/{user}', [StaffProdiController::class, 'show'])->name('staffprodi_profile');
+    Route::get('/edit-profile/{user}/edit', [StaffProdiController::class, 'edit'])->name('edit_staffprodi_profil');
+    Route::put('/edit-profile/{user}/', [StaffProdiController::class, 'update'])->name('proses_edit_staffprodi_profil');
+
+    // ========== DASHBOARD STAFF PRODI ==========
+    Route::get('/', [StaffProdiController::class, 'index'])->name('dashboard');
+
+    // ========== DRAFT JADWAL SIDANG UNTUK PRODI ==========
+
+});

@@ -53,7 +53,7 @@
             <div class="col-md-6">
                 <label for="tahun" class="form-label">Tahun Akademik</label>
                 <input type="text" class="form-control @error('tahun') is-invalid @enderror" id="tahun" name="tahun"
-                    value="{{ old('tahun') }}">
+                    value="{{ old('tahun', date('Y')) }}" readonly>
                 @error('tahun')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror

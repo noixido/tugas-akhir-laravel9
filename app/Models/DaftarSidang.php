@@ -16,23 +16,28 @@ class DaftarSidang extends Model
         'created_at'
     ];
 
-    public function program_studi()
-    {
-        return $this->belongsTo(ProgramStudi::class, 'jurusan_id');
-    }
-
     public function mahasiswa()
     {
         return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id');
     }
 
-    public function dosen()
+    public function program_studi()
     {
-        return $this->belongsTo(Dosen::class, 'dosen_id');
+        return $this->belongsTo(ProgramStudi::class, 'jurusan_id');
     }
 
     public function tugas_akhir()
     {
         return $this->belongsTo(TugasAkhir::class, 'tugas_akhir_id');
+    }
+
+    public function bimbingan()
+    {
+        return $this->belongsTo(Bimbingan::class, 'bimbingan_id');
+    }
+
+    public function grup()
+    {
+        return $this->belongsTo(Grup::class, 'grup_id');
     }
 }

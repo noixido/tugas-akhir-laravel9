@@ -16,14 +16,14 @@ class Dosen extends Model
         'nidn', 'nama_dosen'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function program_studi()
     {
         return $this->belongsTo(ProgramStudi::class, 'jurusan_id');
-    }
-
-    public function daftar_sidang()
-    {
-        return $this->hasMany(DaftarSidang::class);
     }
 
     public function tugas_akhir()
