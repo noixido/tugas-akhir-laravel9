@@ -23,6 +23,7 @@
             <thead>
                 <tr>
                     <th scope="col" class="col-1">No</th>
+                    <th scope="col" class="col-1">@sortablelink('nama_ruangan','Nama Ruangan')</th>
                     <th scope="col" class="col-1">@sortablelink('lantai','Lantai')</th>
                     <th scope="col" class="col-1">@sortablelink('ruangan','Ruangan')</th>
                     <th scope="col" class="col-1">aksi</th>
@@ -32,6 +33,7 @@
                 @foreach($data as $index => $row)
                 <tr>
                     <td>{{ $data->firstItem() + $index }}</td>
+                    <td>{{ $row->nama_ruangan}}</td>
                     <td>{{ $row->lantai}}</td>
                     <td>{{ $row->ruangan}}</td>
                     <td style="text-align: center;">

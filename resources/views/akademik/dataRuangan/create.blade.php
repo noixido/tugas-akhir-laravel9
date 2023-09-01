@@ -14,7 +14,7 @@
             @csrf
             <div class="col-md-6">
                 <label for="lantai" class="form-label">Lantai</label>
-                <input type="number" class="form-control @error('latnai') is-invalid @enderror" id="lantai"
+                <input type="number" class="form-control @error('lantai') is-invalid @enderror" id="lantai"
                     name="lantai" value="{{ old('lantai') }}">
                 @error('lantai')
                 <span class="invalid-feedback">{{ $message }}</span>
@@ -25,6 +25,14 @@
                 <input type="number" class="form-control @error('ruangan') is-invalid @enderror" id="ruangan"
                     name="ruangan" value="{{ old('ruangan') }}">
                 @error('ruangan')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-6">
+                <label for="nama_ruangan" class="form-label">Nama Ruangan</label>
+                <input type="text" class="form-control @error('nama_ruangan') is-invalid @enderror" id="nama_ruangan"
+                    name="nama_ruangan" value="{{ old('nama_ruangan') }}">
+                @error('nama_ruangan')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>

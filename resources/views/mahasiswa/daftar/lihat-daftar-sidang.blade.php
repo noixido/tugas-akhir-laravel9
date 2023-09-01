@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <th>Tanggal Daftar</th>
-                <td>{{ date('j F Y, g:i A', strtotime($create->created_at)) }}</td>
+                <td>{{ date('j F Y, H:i', strtotime($create->created_at)) }}</td>
             </tr>
             <tr>
                 <th>Nama Lengkap</th>

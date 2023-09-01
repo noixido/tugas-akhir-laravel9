@@ -20,6 +20,10 @@ return new class extends Migration
             $table->integer('yudisium_ke');
             $table->integer('jurusan_id');
             $table->string('tahun_akademik');
+            $table->string('status_jadwal');
+            $table->integer('ruangan_id')->nullable();
+            $table->date('tanggal_sidang')->nullable();
+            $table->date('batas_revisi')->nullable();
 
             $table->timestamps();
         });

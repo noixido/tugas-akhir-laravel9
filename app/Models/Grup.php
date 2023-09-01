@@ -19,4 +19,9 @@ class Grup extends Model
     {
         return $this->hasMany(DaftarSidang::class);
     }
+
+    public function ruangan()
+    {
+        return $this->belongsTo(Ruangan::class, 'ruangan_id');
+    }
 }

@@ -40,4 +40,22 @@ class DaftarSidang extends Model
     {
         return $this->belongsTo(Grup::class, 'grup_id');
     }
+
+
+
+
+
+
+
+
+
+
+    public function penguji1()
+    {
+        return $this->belongsTo(Dosen::class, 'penguji_1');
+    }
+    public function penguji2()
+    {
+        return $this->belongsTo(Dosen::class, 'penguji_2');
+    }
 }

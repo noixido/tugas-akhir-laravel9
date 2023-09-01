@@ -26,7 +26,7 @@
                 </td>
                 <td class="col-3">
                     <label for="tahun_akademik">Tahun Akademik</label>
-                    <h5><b>{{ $data->tahun_akademik }}</b></h5>
+                    <h5><b>{{ $data->tahun_akademik - 1 }}/{{ $data->tahun_akademik }}</b></h5>
                 </td>
             </tr>
         </table>

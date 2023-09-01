@@ -20,7 +20,8 @@ class DataRuanganController extends Controller
             $data = Ruangan::query()
                 ->sortable()
                 ->orderBy('created_at', 'desc')
-                ->where('lantai', 'LIKE', '%' . $request->search . '%')
+                ->where('nama_ruangan', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('lantai', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('ruangan', 'LIKE', '%' . $request->search . '%')
                 ->paginate(10)
                 ->onEachSide(2);
@@ -66,11 +67,13 @@ class DataRuanganController extends Controller
         //
         // dd($request->all());
         $request->validate([
+            'nama_ruangan' => ['required'],
             'lantai' => ['required', 'numeric'],
             'ruangan' => ['required', 'numeric'],
         ]);
         // dd($request->all());
         $data = Ruangan::create([
+            'nama_ruangan' => $request->nama_ruangan,
             'lantai' => $request->lantai,
             'ruangan' => $request->ruangan,
         ]);
@@ -113,12 +116,14 @@ class DataRuanganController extends Controller
     {
         //
         $request->validate([
+            'nama_ruangan' => ['required'],
             'lantai' => ['required', 'numeric'],
             'ruangan' => ['required', 'numeric'],
         ]);
         Ruangan::query()
             ->find($id)
             ->update([
+                'nama_ruangan' => $request->nama_ruangan,
                 'lantai' => $request->lantai,
                 'ruangan' => $request->ruangan,
             ]);

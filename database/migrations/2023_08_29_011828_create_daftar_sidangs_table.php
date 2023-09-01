@@ -38,6 +38,12 @@ return new class extends Migration
             $table->string('scan_sertifikat_toefl');
             $table->string('status_pendaftaran');
 
+            $table->integer('grup_id')->nullable();
+            $table->time('jam_mulai_sidang')->nullable();
+            $table->time('jam_selesai_sidang')->nullable();
+            $table->integer('penguji_1')->nullable();
+            $table->integer('penguji_2')->nullable();
+
             $table->timestamps();
         });
     }

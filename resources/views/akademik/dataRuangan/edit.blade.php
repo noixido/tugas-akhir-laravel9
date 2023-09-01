@@ -29,6 +29,14 @@
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
+            <div class="col-md-6">
+                <label for="nama_ruangan" class="form-label">Nama Ruangan</label>
+                <input type="text" class="form-control @error('nama_ruangan') is-invalid @enderror" id="nama_ruangan"
+                    name="nama_ruangan" value="{{ old('nama_ruangan', $data->nama_ruangan) }}">
+                @error('nama_ruangan')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
             <div class="col-12" style="margin-top: 50px">
                 <button type="submit" class="btn btn-warning">Perbarui</button>
             </div>

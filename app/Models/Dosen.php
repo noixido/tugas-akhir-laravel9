@@ -30,4 +30,15 @@ class Dosen extends Model
     {
         return $this->hasMany(TugasAkhir::class);
     }
+
+
+
+
+
+
+
+    public function daftar_sidang()
+    {
+        return $this->hasMany(DaftarSidang::class);
+    }
 }

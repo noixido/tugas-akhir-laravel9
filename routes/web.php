@@ -16,6 +16,7 @@ use App\Http\Controllers\DataRuanganController;
 use App\Http\Controllers\DataStaffProdiController;
 use App\Http\Controllers\DosenBimbinganController;
 use App\Http\Controllers\DraftJadwalController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffProdiController;
 use App\Http\Controllers\TugasAkhirController;
@@ -121,6 +122,7 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     // Route::put('/edit-draft/{id}', [DraftJadwalController::class, 'update'])->name('proses-edit-draft');
     Route::get('/detail-draft/{id}', [DraftJadwalController::class, 'show'])->name('detail-draft');
     Route::delete('/hapus-draft/{id}', [DraftJadwalController::class, 'destroy'])->name('hapus-draft');
+    Route::put('/kirim-ke-prodi/{id}', [DraftJadwalController::class, 'kirimKeProdi'])->name('kirim-ke-prodi');
 });
 
 
@@ -195,5 +197,9 @@ Route::middleware(['auth', 'hakakses:staffprodi'])->prefix('staffprodi')->group(
     Route::get('/', [StaffProdiController::class, 'index'])->name('dashboard');
 
     // ========== DRAFT JADWAL SIDANG UNTUK PRODI ==========
-
+    Route::get('/draft-jadwal', [JadwalController::class, 'index'])->name('staff-draft-jadwal');
+    Route::get('/detail-jadwal/{id}', [JadwalController::class, 'show'])->name('detail-jadwal');
+    Route::get('/lengkapi-jadwal-a/{id}', [JadwalController::class, 'lengkapiJadwalA'])->name('lengkapi-jadwal-a');
+    Route::put('/lengkapi-jadwal-a/{id}', [JadwalController::class, 'prosesLengkapiJadwalA'])->name('proses-lengkapi-a');
+    Route::get('/lengkapi-jadwal-b/{id}', [JadwalController::class, 'lengkapiJadwalB'])->name('lengkapi-jadwal-b');
 });

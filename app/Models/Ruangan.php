@@ -15,6 +15,11 @@ class Ruangan extends Model
     protected $guarded = [];
 
     public $sortable = [
-        'lantai', 'ruangan'
+        'nama_ruangan', 'lantai', 'ruangan'
     ];
+
+    public function grup()
+    {
+        return $this->hasMany(Grup::class);
+    }
 }

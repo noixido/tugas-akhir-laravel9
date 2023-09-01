@@ -86,9 +86,7 @@
             <div class="col-md-6">
                 <label for="alamat" class="form-label">Alamat</label>
                 <textarea style="height: 40px" name="alamat" id="alamat" cols="30" rows="10"
-                    class="form-control @error('alamat') is-invalid @enderror">
-                {{ old('alamat', $data->alamat) }}
-                </textarea>
+                    class="form-control @error('alamat') is-invalid @enderror">{{ old('alamat', $data->alamat) }}</textarea>
                 @error('alamat')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror

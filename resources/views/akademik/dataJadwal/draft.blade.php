@@ -42,6 +42,11 @@
                     <td>{{ $row->tahun_akademik - 1 }}/{{ $row->tahun_akademik }}</td>
                     <td>
                         <div class="kumpulan-tombol" style="display: flex; justify-content:center">
+                            <form action="{{ route('kirim-ke-prodi', $row->id) }}" method="POST">
+                                @csrf
+                                @method('put')
+                                <button type="submit" class="btn btn-success">Kirim ke prodi</button>
+                            </form>
                             <a href="{{ route('detail-draft-jadwal', $row->id) }}" class="btn btn-primary"><i
                                     class="fa-solid fa-eye icon"></i></a>
                             <form action="{{ route('hapus-draft', $row->id) }}" method="post">
