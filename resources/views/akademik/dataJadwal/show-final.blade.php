@@ -1,15 +1,10 @@
-@extends('layouts.master-staffprodi')
-@section('title', 'Detail Jadwal')
+@extends('layouts.master-admin')
+@section('title', 'Detail Jadwal Final')
 @section('content')
 <div class="container">
-    @if (session()->has('message'))
-    <div class="alert alert-danger" style="display:flex; justify-content: center; margin: 10px auto; width: 1000px">
-        {{ session()->get('message') }}
-    </div>
-    @endif
     <div class="menu-header">
         <div class="input-group col-md-8">
-            <a href="{{ route('staff-draft-jadwal') }}" class="btn btn-light" style="height: 40px;">
+            <a href="{{ route('jadwal-sidang') }}" class="btn btn-light" style="height: 40px;">
                 <i class="fa-solid fa-arrow-left-long icon"></i> Kembali
             </a>
         </div>
@@ -19,26 +14,26 @@
             <tr>
                 <td class="col-3">
                     <label for="periode">Periode</label>
-                    <h5><b>P{{ $data->periode_ke }}Y{{ $data->yudisium_ke }}</b></h4>
+                    <h5><b>P{{ $grup->periode_ke }}Y{{ $grup->yudisium_ke }}</b></h4>
                 </td>
                 <td class="col-3">
                     <label for="jenjang">Jenjang</label>
-                    <h5><b>{{ $data->program_studi->jenjang }}</b></h5>
+                    <h5><b>{{ $grup->program_studi->jenjang }}</b></h5>
                 </td>
                 <td class="col-3">
                     <label for="jurusan">Program Studi</label>
-                    <h5><b>{{ $data->program_studi->nama_prodi }}</b></h5>
+                    <h5><b>{{ $grup->program_studi->nama_prodi }}</b></h5>
                 </td>
                 <td class="col-3">
                     <label for="tahun_akademik">Tahun Akademik</label>
-                    <h5><b>{{ $data->tahun_akademik - 1 }}/{{ $data->tahun_akademik }}</b></h5>
+                    <h5><b>{{ $grup->tahun_akademik - 1 }}/{{ $grup->tahun_akademik }}</b></h5>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="ruangan">Ruangan</label>
-                    <h5><b>@if ($data->ruangan_id != null)
-                            {{ $data->ruangan->nama_ruangan}}, L{{ $data->ruangan->lantai }}R{{$data->ruangan->ruangan
+                    <h5><b>@if ($grup->ruangan_id != null)
+                            {{ $grup->ruangan->nama_ruangan}}, L{{ $grup->ruangan->lantai }}R{{$grup->ruangan->ruangan
                             }}
                             @else
                             -
@@ -46,26 +41,19 @@
                 </td>
                 <td>
                     <label for="tanggal_sidang">Tangal Sidang</label>
-                    <h5><b>@if ($data->tanggal_sidang != null)
-                            {{ date('j F Y', strtotime($data->tanggal_sidang))}}
+                    <h5><b>@if ($grup->tanggal_sidang != null)
+                            {{ date('j F Y', strtotime($grup->tanggal_sidang))}}
                             @else
                             -
                             @endif</b></h5>
                 </td>
                 <td>
                     <label for="revisi">Batas Revisi</label>
-                    <h5><b>@if ($data->batas_revisi != null)
-                            {{ date('j F Y', strtotime($data->batas_revisi))}}
+                    <h5><b>@if ($grup->batas_revisi != null)
+                            {{ date('j F Y', strtotime($grup->batas_revisi))}}
                             @else
                             -
                             @endif</b></h5>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <div class="kumpulan-tombol" style="display: flex; justify-content:center">
-                        <a href="{{ route('lengkapi-jadwal-a', $data->id) }}" class="btn btn-primary">Lengkapi</a>
-                    </div>
                 </td>
             </tr>
         </table>
@@ -77,9 +65,8 @@
                 <th scope="col" class="col-1">NIM</th>
                 <th scope="col" class="col-2">Nama Mahasiswa</th>
                 <th scope="col" class="col-2">Dosen Pembimbing</th>
-                <th scope="col" class="col-2">Jam</th>
+                <th scope="col" class="col-1">Jam</th>
                 <th scope="col" class="col-2">Penguji</th>
-                <th scope="col" class="col-1">aksi</th>
             </tr>
             @foreach ($daftar as $index => $row)
             <tr>
@@ -99,14 +86,21 @@
                     1. {{ $row->penguji1->nama_dosen ?? '-' }} <br />
                     2. {{ $row->penguji2->nama_dosen ?? '-' }}
                 </td>
-                <td>
-                    <div class="kumpulan-tombol" style="display: flex; justify-content:center">
-                        <a href="{{ route('lengkapi-jadwal-b', $row->id) }}" class="btn btn-primary">Lengkapi</a>
-                    </div>
-                </td>
             </tr>
             @endforeach
         </table>
+        <div style="text-align:center; margin: 20px auto">
+            @if ($grup->status_jadwal == 'published')
+            <p class="btn btn-success">Sudah di-publish!</p>
+            @else
+            <form action="{{ route('publish-jadwal', $row->grup_id) }}" method="post">
+                @csrf
+                @method('put')
+                <button type="submit" class="btn btn-success">Publish</i>
+                </button>
+            </form>
+            @endif
+        </div>
         {{ $daftar->links() }}
     </div>
 </div>

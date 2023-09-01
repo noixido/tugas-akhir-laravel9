@@ -62,7 +62,7 @@
                     </a>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('jadwal-sidang') }}">
                         <i class="fa-solid fa-calendar-days icon"></i>
                         <span class="desc-main">Jadwal</span>
                     </a>

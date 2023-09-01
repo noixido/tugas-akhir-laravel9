@@ -16,6 +16,7 @@ use App\Http\Controllers\DataRuanganController;
 use App\Http\Controllers\DataStaffProdiController;
 use App\Http\Controllers\DosenBimbinganController;
 use App\Http\Controllers\DraftJadwalController;
+use App\Http\Controllers\FinalJadwalController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffProdiController;
@@ -123,6 +124,11 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::get('/detail-draft/{id}', [DraftJadwalController::class, 'show'])->name('detail-draft');
     Route::delete('/hapus-draft/{id}', [DraftJadwalController::class, 'destroy'])->name('hapus-draft');
     Route::put('/kirim-ke-prodi/{id}', [DraftJadwalController::class, 'kirimKeProdi'])->name('kirim-ke-prodi');
+
+    // ==========  JADWAL DARI PRODI UNTUK AKADEMIK (finalisasi)==========
+    Route::get('/jadwal-sidang', [FinalJadwalController::class, 'index'])->name('jadwal-sidang');
+    Route::get('/jadwal-sidang/{id}', [FinalJadwalController::class, 'show'])->name('detail-jadwal-sidang');
+    Route::put('/publish/{id}', [FinalJadwalController::class, 'publish'])->name('publish-jadwal');
 });
 
 
@@ -202,4 +208,6 @@ Route::middleware(['auth', 'hakakses:staffprodi'])->prefix('staffprodi')->group(
     Route::get('/lengkapi-jadwal-a/{id}', [JadwalController::class, 'lengkapiJadwalA'])->name('lengkapi-jadwal-a');
     Route::put('/lengkapi-jadwal-a/{id}', [JadwalController::class, 'prosesLengkapiJadwalA'])->name('proses-lengkapi-a');
     Route::get('/lengkapi-jadwal-b/{id}', [JadwalController::class, 'lengkapiJadwalB'])->name('lengkapi-jadwal-b');
+    Route::put('/lengkapi-jadwal-b/{id}', [JadwalController::class, 'prosesLengkapiJadwalB'])->name('proses-lengkapi-jadwal-b');
+    Route::put('/kirim-ke-akademik/{id}', [JadwalController::class, 'kirimKeAkademik'])->name('kirim-ke-akademik');
 });

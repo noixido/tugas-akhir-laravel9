@@ -2,7 +2,7 @@
 @section('title', 'Halaman Draft Jadwal')
 @section('content')
 <div class="container">
-    <div class="row" style="height: auto">
+    <div class="row" style="height: 100%">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -28,6 +28,11 @@
                         <div class="kumpulan-tombol" style="display: flex; justify-content:center">
                             <a href="{{ route('detail-jadwal', $row->id) }}" class="btn btn-primary"><i
                                     class="fa-solid fa-eye icon"></i></a>
+                            <form action="{{ route('kirim-ke-akademik', $row->id) }}" method="POST">
+                                @csrf
+                                @method('put')
+                                <button type="submit" class="btn btn-success">Kirim ke akademik</button>
+                            </form>
                         </div>
                     </td>
                 </tr>

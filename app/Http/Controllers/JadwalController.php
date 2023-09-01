@@ -8,6 +8,7 @@ use App\Models\Grup;
 use App\Models\Mahasiswa;
 use App\Models\Ruangan;
 use App\Models\StaffProdi;
+use App\Models\TugasAkhir;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -140,12 +141,68 @@ class JadwalController extends Controller
 
     public function lengkapiJadwalB(Request $request, $id)
     {
-        // $grup = Grup::find($id)->first();
         $daftar = DaftarSidang::query()
             ->where('id', $id)
             ->first();
+        $ta = TugasAkhir::query()
+            ->where('id', $daftar->tugas_akhir_id)
+            ->first();
+        $dosen = Dosen::query()
+            ->where('jurusan_id', $daftar->jurusan_id)
+            ->where('dosens.id', '!=', $ta->dosen_id)
+            ->orderBy('nama_dosen', 'asc')
+            ->get();
+        // dd($dosen);
 
-        // dd($data);
-        return view('staffprodi.jadwal.lengkapi-b', compact('daftar'));
+        return view('staffprodi.jadwal.lengkapi-b', compact('daftar', 'dosen'));
+    }
+
+    public function prosesLengkapiJadwalB(Request $request, $id)
+    {
+        // dd($request->all());
+        $daftar = DaftarSidang::query()
+            ->where('id', $id)
+            ->first();
+        $request->validate([
+            'mulai' => ['required'],
+            'selesai' => ['required'],
+            'dosen1' => ['required'],
+            'dosen2' => ['required'],
+        ]);
+        $daftar->update([
+            'jam_mulai_sidang' => $request->mulai,
+            'jam_selesai_sidang' => $request->selesai,
+            'penguji_1' => $request->dosen1,
+            'penguji_2' => $request->dosen2,
+        ]);
+        return redirect()->route('detail-jadwal', $daftar->grup_id);
+    }
+
+    public function kirimKeAkademik($id)
+    {
+
+        $grup = Grup::query()
+            ->where('id', $id)
+            ->first();
+        $daftar = DaftarSidang::query()
+            ->where('grup_id', $grup->id)
+            ->first();
+
+        if (
+            $grup->ruangan_id != null
+            && $grup->tanggal_sidang != null
+            && $grup->batas_revisi != null
+            && $daftar->jam_mulai_sidang != null
+            && $daftar->jam_selesai_sidang != null
+            && $daftar->penguji_1 != null
+            && $daftar->penguji_2 != null
+        ) {
+            $grup->update([
+                'status_jadwal' => 'sudah dilengkapi'
+            ]);
+        } else {
+            return redirect()->route('detail-jadwal', $grup->id)->with('message', 'Silahkan lengkapi draft jadwal terlebih dahulu sebelum mengirimkan kembali data draft ke Akademik.');
+        }
+        return back();
     }
 }

@@ -8,15 +8,6 @@
                 Tambah
                 Data</a>
         </div>
-        <div class="input-group col-md-4 goes-right">
-            <form action="{{ route('draft-jadwal') }}" method="GET" style="display: flex;">
-                @csrf
-                <input type="text" name="search" value="{{ old('search') }}" class="form-control"
-                    placeholder="cari draft jadwal..." aria-label="Search" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i
-                        class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
-        </div>
     </div>
     <div class="row" style="height: auto">
         <table class="table table-bordered">

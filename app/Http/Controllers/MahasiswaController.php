@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DaftarSidang;
+use App\Models\Grup;
 use App\Models\Mahasiswa;
 use App\Models\ProgramStudi;
 use App\Models\User;
@@ -18,7 +20,14 @@ class MahasiswaController extends Controller
     public function index()
     {
         //
-        return view('mahasiswa.dashboard');
+
+        $grup = Grup::query()
+            ->orderBy('tanggal_sidang', 'desc')
+            ->get();
+        $daftar = DaftarSidang::query()
+            ->whereIn('grup_id', $grup->pluck('id'))
+            ->get();
+        return view('mahasiswa.dashboard', compact('grup', 'daftar'));
     }
 
     /**
