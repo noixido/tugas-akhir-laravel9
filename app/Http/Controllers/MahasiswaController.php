@@ -23,9 +23,11 @@ class MahasiswaController extends Controller
 
         $grup = Grup::query()
             ->orderBy('tanggal_sidang', 'desc')
-            ->get();
+            ->paginate(5)
+            ->onEachSide(2);
         $daftar = DaftarSidang::query()
             ->whereIn('grup_id', $grup->pluck('id'))
+            ->orderBy('jam_mulai_sidang', 'asc')
             ->get();
         return view('mahasiswa.dashboard', compact('grup', 'daftar'));
     }

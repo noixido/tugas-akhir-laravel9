@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DaftarSidang;
+use App\Models\Grup;
 use App\Models\ProgramStudi;
 use App\Models\StaffProdi;
 use App\Models\User;
@@ -18,7 +20,14 @@ class StaffProdiController extends Controller
     public function index()
     {
         //
-        return view('staffprodi.dashboard');
+        $grup = Grup::query()
+            ->orderBy('tanggal_sidang', 'desc')
+            ->get();
+        $daftar = DaftarSidang::query()
+            ->whereIn('grup_id', $grup->pluck('id'))
+            ->orderBy('jam_mulai_sidang', 'asc')
+            ->get();
+        return view('staffprodi.dashboard', compact('grup', 'daftar'));
     }
 
     /**

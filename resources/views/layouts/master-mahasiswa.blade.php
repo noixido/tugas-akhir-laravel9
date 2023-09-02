@@ -63,6 +63,16 @@
                         <span class="desc-main">Daftar Sidang</span>
                     </a>
                 </div>
+                {{-- ini nilai mahasiswa --}}
+                <div class="spacer">
+                    <span class="desc-spacer">Nilai Sidang</span>
+                </div>
+                <div class="list-item">
+                    <a href="#">
+                        <i class="fa-solid fa-square-check icon"></i>
+                        <span class="desc-main">Nilai Sidang</span>
+                    </a>
+                </div>
 
                 {{-- buat logout,, ini paling terakhir ya!!! --}}
                 <div class="list-item logout">

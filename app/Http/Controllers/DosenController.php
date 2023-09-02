@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DaftarSidang;
 use App\Models\Dosen;
+use App\Models\Grup;
 use App\Models\ProgramStudi;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,7 +20,14 @@ class DosenController extends Controller
     public function index()
     {
         //
-        return view('dosen.dashboard');
+        $grup = Grup::query()
+            ->orderBy('tanggal_sidang', 'desc')
+            ->get();
+        $daftar = DaftarSidang::query()
+            ->whereIn('grup_id', $grup->pluck('id'))
+            ->orderBy('jam_mulai_sidang', 'asc')
+            ->get();
+        return view('dosen.dashboard', compact('grup', 'daftar'));
     }
 
     /**
