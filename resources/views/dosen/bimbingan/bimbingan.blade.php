@@ -2,7 +2,7 @@
 @section('title', 'Halaman Data Bimbingan Mahasiswa')
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row" style="height: 100%">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -26,6 +26,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $bimbingan->links() }}
     </div>
 </div>
 @endsection

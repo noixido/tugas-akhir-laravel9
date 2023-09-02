@@ -21,7 +21,7 @@
             </form>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="height: 100%">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -31,7 +31,6 @@
                     <th scope="col">@sortablelink('mahasiswa.nama_mahasiswa', 'Nama Mahasiswa')</th>
                     <th scope="col">@sortablelink('program_studi.jenjang', 'Jenjang')</th>
                     <th scope="col">@sortablelink('program_studi.nama_prodi', 'Program Studi')</th>
-                    <th scope="col">@sortablelink('status_pendaftaran', 'Status')</th>
                     <th scope="col" class="col-1">aksi</th>
                 </tr>
             </thead>
@@ -44,7 +43,6 @@
                     <td>{{ $row->mahasiswa->nama_mahasiswa }}</td>
                     <td>{{ $row->program_studi->jenjang }}</td>
                     <td>{{ $row->program_studi->nama_prodi }}</td>
-                    <td>{{ $row->status_pendaftaran }}</td>
                     <td>
                         <div class="kumpulan-tombol">
                             <a href="/akademik/lihat-pendaftaran/{{ $row->mahasiswa_id }}" class="btn btn-primary"><i

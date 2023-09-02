@@ -20,8 +20,8 @@ class MahasiswaController extends Controller
     public function index()
     {
         //
-
         $grup = Grup::query()
+            ->where('status_jadwal', 'published')
             ->orderBy('tanggal_sidang', 'desc')
             ->paginate(5)
             ->onEachSide(2);

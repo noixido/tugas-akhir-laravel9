@@ -15,6 +15,7 @@ use App\Http\Controllers\DataPendaftaranController;
 use App\Http\Controllers\DataRuanganController;
 use App\Http\Controllers\DataStaffProdiController;
 use App\Http\Controllers\DosenBimbinganController;
+use App\Http\Controllers\DosenNilaiController;
 use App\Http\Controllers\DraftJadwalController;
 use App\Http\Controllers\FinalJadwalController;
 use App\Http\Controllers\JadwalController;
@@ -185,6 +186,12 @@ Route::middleware(['auth', 'hakakses:dosen'])->prefix('dosen')->group(function (
     //--- ubah status bimbingan mahasiswa ---
     Route::put('/diterima/{id}', [DosenBimbinganController::class, 'diterima'])->name('diterima');
     Route::put('/ditolak/{id}', [DosenBimbinganController::class, 'ditolak'])->name('ditolak');
+
+    // ========== MASUKIN NILAI UNTUK PENGUJI DAN PEMBIMBING ==========
+    Route::get('/nilai-sidang', [DosenNilaiController::class, 'index'])->name('nilai-sidang');
+    Route::get('/nilai-sidang/{id}', [DosenNilaiController::class, 'show'])->name('detail-nilai-sidang');
+    Route::get('/input-nilai/{id}', [DosenNilaiController::class, 'showNilai'])->name('input-nilai');
+    Route::put('/input-nilai/{id}', [DosenNilaiController::class, 'update'])->name('proses-input-nilai');
 });
 
 

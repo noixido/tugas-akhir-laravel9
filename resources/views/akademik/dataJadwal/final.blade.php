@@ -7,7 +7,7 @@
 
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="height: 100% ">
         <table class="table table-bordered">
             <thead>
                 <tr>

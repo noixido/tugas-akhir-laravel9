@@ -77,7 +77,7 @@
                 <th scope="col" class="col-1">NIM</th>
                 <th scope="col" class="col-2">Nama Mahasiswa</th>
                 <th scope="col" class="col-2">Dosen Pembimbing</th>
-                <th scope="col" class="col-2">Jam</th>
+                <th scope="col" class="col-1">Jam</th>
                 <th scope="col" class="col-2">Penguji</th>
                 <th scope="col" class="col-1">aksi</th>
             </tr>

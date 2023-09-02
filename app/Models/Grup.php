@@ -24,4 +24,9 @@ class Grup extends Model
     {
         return $this->belongsTo(Ruangan::class, 'ruangan_id');
     }
+
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class);
+    }
 }

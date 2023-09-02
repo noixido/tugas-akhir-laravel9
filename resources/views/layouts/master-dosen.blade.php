@@ -57,7 +57,7 @@
                     <span class="desc-spacer">Penguji</span>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('nilai-sidang') }}">
                         <i class="fa-solid fa-square-check icon"></i>
                         <span class="desc-main">Nilai</span>
                     </a>

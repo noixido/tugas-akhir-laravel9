@@ -69,7 +69,7 @@ class JadwalController extends Controller
             ->where('id', $id)
             ->first();
         $daftar = DaftarSidang::query()
-            ->orderBy('daftar_sidangs.created_at', 'desc')
+            ->orderBy('daftar_sidangs.created_at', 'asc')
             ->where('grup_id', $data->id)
             ->paginate(10);
         return view('staffprodi.jadwal.show', compact('data', 'daftar'));

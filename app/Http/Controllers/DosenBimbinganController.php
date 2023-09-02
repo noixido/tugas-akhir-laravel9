@@ -26,7 +26,8 @@ class DosenBimbinganController extends Controller
             ->join('mahasiswas', 'mahasiswas.id', '=', 'bimbingans.mahasiswa_id')
             ->where('tugas_akhirs.dosen_id', $dosen->id)
             ->groupBy('bimbingans.mahasiswa_id', 'nama_mahasiswa', 'nim', 'judul_tugas_akhir')
-            ->get();
+            ->paginate(10)
+            ->onEachSide(2);
         // dd($bimbingan);
         return view('dosen.bimbingan.bimbingan', compact('bimbingan'));
     }
