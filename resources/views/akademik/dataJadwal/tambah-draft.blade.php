@@ -1,6 +1,7 @@
 @extends('layouts.master-admin')
 @section('title', 'Tambah Data Mahasiswa')
 @section('content')
+<script type="text/javascript" src="/js/jquery-3.7.0.js"></script>
 <div class="container">
     <div class="menu-header">
         <div class="input-group col-md-8">
@@ -61,24 +62,30 @@
             <div class="col-md-12" style="margin-top: 15px">
                 <label for="mahasiswa_daftar" class="form-label">Daftar Mahasiswa Pendaftaran Sidang Tugas Akhir</label>
                 <table class="table table-bordered" id="tabel-pendaftaran">
-                    <tr>
-                        <th scope="col" class="col-1"><input type="checkbox" name="cbParent"></th>
-                        <th scope="col" class="col-2">NIM</th>
-                        <th scope="col" class="col-2">Nama Mahasiswa</th>
-                        <th scope="col" class="col-2">Tanggal Daftar</th>
-                        <th scope="col" class="col-1">Jenjang</th>
-                        <th scope="col" class="col-2">Program Studi</th>
-                    </tr>
-                    @foreach ($data as $row)
-                    <tr data-jurusan="{{ $row->program_studi->id }}">
-                        <td><input type="checkbox" name="daftarSidang[]" value="{{ $row->id }}"></td>
-                        <td>{{ $row->mahasiswa->nim }}</td>
-                        <td>{{ $row->mahasiswa->nama_mahasiswa }}</td>
-                        <td>{{ $row->created_at }}</td>
-                        <td>{{ $row->program_studi->jenjang }}</td>
-                        <td>{{ $row->program_studi->nama_prodi }}</td>
-                    </tr>
-                    @endforeach
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col-1"><input type="checkbox" id="cbParent"></th>
+                            <th scope="col" class="col-2">NIM</th>
+                            <th scope="col" class="col-2">Nama Mahasiswa</th>
+                            <th scope="col" class="col-2">Tanggal Daftar</th>
+                            <th scope="col" class="col-1">Jenjang</th>
+                            <th scope="col" class="col-2">Program Studi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $row)
+                        <tr data-jurusan="{{ $row->program_studi->id }}">
+                            <td><input type="checkbox" name="daftarSidang[]" value="{{ $row->id }}" class="cbChild">
+                            </td>
+                            <td>{{ $row->mahasiswa->nim }}</td>
+                            <td>{{ $row->mahasiswa->nama_mahasiswa }}</td>
+                            <td>{{ $row->created_at }}</td>
+                            <td>{{ $row->program_studi->jenjang }}</td>
+                            <td>{{ $row->program_studi->nama_prodi }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+
                 </table>
             </div>
             <div class="col-12" style="margin-bottom: 20px">
@@ -87,8 +94,16 @@
         </form>
     </div>
 </div>
-
 <script>
+    $("#cbParent").on('click', function(){
+        $(".cbChild").prop('checked', $("#cbParent").prop('checked'));
+    });
+    $("#tabel-pendaftaran tbody").on('click', '.cbChild', function(){
+        if($(this).prop('checked') != true){
+            $('#cbParent').prop('checked', false)
+        }
+    });
+
     function jurusanKeubah(event) {
     const jurusanId = event.value;
     const tabel = document.getElementById('tabel-pendaftaran');

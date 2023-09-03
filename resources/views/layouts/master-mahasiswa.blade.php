@@ -68,7 +68,7 @@
                     <span class="desc-spacer">Nilai Sidang</span>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('mahasiswa-nilai-sidang', ) }}">
                         <i class="fa-solid fa-square-check icon"></i>
                         <span class="desc-main">Nilai Sidang</span>
                     </a>

@@ -73,7 +73,7 @@
                     <span class="desc-spacer">Nilai-Nilai</span>
                 </div>
                 <div class="list-item">
-                    <a href="#">
+                    <a href="{{ route('data-nilai') }}">
                         <i class="fa-solid fa-square-check icon"></i>
                         <span class="desc-main">Data Nilai</span>
                     </a>

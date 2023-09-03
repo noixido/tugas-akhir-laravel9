@@ -20,6 +20,7 @@ use App\Http\Controllers\DraftJadwalController;
 use App\Http\Controllers\FinalJadwalController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\StaffProdiController;
 use App\Http\Controllers\TugasAkhirController;
 use App\Models\Bimbingan;
@@ -108,6 +109,10 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::put('/edit-ruangan/{id}', [DataRuanganController::class, 'update'])->name('proses-edit-ruangan');
     Route::delete('/hapus-ruangan/{id}', [DataRuanganController::class, 'destroy'])->name('hapus-ruangan');
 
+    // ==========  DATA NILAI SIDANG TUGAS AKHIR MAHASISWA ==========
+    Route::get('/data-nilai', [NilaiController::class, 'index'])->name('data-nilai');
+    Route::get('/data-nilai/{id}', [NilaiController::class, 'show'])->name('detail-data-nilai');
+
     // ========== DATA PENDAFTARAN SIDANG TUGAS AKHIR ==========
     Route::get('/data-pendaftaran-sidang', [DataPendaftaranController::class, 'index'])->name('data-pendaftaran-sidang');
     Route::get('/lihat-pendaftaran/{id}', [DataPendaftaranController::class, 'show'])->name('lihat-pendaftaran');
@@ -165,6 +170,9 @@ Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(fu
     Route::get('/daftar-sidang', [DaftarSidangController::class, 'create'])->name('daftar-sidang');
     Route::post('/daftar-sidang', [DaftarSidangController::class, 'store'])->name('proses-daftar-sidang');
     Route::get('/daftar-sidang/{id}', [DaftarSidangController::class, 'show'])->name('lihat-daftar-sidang');
+
+    // ========== Pendaftaran Sidang Mahasiswa ==========
+    Route::get('/nilai-sidang', [MahasiswaController::class, 'nilaiSidang'])->name('mahasiswa-nilai-sidang');
 });
 
 

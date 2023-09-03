@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DaftarSidang;
 use App\Models\Grup;
 use App\Models\Mahasiswa;
+use App\Models\Nilai;
 use App\Models\ProgramStudi;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -173,5 +174,40 @@ class MahasiswaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function nilaiSidang()
+    {
+        $user = Auth::user()->id;
+        $mhs = Mahasiswa::query()
+            ->where('user_id', $user)
+            ->first();
+
+        $nilai = Nilai::query()
+            ->join('daftar_sidangs', 'daftar_sidangs.id', '=', 'nilais.daftar_id')
+            ->where('daftar_sidangs.mahasiswa_id', $mhs->id)
+            ->first();
+        $nilai_sidang = number_format((($nilai->nilai_pembimbing * 2) + $nilai->nilai_penguji_1 +
+            $nilai->nilai_penguji_2) / 4, 2);
+        $nilai_huruf = '';
+
+        if ($nilai_sidang >= 85 && $nilai_sidang <= 100) {
+            $nilai_huruf = "A";
+        } elseif ($nilai_sidang >= 80 && $nilai_sidang <= 84.99) {
+            $nilai_huruf = "AB";
+        } elseif ($nilai_sidang >= 75 && $nilai_sidang <= 79.99) {
+            $nilai_huruf = "B";
+        } elseif ($nilai_sidang >= 70 && $nilai_sidang <= 74.99) {
+            $nilai_huruf = "BC";
+        } elseif ($nilai_sidang >= 60 && $nilai_sidang <= 69.99) {
+            $nilai_huruf = "C";
+        } elseif ($nilai_sidang >= 55 && $nilai_sidang <= 59.99) {
+            $nilai_huruf = "CD";
+        } elseif ($nilai_sidang >= 0 && $nilai_sidang <= 54.99) {
+            $nilai_huruf = "D";
+        } else {
+            $nilai_huruf = "Nilai Diluar Jangkauan";
+        }
+        return view('mahasiswa.nilai', compact('nilai', 'nilai_huruf'));
     }
 }
