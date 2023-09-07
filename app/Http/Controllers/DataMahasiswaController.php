@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\MahasiswaImport;
 use App\Models\User;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataMahasiswaController extends Controller
 {
@@ -120,8 +122,8 @@ class DataMahasiswaController extends Controller
         //
         // dd($id);
         $data = Mahasiswa::query()
-            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
-            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
+            // ->join('users', 'users.id', '=', 'mahasiswas.user_id')
+            // ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->orderBy('mahasiswas.created_at', 'desc')
             ->where('user_id', $id)
             ->first();
@@ -237,6 +239,12 @@ class DataMahasiswaController extends Controller
         User::query()
             ->find($id)
             ->delete();
+        return back();
+    }
+
+    public function import()
+    {
+        Excel::import(new MahasiswaImport, request()->file('import'));
         return back();
     }
 }

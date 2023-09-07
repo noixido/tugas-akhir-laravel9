@@ -13,7 +13,7 @@
         <table class="table table-bordered">
             <tr>
                 <th>Username</th>
-                <td>{{ $data->username }}</td>
+                <td>{{ $data->user->username }}</td>
             </tr>
             <tr>
                 <th>Nama Lengkap</th>
@@ -25,23 +25,23 @@
             </tr>
             <tr>
                 <th>Angkatan</th>
-                <td>{{ $data->angkatan }}</td>
+                <td>{{ $data->angkatan ?? '-' }}</td>
             </tr>
             <tr>
                 <th>Program Studi</th>
-                <td>{{ $data->jenjang }} {{ $data->nama_prodi }}</td>
+                <td>{{ $data->program_studi->jenjang ?? '-'}} {{ $data->program_studi->nama_prodi ?? ''}}</td>
             </tr>
             <tr>
                 <th>Konsentrasi Program Studi</th>
-                <td>{{ $data->konsentrasi ?? '-' }}</td>
+                <td>{{ $data->program_studi->konsentrasi ?? '-' }}</td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td>{{ $data->email }}</td>
+                <td>{{ $data->email ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Nomor Telepon</th>
-                <td>{{ $data->telepon }}</td>
+                <td>{{ $data->telepon ?? '-'}}</td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align: center   ">

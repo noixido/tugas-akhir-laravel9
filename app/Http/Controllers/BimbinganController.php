@@ -69,6 +69,10 @@ class BimbinganController extends Controller
             'tanggal' => ['required'],
             'isi' => ['required']
         ]);
+
+        if ($ta === null) {
+            return redirect()->route('tugas-akhir')->with('message', 'Silahkan lengkapi data tugas akhir anda terlebih dahulu sebelum melaksanakan bimbingan!');
+        }
         Bimbingan::create([
             'mahasiswa_id' => $mhs->id,
             'tugas_akhir_id' => $ta->id,

@@ -4,10 +4,8 @@
 <div class="container">
     <div class="menu-header">
         <div class="input-group col-md-8">
-            <a href="{{ route('tambah-mahasiswa') }}" class="btn btn-primary" hidden><i
-                    class="fa-solid fa-plus icon"></i>
-                Tambah
-                Data</a>
+            <a href="{{ route('export-data-pendaftaran-sidang') }}" class="btn btn-warning"><i
+                    class="fa-solid fa-file-export"></i> Export</a>
         </div>
         <div class="input-group col-md-4 goes-right">
             <form action="{{ route('data-pendaftaran-sidang') }}" method="GET" style="display: flex;">

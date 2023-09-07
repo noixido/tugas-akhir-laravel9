@@ -37,7 +37,7 @@ class DaftarSidangController extends Controller
             ->first();
         $mhs = Mahasiswa::query()
             ->join('users', 'users.id', '=', 'mahasiswas.user_id')
-            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
+            // ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->where('mahasiswas.user_id', $user)
             ->first();
         $ta = TugasAkhir::query()
@@ -107,6 +107,9 @@ class DaftarSidangController extends Controller
             ->where('mahasiswa_id', $mhs->id)
             ->first();
 
+        if ($ta === null) {
+            return redirect()->route('tugas-akhir')->with('message', 'Silahkan lengkapi data tugas akhir anda sebelum mendaftar!');
+        }
         if (Bimbingan::where('status_bimbingan', 'diterima')->where('mahasiswa_id', $mhs->id)->count() < 8) {
             return redirect()->route('daftar-sidang')->with('message', 'Kelihatannya Bimbingan yang telah dikonfirmasi oleh dosen pembimbing anda belum mencukupi syarat minimum untuk melakukan pendaftaran sidang tugas akhir.
             Syarat minimum untuk melakukan pendaftaran sidang tugas akhir salah satunya adalah bimbingan yang telah dikonfirmasi oleh dosen pembimbing sudah mencapai sebanyak 8 bimbingan paling sedikit.

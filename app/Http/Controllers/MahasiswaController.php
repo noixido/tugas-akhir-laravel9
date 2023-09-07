@@ -65,9 +65,10 @@ class MahasiswaController extends Controller
         //
         $user = Auth::user()->id;
         // dd($user);
+        // dd($user);
         $data = Mahasiswa::query()
-            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
-            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
+            // ->join('users', 'users.id', '=', 'mahasiswas.user_id')
+            // ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->where('user_id', $user)
             ->first();
         return view('mahasiswa.profile', compact('data'));
@@ -182,13 +183,29 @@ class MahasiswaController extends Controller
         $mhs = Mahasiswa::query()
             ->where('user_id', $user)
             ->first();
+        $daftar = DaftarSidang::query()
+            ->where('mahasiswa_id', $mhs->id)
+            ->first();
+        // dd($daftar);
+
+        if ($daftar === null) {
+            return redirect()->route('daftar-sidang')->with('message', 'Anda belum mendaftar sidang tugas akhir!');
+        }
+
 
         $nilai = Nilai::query()
-            ->join('daftar_sidangs', 'daftar_sidangs.id', '=', 'nilais.daftar_id')
-            ->where('daftar_sidangs.mahasiswa_id', $mhs->id)
+            // ->join('daftar_sidangs', 'daftar_sidangs.id', '=', 'nilais.daftar_id')  
+            ->where('daftar_id', $daftar->id)
             ->first();
-        $nilai_sidang = number_format((($nilai->nilai_pembimbing * 2) + $nilai->nilai_penguji_1 +
-            $nilai->nilai_penguji_2) / 4, 2);
+
+        // dd($nilai);
+
+        $nilaiPembimbing = $nilai->nilai_pembimbing ?? 0;
+        $nilaiPenguji1 = $nilai->nilai_penguji_1 ?? 0;
+        $nilaiPenguji2 = $nilai->nilai_penguji_2 ?? 0;
+
+        $nilai_sidang = number_format((($nilaiPembimbing * 2) + $nilaiPenguji1 + $nilaiPenguji2) / 4, 2);
+
         $nilai_huruf = '';
 
         if ($nilai_sidang >= 85 && $nilai_sidang <= 100) {
@@ -208,6 +225,6 @@ class MahasiswaController extends Controller
         } else {
             $nilai_huruf = "Nilai Diluar Jangkauan";
         }
-        return view('mahasiswa.nilai', compact('nilai', 'nilai_huruf'));
+        return view('mahasiswa.nilai', compact('daftar', 'nilai', 'nilai_sidang',  'nilai_huruf'));
     }
 }

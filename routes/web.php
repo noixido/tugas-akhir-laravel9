@@ -21,6 +21,7 @@ use App\Http\Controllers\FinalJadwalController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\PublicBimbinganController;
 use App\Http\Controllers\StaffProdiController;
 use App\Http\Controllers\TugasAkhirController;
 use App\Models\Bimbingan;
@@ -48,6 +49,8 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('daftar', [LoginController::class, 'daftar'])->name('daftar');
 Route::post('registrasi', [LoginController::class, 'registrasi'])->name('registrasi');
 
+Route::get('/bimbingan/mahasiswa/{nim}', [PublicBimbinganController::class, 'show'])->name('public-bimbingan');
+
 Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(function () {
     // Route::resource('/akademik', AkademikController::class)->middleware(['auth', 'hakakses:akademik']);
 
@@ -61,6 +64,7 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
 
     // ========== DATA MAHASISWA ==========
     Route::get('/data-mahasiswa', [DataMahasiswaController::class, 'index'])->name('data-mahasiswa');
+    Route::post('/data-mahasiswa/import', [DataMahasiswaController::class, 'import'])->name('import-data-mahasiswa');
     Route::get('/tambah-mahasiswa', [DataMahasiswaController::class, 'create'])->name('tambah-mahasiswa');
     Route::post('/tambah-mahasiswa', [DataMahasiswaController::class, 'store'])->name('proses-tambah-mahasiswa');
     Route::get('/lihat-mahasiswa/{id}', [DataMahasiswaController::class, 'show'])->name('lihat-mahasiswa');
@@ -111,10 +115,13 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
 
     // ==========  DATA NILAI SIDANG TUGAS AKHIR MAHASISWA ==========
     Route::get('/data-nilai', [NilaiController::class, 'index'])->name('data-nilai');
+    Route::get('/data-nilai/export', [NilaiController::class, 'export'])->name('export-data-nilai');
     Route::get('/data-nilai/{id}', [NilaiController::class, 'show'])->name('detail-data-nilai');
 
     // ========== DATA PENDAFTARAN SIDANG TUGAS AKHIR ==========
     Route::get('/data-pendaftaran-sidang', [DataPendaftaranController::class, 'index'])->name('data-pendaftaran-sidang');
+    Route::get('/tabel-data-pendaftaran-sidang', [DataPendaftaranController::class, 'tabel'])->name('tabel-data-pendaftaran-sidang');
+    Route::get('/data-pendaftaran-sidang/export', [DataPendaftaranController::class, 'export'])->name('export-data-pendaftaran-sidang');
     Route::get('/lihat-pendaftaran/{id}', [DataPendaftaranController::class, 'show'])->name('lihat-pendaftaran');
     Route::delete('/hapus-pendaftaran/{id}', [DataPendaftaranController::class, 'destroy'])->name('hapus-pendaftaran');
     //-------------- LIHAT BIMBINGAN MAHASISWA --------------

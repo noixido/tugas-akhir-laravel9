@@ -2,58 +2,47 @@
 @section('title', 'Halaman Data Nilai Sidang')
 @section('content')
 <div class="container">
-    <div class="menu-header">
-
+    <div class="menu-header" style="height: 100%; padding-bottom: 30px">
+        <form action="{{ route('data-nilai') }}" class="row" style="margin: 0%; width: 100%">
+            <div class="col-md-4">
+                <label for="nama" class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-control" id="nama" name="nama" value="{{ \Request::get('nama') }}">
+            </div>
+            <div class="col-md-4">
+                <label for="nim" class="form-label">Nomor Induk Mahasiswa</label>
+                <input type="text" class="form-control" id="nim" name="nim" value="{{ \Request::get('nim') }}">
+            </div>
+            <div class="col-md-4">
+                <label for="jurusan" class="form-label">Program Studi</label>
+                <select id="jurusan" class="form-select form-control" name="jurusan">
+                    <option value="" selected disabled>=== Pilih ===</option>
+                    @foreach ($prodi as $row)
+                    @if (old('jurusan', \Request::get('jurusan')) == $row->id)
+                    <option value="{{ $row->id }}" selected>{{ $row->jenjang }} {{ $row->nama_prodi }}, {{
+                        $row->konsentrasi ??
+                        "" }}
+                    </option>
+                    @else
+                    <option value="{{ $row->id }}">{{ $row->jenjang }} {{ $row->nama_prodi }}, {{ $row->konsentrasi ??
+                        "" }}
+                    </option>
+                    @endif
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-12" style="margin-top: 50px; display:flex; justify-content: space-between">
+                <a href="{{ route('export-data-nilai') }}" class="btn btn-warning"><i
+                        class="fa-solid fa-file-export"></i> Export</a>
+                <div>
+                    <button type="submit" class="btn btn-light"><i class="fa-solid fa-sliders"></i> Filter</button>
+                    <a href="{{ route('data-nilai') }}" class="btn btn-danger"><i class="fa-solid fa-xmark"></i>
+                        Reset</a>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="row" style="height: 100%">
-        <table class="table table-bordered">
-            <tr style="text-align: center">
-                <th rowspan="2" scope="col" class="col-1">No</th>
-                <th rowspan="2" scope="col" class="col-1">NIM</th>
-                <th rowspan="2" scope="col" class="col-2">Nama Mahasiswa</th>
-                <th colspan="5">Nilai</th>
-                <th rowspan="2" scope="col" class="col-1">Aksi</th>
-            </tr>
-            <tr>
-                <th scope="col" class="col-1">Pembimbing</th>
-                <th scope="col" class="col-1">Penguji 1</th>
-                <th scope="col" class="col-1">Penguji 2</th>
-                <th scope="col" class="col-1">Total</th>
-                <th scope="col" class="col-1">Huruf</th>
-            </tr>
-            @foreach ($nilai as $index => $row)
-            <tr>
-                <td>{{ $nilai->firstItem() + $index }}</td>
-                <td>{{ $row->daftar_sidang->tugas_akhir->mahasiswa->nim }}</td>
-                <td>{{ $row->daftar_sidang->tugas_akhir->mahasiswa->nama_mahasiswa }}</td>
-                <td>{{ $row->nilai_pembimbing }}</td>
-                <td>{{ $row->nilai_penguji_1 }}</td>
-                <td>{{ $row->nilai_penguji_2 }}</td>
-                <td>{{ number_format((($row->nilai_pembimbing * 2) + $row->nilai_penguji_1 + $row->nilai_penguji_2) / 4,
-                    2) }}</td>
-                <td>
-                    @php
-                    $nilai_sidang = number_format((($row->nilai_pembimbing * 2) + $row->nilai_penguji_1 +
-                    $row->nilai_penguji_2) / 4,
-                    2);
-                    $nilai_huruf = '';
-                    @endphp
-                    @if ($nilai_sidang >= 85 && $nilai_sidang <= 100) {{ $nilai_huruf="A" }} @elseif ($nilai_sidang>= 80
-                        && $nilai_sidang <= 84.99) {{ $nilai_huruf="AB" }} @elseif ($nilai_sidang>= 75 && $nilai_sidang
-                            <= 79.99) {{ $nilai_huruf="B" }} @elseif ($nilai_sidang>= 70 && $nilai_sidang <= 74.99) {{
-                                    $nilai_huruf="BC" }} @elseif ($nilai_sidang>= 60 && $nilai_sidang <= 69.99) {{
-                                        $nilai_huruf="C" }} @elseif ($nilai_sidang>= 55 && $nilai_sidang <= 59.99) {{
-                                            $nilai_huruf="CD" }} @elseif ($nilai_sidang>= 0 && $nilai_sidang <= 54.99){{
-                                                $nilai_huruf="D" }} @endif </td>
-                <td>
-                    <div class="kumpulan-tombol" style="display: flex; justify-content: center">
-                        <a href="{{ route('detail-data-nilai', $row->id) }}" class="btn btn-primary"><i
-                                class="fa-solid fa-eye icon"></i></a>
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </table>
+        @include('akademik.dataNilai.nilai-tabel')
 
         {{-- {{ $data->links() }} --}}
         {{-- {!! $data->appends(\Request::except('page'))->render() !!} --}}

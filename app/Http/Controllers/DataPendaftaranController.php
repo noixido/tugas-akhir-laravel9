@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DaftarSidangExport;
 use App\Models\Bimbingan;
 use App\Models\DaftarSidang;
 use App\Models\Mahasiswa;
@@ -11,6 +12,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session as FacadesSession;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataPendaftaranController extends Controller
 {
@@ -161,9 +163,22 @@ class DataPendaftaranController extends Controller
             ->join('mahasiswas', 'mahasiswas.id', '=', 'bimbingans.mahasiswa_id')
             ->join('tugas_akhirs', 'tugas_akhirs.id', '=', 'bimbingans.tugas_akhir_id')
             ->where('bimbingans.mahasiswa_id', $id)
-            ->orderBy('bimbingans.created_at', 'desc')
             ->orderBy('bimbingans.tanggal_bimbingan', 'desc')
+            ->orderBy('bimbingans.created_at', 'desc')
             ->paginate(8);
         return view('akademik.dataPendaftaran.bimbingan', compact('data', 'ta', 'daftar'));
+    }
+
+    public function tabel()
+    {
+        $data = DaftarSidang::query()
+            ->sortable()
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('akademik.dataPendaftaran.tabel-pendaftaran', compact('data'));
+    }
+    public function export()
+    {
+        return Excel::download(new DaftarSidangExport, 'data-pendaftaran-sidang-mahasiswa.xlsx');
     }
 }

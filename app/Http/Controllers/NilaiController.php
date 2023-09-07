@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\NilaiExport;
 use App\Models\Nilai;
+use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NilaiController extends Controller
 {
@@ -12,14 +15,36 @@ class NilaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $nilai = Nilai::query()
+        $prodi = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
+
+        $queryNilai = Nilai::query()
             ->orderBy('created_at', 'desc')
-            ->paginate(10)
+            ->where(function ($q) use ($request) {
+                if ($request->jurusan) {
+                    $q->whereHas('daftar_sidang.program_studi', function ($q) use ($request) {
+                        $q->where('id', $request->jurusan);
+                    });
+                }
+                if ($request->nama) {
+                    $q->whereHas('daftar_sidang.mahasiswa', function ($q) use ($request) {
+                        $q->where('nama_mahasiswa', 'LIKE', '%' . $request->nama . '%');
+                    });
+                }
+                if ($request->nim) {
+                    $q->whereHas('daftar_sidang.mahasiswa', function ($q) use ($request) {
+                        $q->where('nim', 'LIKE', '%' . $request->nim . '%');
+                    });
+                }
+            });
+        $nilai = $queryNilai->paginate(10)
             ->onEachSide(2);
-        return view('akademik.dataNilai.index', compact('nilai'));
+        return view('akademik.dataNilai.index', compact('nilai', 'prodi'));
     }
 
     /**
@@ -90,5 +115,10 @@ class NilaiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export()
+    {
+        return Excel::download(new NilaiExport, 'nilai-sidang-mahasiswa.xlsx');
     }
 }

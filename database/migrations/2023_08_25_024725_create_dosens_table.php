@@ -19,10 +19,10 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('nama_dosen');
             $table->string('nidn')->unique();
-            $table->integer('jurusan_id');
-            $table->string('email')->unique();
-            $table->string('telepon');
-            $table->string('alamat');
+            $table->integer('jurusan_id')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('telepon')->nullable();
+            $table->string('alamat')->nullable();
 
             $table->timestamps();
         });

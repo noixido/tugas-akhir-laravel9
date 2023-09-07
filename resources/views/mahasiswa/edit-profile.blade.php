@@ -49,8 +49,10 @@
             </div>
             <div class="col-md-6">
                 <label for="angkatan" class="form-label">Angkatan</label>
-                <input type="number" class="form-control @error('angkatan') is-invalid @enderror" id="angkatan"
-                    name="angkatan" value="{{ old('angkatan', $data->angkatan) }}">
+                {{-- <input type="number" class="form-control @error('angkatan') is-invalid @enderror" id="angkatan"
+                    name="angkatan" value="{{ old('angkatan', $data->angkatan) }}"> --}}
+                <select name="angkatan" id="angkatan"
+                    class="form-control @error('angkatan') is-invalid @enderror"></select>
                 @error('nama')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -59,7 +61,7 @@
                 <label for="jurusan" class="form-label">Program Studi</label>
                 <select id="jurusan" class="form-select form-control @error('jurusan') is-invalid @enderror"
                     name="jurusan">
-
+                    <option value="" selected disabled>=== Pilih ===</option>
                     @foreach ($prodis as $row)
                     @if ( old('jurusan', $data->jurusan_id) == $row->id)
                     <option value="{{ $row->id }}" selected>{{ $row->jenjang }} {{ $row->nama_prodi }}, {{
@@ -98,4 +100,18 @@
         </form>
     </div>
 </div>
+<script>
+    (() => {
+    
+    let option = '';
+    option = '<option value="" disabled selected>== Pilih Tahun ==</option>'; // first option
+    
+    let year_start = 1940;
+    let year_end = (new Date).getFullYear(); // current year
+    let year_selected = option;
+    
+    for (let i = year_start; i <= year_end; i++) { let selected=(i===year_selected ? ' selected' : '' ); option
+        +='<option value="' + i + '"' + selected + '>' + i + '</option>' ; }
+        document.getElementById("angkatan").innerHTML=option; })();
+</script>
 @endsection

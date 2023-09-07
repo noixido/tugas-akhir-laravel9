@@ -20,7 +20,6 @@ class DataJurusanController extends Controller
             $data = ProgramStudi::query()
                 ->sortable()
                 ->orderBy('created_at', 'desc')
-                ->where('kode_prodi', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('nama_prodi', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('jenjang', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('konsentrasi', 'LIKE', '%' . $request->search . '%')
@@ -68,14 +67,12 @@ class DataJurusanController extends Controller
         //
         // dd($request->all());
         $request->validate([
-            'kode_prodi' => ['required'],
             'jenjang' => ['required'],
             'nama_prodi' => ['required'],
             'konsentrasi' => ['nullable'],
         ]);
         // dd($request->all());
         $data = ProgramStudi::create([
-            'kode_prodi' => $request->kode_prodi,
             'jenjang' => $request->jenjang,
             'nama_prodi' => $request->nama_prodi,
             'konsentrasi' => $request->konsentrasi,
@@ -119,7 +116,6 @@ class DataJurusanController extends Controller
     {
         //
         $request->validate([
-            'kode_prodi' => ['required'],
             'jenjang' => ['required'],
             'nama_prodi' => ['required'],
             'konsentrasi' => ['nullable'],
@@ -127,7 +123,6 @@ class DataJurusanController extends Controller
         ProgramStudi::query()
             ->find($id)
             ->update([
-                'kode_prodi' => $request->kode_prodi,
                 'jenjang' => $request->jenjang,
                 'nama_prodi' => $request->nama_prodi,
                 'konsentrasi' => $request->konsentrasi,

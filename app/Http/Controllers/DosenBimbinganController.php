@@ -76,7 +76,7 @@ class DosenBimbinganController extends Controller
             ->join('mahasiswas', 'mahasiswas.id', '=', 'bimbingans.mahasiswa_id')
             ->where('tugas_akhirs.dosen_id', $dosen->id)
             ->where('bimbingans.mahasiswa_id', $id)
-            ->orderBy('bimbingans.created_at', 'desc')
+            ->orderBy('tanggal_bimbingan', 'desc')
             ->paginate(8)
             ->onEachSide(2);
         // dd($bimbingan);

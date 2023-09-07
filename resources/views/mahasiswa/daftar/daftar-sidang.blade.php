@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row" style="height: 100%">
         @if (session()->has('message'))
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" style="text-align: center; width:100%">
             {{ session()->get('message') }}
         </div>
         @endif
@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <label for="nim" class="form-label">Nomor Induk Mahasiswa</label>
                 <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim"
-                    value="{{ old('nim', $mhs->nim) }}" disabled>
+                    value="{{ old('nim', $mhs->nim ?? '-') }}" disabled>
                 @error('nim')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -22,7 +22,7 @@
             <div class="col-md-6">
                 <label for="nama" class="form-label">Nama Mahasiswa</label>
                 <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
-                    value="{{ old('nama', $mhs->nama_mahasiswa) }}" disabled>
+                    value="{{ old('nama', $mhs->nama_mahasiswa ?? '-') }}" disabled>
                 @error('nim')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -30,7 +30,7 @@
             <div class="col-md-6">
                 <label for="jenjang" class="form-label">Jenjang</label>
                 <input type="text" class="form-control @error('jenjang') is-invalid @enderror" id="jenjang"
-                    name="jenjang" value="{{ old('jenjang', $mhs->jenjang) }}" disabled>
+                    name="jenjang" value="{{ old('jenjang', $mhs->program_studi->jenjang ?? '-') }}" disabled>
                 @error('jenjang')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -38,7 +38,7 @@
             <div class="col-md-6">
                 <label for="jurusan" class="form-label">Program Studi</label>
                 <input type="text" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan"
-                    name="jurusan" value="{{ old('jurusan', $mhs->nama_prodi) }}" disabled>
+                    name="jurusan" value="{{ old('jurusan', $mhs->program_studi->nama_prodi ?? '-') }}" disabled>
                 @error('jurusan')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -46,7 +46,8 @@
             <div class="col-md-6">
                 <label for="konsentrasi" class="form-label">Konsentrasi Program Studi</label>
                 <input type="text" class="form-control @error('konsentrasi') is-invalid @enderror" id="konsentrasi"
-                    name="konsentrasi" value="{{ old('konsentrasi', $mhs->konsentrasi ?? '-') }}" disabled>
+                    name="konsentrasi" value="{{ old('konsentrasi', $mhs->program_studi->konsentrasi ?? '-') }}"
+                    disabled>
                 @error('konsentrasi')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -55,7 +56,7 @@
                 <label for="telepon_mahasiswa" class="form-label">Telepon Mahasiswa</label>
                 <input type="number" class="form-control @error('telepon_mahasiswa') is-invalid @enderror"
                     id="telepon_mahasiswa" name="telepon_mahasiswa"
-                    value="{{ old('telepon_mahasiswa', $mhs->telepon) }}" disabled>
+                    value="{{ old('telepon_mahasiswa', $mhs->telepon ?? '-') }}" disabled>
                 @error('telepon_mahasiswa')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -63,7 +64,7 @@
             <div class="col-md-6">
                 <label for="email_mahasiswa" class="form-label">Email Mahasiswa</label>
                 <input type="email" class="form-control @error('email_mahasiswa') is-invalid @enderror"
-                    id="email_mahasiswa" name="email_mahasiswa" value="{{ old('email_mahasiswa', $mhs->email) }}"
+                    id="email_mahasiswa" name="email_mahasiswa" value="{{ old('email_mahasiswa', $mhs->email ?? '-') }}"
                     disabled>
                 @error('email_mahasiswa')
                 <span class="invalid-feedback">{{ $message }}</span>
@@ -116,7 +117,7 @@
             <div class="col-md-6">
                 <label for="pembimbing" class="form-label">Dosen Pembimbing</label>
                 <input type="text" class="form-control @error('pembimbing') is-invalid @enderror" id="pembimbing"
-                    name="pembimbing" value="{{ old('pembimbing', $ta->nama_dosen) }}" disabled>
+                    name="pembimbing" value="{{ old('pembimbing', $ta->nama_dosen ?? '-') }}" disabled>
                 @error('pembimbing')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -125,7 +126,7 @@
                 <label for="judul" class="form-label">Judul Tugas Akhir</label>
                 <textarea style="height: 38px" name="judul" id="judul" cols="30" rows="10"
                     class="form-control @error('judul') is-invalid @enderror"
-                    disabled>{{ old('judul', $ta->judul_tugas_akhir) }}</textarea>
+                    disabled>{{ old('judul', $ta->judul_tugas_akhir ?? '-') }}</textarea>
                 @error('judul')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror

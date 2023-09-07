@@ -21,8 +21,8 @@ class TugasAkhirController extends Controller
         //
         $user = Auth::user()->id;
         $mhs = Mahasiswa::query()
-            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
-            ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
+            // ->join('users', 'users.id', '=', 'mahasiswas.user_id')
+            // ->join('program_studis', 'program_studis.id', '=', 'mahasiswas.jurusan_id')
             ->where('user_id', $user)->first();
         $data = TugasAkhir::query()
             ->join('dosens', 'dosens.id', '=', 'tugas_akhirs.dosen_id')
