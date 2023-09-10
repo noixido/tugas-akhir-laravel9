@@ -46,7 +46,8 @@
             @if($row->grup_id == $item->id)
             <tr style="font-size: 14px">
                 <td>{{ $no++ }}</td>
-                <td>{{ $row->jam_mulai_sidang }} - {{ $row->jam_selesai_sidang }}</td>
+                <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $row->jam_mulai_sidang)->format('H:i') }} - {{
+                    \Carbon\Carbon::createFromFormat('H:i:s', $row->jam_selesai_sidang)->format('H:i') }}</td>
                 <td>{{ $row->mahasiswa->nama_mahasiswa }}</td>
                 <td>{{ $row->mahasiswa->nim }}</td>
                 <td>{{ $row->tugas_akhir->judul_tugas_akhir }}</td>
@@ -59,6 +60,9 @@
             @endif
             @endforeach
         </table>
+        <div class="col-12" style="display: flex; justify-content:center">
+            <button class="btn btn-success">Download</button>
+        </div>
         <p style="font-size: 12px; color: red">*dipublish pada {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
             $item->updated_at)->format('j F Y, H:i') }}</p>
     </div>

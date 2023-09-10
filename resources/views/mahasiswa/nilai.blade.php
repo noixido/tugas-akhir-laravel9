@@ -29,7 +29,7 @@
                     <label for="tanggal_sidang">Tanggal Sidang</label>
                     <h5>
                         <b>
-                            @if ($daftar->grup === null)
+                            @if ($daftar->grup === null || $daftar->grup->tanggal_sidang === null)
                             -
                             @else
                             {{ date('j F Y', strtotime($daftar->grup->tanggal_sidang)) }}

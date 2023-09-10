@@ -29,6 +29,7 @@
             <th>Scan Sertifikat UJikom 2</th>
             <th>Scan Sertifikat UJikom 3</th>
             <th>Scan Sertifikat UJikom 4</th>
+            <th>Scan Sertifikat UJikom 5</th>
         </tr>
     </thead>
     <tbody>
@@ -95,6 +96,15 @@
                 <a href="http://127.0.0.1:8000/storage/{{ $row->scan_sertifikat_ujikom_4 }}">{{
                     'http://127.0.0.1:8000/storage/'.
                     $row->scan_sertifikat_ujikom_4 }}</a>
+                @endif
+            </td>
+            <td>
+                @if ($row->scan_sertifikat_ujikom_5 === null)
+                -
+                @else
+                <a href="http://127.0.0.1:8000/storage/{{ $row->scan_sertifikat_ujikom_5 }}">{{
+                    'http://127.0.0.1:8000/storage/'.
+                    $row->scan_sertifikat_ujikom_5 }}</a>
                 @endif
             </td>
         </tr>

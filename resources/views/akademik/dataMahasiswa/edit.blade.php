@@ -102,15 +102,16 @@
 <script>
     (() => {
     
-    let option = '';
-    option = '<option value="" disabled selected>== Pilih Tahun ==</option>'; // first option
+    let option = '<option value="" disabled selected>== Pilih Tahun ==</option>'; // first option
     
     let year_start = 1940;
     let year_end = (new Date).getFullYear(); // current year
-    let year_selected = option;
+    let year_selected = parseInt("{{ old('angkatan', $data->angkatan) }}");
     
-    for (let i = year_start; i <= year_end; i++) { let selected=(i===year_selected ? ' selected' : '' ); option
-        +='<option value="' + i + '"' + selected + '>' + i + '</option>' ; }
+    for (let i = year_start; i <= year_end; i++) { 
+        let selected=(i===year_selected ? ' selected' : '' ); 
+            option +='<option value="' + i + '"' + selected + '>' + i + '</option>' ; 
+        }
         document.getElementById("angkatan").innerHTML=option; })();
 </script>
 @endsection

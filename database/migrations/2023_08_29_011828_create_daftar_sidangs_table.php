@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('scan_sertifikat_ujikom_2');
             $table->string('scan_sertifikat_ujikom_3')->nullable();
             $table->string('scan_sertifikat_ujikom_4')->nullable();
+            $table->string('scan_sertifikat_ujikom_5')->nullable();
             $table->string('scan_sertifikat_peka');
             $table->string('scan_sertifikat_toefl');
             $table->string('status_pendaftaran');

@@ -46,7 +46,8 @@
             @if($row->grup_id == $item->id)
             <tr style="font-size: 14px">
                 <td>{{ $no++ }}</td>
-                <td>{{ $row->jam_mulai_sidang }} - {{ $row->jam_selesai_sidang }}</td>
+                <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $row->jam_mulai_sidang)->format('H:i') }} - {{
+                    \Carbon\Carbon::createFromFormat('H:i:s', $row->jam_selesai_sidang)->format('H:i') }}</td>
                 <td>{{ $row->mahasiswa->nama_mahasiswa }}</td>
                 <td>{{ $row->mahasiswa->nim }}</td>
                 <td>{{ $row->tugas_akhir->judul_tugas_akhir }}</td>

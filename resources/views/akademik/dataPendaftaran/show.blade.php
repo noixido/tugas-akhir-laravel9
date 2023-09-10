@@ -183,6 +183,19 @@
                     @endif
                 </td>
             </tr>
+            <tr>
+                <th>Scan Sertifikat Ujikom 5</th>
+                <td>
+                    @if ($data->scan_sertifikat_ujikom_5)
+                    <a href="{{ asset('storage/'. $data->scan_sertifikat_ujikom_5) }}" target="_blank">
+                        <img src="{{ asset('storage/'. $data->scan_sertifikat_ujikom_5) }}" alt="ujikom mahasiswa"
+                            style="max-height: 100%; width: 200px">
+                    </a>
+                    @else
+                    -
+                    @endif
+                </td>
+            </tr>
         </table>
     </div>
 </div>

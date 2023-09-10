@@ -39,7 +39,7 @@ use App\Models\Bimbingan;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('homepage');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -71,6 +71,8 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     Route::get('/edit-mahasiswa/{id}/edit', [DataMahasiswaController::class, 'edit'])->name('edit-mahasiswa');
     Route::put('/edit-mahasiswa/{id}', [DataMahasiswaController::class, 'update'])->name('proses-edit-mahasiswa');
     Route::delete('/hapus-mahasiswa/{id}', [DataMahasiswaController::class, 'destroy'])->name('hapus-mahasiswa');
+
+    Route::get('/download', [DataMahasiswaController::class, 'download'])->name('download-import-data-mahasiswa');
 
     // ========== DATA DOSEN ==========
     Route::get('/data-dosen', [DataDosenController::class, 'index'])->name('data-dosen');

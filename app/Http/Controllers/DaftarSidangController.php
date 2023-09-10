@@ -87,6 +87,7 @@ class DaftarSidangController extends Controller
             'ujikom_2' => ['required', 'image', 'mimes:jpg,jpeg', 'file', 'max:2048'],
             'ujikom_3' => ['nullable', 'image', 'mimes:jpg,jpeg', 'file', 'max:2048'],
             'ujikom_4' => ['nullable', 'image', 'mimes:jpg,jpeg', 'file', 'max:2048'],
+            'ujikom_5' => ['nullable', 'image', 'mimes:jpg,jpeg', 'file', 'max:2048'],
             'peka' => ['required', 'image', 'mimes:jpg,jpeg', 'file', 'max:2048'],
             'toefl' => ['required', 'image', 'mimes:jpg,jpeg', 'file', 'max:2048'],
         ]));
@@ -125,6 +126,7 @@ class DaftarSidangController extends Controller
         $ujikom2CustomName = str_replace(" ", "-", $mhs->nim . "_" . $mhs->nama_mahasiswa . "_" . "Scan-Ujikom-2.jpg");
         $ujikom3CustomName = str_replace(" ", "-", $mhs->nim . "_" . $mhs->nama_mahasiswa . "_" . "Scan-Ujikom-3.jpg");
         $ujikom4CustomName = str_replace(" ", "-", $mhs->nim . "_" . $mhs->nama_mahasiswa . "_" . "Scan-Ujikom-4.jpg");
+        $ujikom5CustomName = str_replace(" ", "-", $mhs->nim . "_" . $mhs->nama_mahasiswa . "_" . "Scan-Ujikom-5.jpg");
         $pekaCustomName = str_replace(" ", "-", $mhs->nim . "_" . $mhs->nama_mahasiswa . "_" . "Scan-Peka.jpg");
         $toeflCustomName = str_replace(" ", "-", $mhs->nim . "_" . $mhs->nama_mahasiswa . "_" . "Scan-Toefl.jpg");
 
@@ -137,6 +139,11 @@ class DaftarSidangController extends Controller
             $ujikom4 =  $request->file('ujikom_4')->storeAs('images/ujikom', $ujikom4CustomName, 'public');
         } else {
             $ujikom4 = null;
+        }
+        if ($request->file('ujikom_5')) {
+            $ujikom5 =  $request->file('ujikom_5')->storeAs('images/ujikom', $ujikom5CustomName, 'public');
+        } else {
+            $ujikom5 = null;
         }
 
         DaftarSidang::create([
@@ -158,6 +165,7 @@ class DaftarSidangController extends Controller
             'scan_sertifikat_ujikom_2' => $request->file('ujikom_2')->storeAs('images/ujikom', $ujikom2CustomName, 'public'),
             'scan_sertifikat_ujikom_3' => $ujikom3,
             'scan_sertifikat_ujikom_4' => $ujikom4,
+            'scan_sertifikat_ujikom_5' => $ujikom5,
             'scan_sertifikat_peka' => $request->file('peka')->storeAs('images/peka', $pekaCustomName, 'public'),
             'scan_sertifikat_toefl' => $request->file('toefl')->storeAs('images/toefl', $toeflCustomName, 'public'),
             'status_pendaftaran' => 'sedang ditinjau',

@@ -14,15 +14,52 @@ class DraftJadwalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $data = Grup::query()
+        $periode = Grup::query()
+            ->select('periode_ke')
+            ->orderBy('periode_ke', 'asc')
+            ->orderBy('yudisium_ke', 'asc')
+            ->groupBy('periode_ke')
+            ->get();
+        $yudisium = Grup::query()
+            ->select('yudisium_ke')
+            ->orderBy('periode_ke', 'asc')
+            ->orderBy('yudisium_ke', 'asc')
+            ->groupBy('yudisium_ke')
+            ->get();
+        $tahun = Grup::query()
+            ->select('tahun_akademik')
+            ->orderBy('tahun_akademik', 'asc')
+            ->groupBy('tahun_akademik')
+            ->get();
+        $prodi = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
+        $dataQuery = Grup::query()
             ->where('status_jadwal', 'belum dilengkapi')
             ->orderBy('created_at', 'desc')
-            ->paginate(10)
+            ->where(function ($q) use ($request) {
+                if ($request->periode) {
+                    $q->where('periode_ke', $request->periode);
+                }
+                if ($request->yudisium) {
+                    $q->where('yudisium_ke', $request->yudisium);
+                }
+                if ($request->tahun) {
+                    $q->where('tahun_akademik', $request->tahun);
+                }
+                if ($request->jurusan) {
+                    $q->whereHas('daftar_sidang.program_studi', function ($q) use ($request) {
+                        $q->where('id', $request->jurusan);
+                    });
+                }
+            });
+        $data = $dataQuery->paginate(10)
             ->onEachSide(2);
-        return view('akademik.dataJadwal.draft', compact('data'));
+        return view('akademik.dataJadwal.draft', compact('data', 'prodi', 'periode', 'yudisium', 'tahun'));
     }
 
     /**
@@ -83,7 +120,7 @@ class DraftJadwalController extends Controller
             ->where('id', $id)
             ->first();
         $daftar = DaftarSidang::query()
-            ->orderBy('daftar_sidangs.created_at', 'desc')
+            ->orderBy('daftar_sidangs.created_at', 'asc')
             ->where('grup_id', $data->id)
             ->paginate(10);
         return view('akademik.dataJadwal.show', compact('data', 'daftar'));

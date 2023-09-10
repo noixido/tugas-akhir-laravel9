@@ -12,6 +12,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session as FacadesSession;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DataPendaftaranController extends Controller
@@ -142,9 +143,48 @@ class DataPendaftaranController extends Controller
     public function destroy($id)
     {
         //
-        DaftarSidang::query()
+        $daftar = DaftarSidang::query()
             ->where('mahasiswa_id', $id)
-            ->delete();
+            ->first();
+
+        if ($daftar->pas_foto) {
+            unlink('storage/' . $daftar->pas_foto);
+        }
+        if ($daftar->scan_bukti_spp) {
+            unlink('storage/' . $daftar->scan_bukti_spp);
+        }
+        if ($daftar->scan_ijazah_terakhir) {
+            unlink('storage/' . $daftar->scan_ijazah_terakhir);
+        }
+        if ($daftar->scan_akta_kelahiran) {
+            unlink('storage/' . $daftar->scan_akta_kelahiran);
+        }
+        if ($daftar->scan_kartu_keluarga) {
+            unlink('storage/' . $daftar->scan_kartu_keluarga);
+        }
+        if ($daftar->scan_sertifikat_peka) {
+            unlink('storage/' . $daftar->scan_sertifikat_peka);
+        }
+        if ($daftar->scan_sertifikat_toefl) {
+            unlink('storage/' . $daftar->scan_sertifikat_toefl);
+        }
+        if ($daftar->scan_sertifikat_ujikom_1) {
+            unlink('storage/' . $daftar->scan_sertifikat_ujikom_1);
+        }
+        if ($daftar->scan_sertifikat_ujikom_2) {
+            unlink('storage/' . $daftar->scan_sertifikat_ujikom_2);
+        }
+        if ($daftar->scan_sertifikat_ujikom_3) {
+            unlink('storage/' . $daftar->scan_sertifikat_ujikom_3);
+        }
+        if ($daftar->scan_sertifikat_ujikom_4) {
+            unlink('storage/' . $daftar->scan_sertifikat_ujikom_4);
+        }
+        if ($daftar->scan_sertifikat_ujikom_5) {
+            unlink('storage/' . $daftar->scan_sertifikat_ujikom_5);
+        }
+
+        $daftar->delete();
         return back();
     }
 

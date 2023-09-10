@@ -18,13 +18,18 @@ class MahasiswaImport implements OnEachRow, WithHeadingRow
         if ($rowIndex == 0) {
             return;
         }
-        $user = User::firstOrCreate([
-            'username' => $row['nim'],
-            'password' => bcrypt($row['nim']),
-            'role' => 'mahasiswa'
-        ]);
-        $mhs = Mahasiswa::firstOrCreate([
+        $user = User::firstOrCreate(
+            [
+                'username' => $row['nim'],
+            ],
+            [
+                'password' => bcrypt($row['nim']),
+                'role' => 'mahasiswa'
+            ]
+        );
+        Mahasiswa::firstOrCreate([
             'user_id' => $user->id,
+        ], [
             'nim' => $row['nim'],
             'nama_mahasiswa' => $row['nama'],
         ]);

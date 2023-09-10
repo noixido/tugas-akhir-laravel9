@@ -247,4 +247,10 @@ class DataMahasiswaController extends Controller
         Excel::import(new MahasiswaImport, request()->file('import'));
         return back();
     }
+
+    public function download()
+    {
+        $file = public_path() . "/files/import-template.xlsx";
+        return response()->download($file);
+    }
 }

@@ -259,6 +259,17 @@
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
+            <div class="col-md-6">
+                <label for="ujikom_5" class="form-label">Sertifikat Ujikom 5 <b style="color: red">*</b></label>
+                <div style="height: 200px; display: flex; justify-content:center">
+                    <img class="ujikom5Preview img-fluid" style="max-height: 100%; width: auto; margin: 10px">
+                </div>
+                <input type="file" class="form-control @error('ujikom_5') is-invalid @enderror" id="ujikom_5"
+                    name="ujikom_5" onchange="previewUjikom5Image()">
+                @error('ujikom_5')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
             <p style="color: red; font-size: 12px; margin-top: 50px; margin-left: 20px">
                 *jika anda hanya memiliki 2-3 sertifikat uji kompetisi saja, cukup masukan data sampai scan sertifikat
                 ujikom 2 atau 3.
@@ -412,6 +423,19 @@
         oFReader.onload = function(oFREvent){
             ujikom4ImgPreview.src = oFREvent.target.result;
         }
+    }
+    function previewUjikom5Image(){
+    const ujikom5Img = document.querySelector('#ujikom_5');
+    const ujikom5ImgPreview = document.querySelector('.ujikom5Preview');
+    
+    ujikom5ImgPreview.style.display = 'block';
+    
+    const oFReader = new FileReader();
+    oFReader.readAsDataURL(ujikom5Img.files[0]);
+    
+    oFReader.onload = function(oFREvent){
+    ujikom5ImgPreview.src = oFREvent.target.result;
+    }
     }
 </script>
 @endsection

@@ -7,6 +7,7 @@ use App\Models\Dosen;
 use App\Models\TugasAkhir;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DosenBimbinganController extends Controller
 {
@@ -21,9 +22,10 @@ class DosenBimbinganController extends Controller
         $user = Auth::user()->id;
         $dosen = Dosen::where('user_id', $user)->first();
         $bimbingan = Bimbingan::query()
-            ->select('bimbingans.mahasiswa_id', 'nama_mahasiswa', 'nim', 'judul_tugas_akhir')
+            ->select('bimbingans.mahasiswa_id', 'nama_mahasiswa', 'nim', 'judul_tugas_akhir', DB::raw('MAX(tanggal_bimbingan) as tanggal_bimbingan_terakhir'))
             ->join('tugas_akhirs', 'tugas_akhirs.id', '=', 'bimbingans.tugas_akhir_id')
             ->join('mahasiswas', 'mahasiswas.id', '=', 'bimbingans.mahasiswa_id')
+            ->orderBy('tanggal_bimbingan_terakhir', 'desc')
             ->where('tugas_akhirs.dosen_id', $dosen->id)
             ->groupBy('bimbingans.mahasiswa_id', 'nama_mahasiswa', 'nim', 'judul_tugas_akhir')
             ->paginate(10)

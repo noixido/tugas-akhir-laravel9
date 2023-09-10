@@ -4,17 +4,25 @@
 <div class="container">
     <div class="menu-header">
         <div class="input-group col-md-8">
-            <a href="{{ route('tambah-mahasiswa') }}" class="btn btn-primary"><i class="fa-solid fa-plus icon"></i>
-                Tambah
-                Data</a>
-            <form action="{{ route('import-data-mahasiswa') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div style=" position: relative; overflow: hidden; margin-left: 10px" class="btn btn-success">
-                    <input type="file" name="import" id="import" onchange="form.submit()"
-                        style="cursor: pointer; position: absolute; font-size: 50px; opacity: 0; right: 0; top: 0;"><i
-                        class="fa-solid fa-file-import"></i> Import
-                </div>
-            </form>
+            <div>
+                <a href="{{ route('tambah-mahasiswa') }}" class="btn btn-primary"><i class="fa-solid fa-plus icon"></i>
+                    Tambah
+                    Data</a>
+            </div>
+            <div>
+                <form action="{{ route('import-data-mahasiswa') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div style=" position: relative; overflow: hidden; margin-left: 10px" class="btn btn-success">
+                        <input type="file" name="import" id="import" onchange="form.submit()"
+                            style="cursor: pointer; position: absolute; font-size: 50px; opacity: 0; right: 0; top: 0;"><i
+                            class="fa-solid fa-file-import"></i> Import
+                    </div>
+                </form>
+            </div>
+            <div style="margin-left: 10px">
+                <a href="{{ route('download-import-data-mahasiswa') }}" class="btn btn-warning"><i
+                        class="fa-solid fa-download"></i> Template Import</a>
+            </div>
         </div>
         <div class="input-group col-md-4 goes-right">
             <form action="{{ route('data-mahasiswa') }}" method="GET" style="display: flex;">
