@@ -20,7 +20,7 @@
             </form>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="height: auto">
         <table class="table table-bordered">
             <thead>
                 <tr>

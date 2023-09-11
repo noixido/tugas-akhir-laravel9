@@ -61,7 +61,7 @@
                 </td>
                 <td class="col-1">
                     <label for="penguji2">Nilai Penguji 2</label>
-                    <h5><b>{{ $nilai->nilai_penguji_1 ?? '-' }}</b></h5>
+                    <h5><b>{{ $nilai->nilai_penguji_2 ?? '-' }}</b></h5>
                 </td>
                 <td class="col-1">
                     <label for="total">Nilai Total</label>

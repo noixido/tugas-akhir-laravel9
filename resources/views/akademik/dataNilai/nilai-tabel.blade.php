@@ -26,9 +26,9 @@
         @endif
         <td>{{ $row->daftar_sidang->tugas_akhir->mahasiswa->nim }}</td>
         <td>{{ $row->daftar_sidang->tugas_akhir->mahasiswa->nama_mahasiswa }}</td>
-        <td>{{ $row->nilai_pembimbing }}</td>
-        <td>{{ $row->nilai_penguji_1 }}</td>
-        <td>{{ $row->nilai_penguji_2 }}</td>
+        <td>{{ $row->nilai_pembimbing ?? '-'}}</td>
+        <td>{{ $row->nilai_penguji_1 ?? '-'}}</td>
+        <td>{{ $row->nilai_penguji_2 ?? '-'}}</td>
         <td>{{ number_format((($row->nilai_pembimbing * 2) + $row->nilai_penguji_1 + $row->nilai_penguji_2) / 4,
             2) }}</td>
         <td>

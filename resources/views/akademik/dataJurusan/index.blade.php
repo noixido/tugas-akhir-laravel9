@@ -18,7 +18,7 @@
             </form>
         </div>
     </div>
-    <div class="row" style="height: 800px">
+    <div class="row" style="height: auto">
         <table class="table table-bordered">
             <thead>
                 <tr>

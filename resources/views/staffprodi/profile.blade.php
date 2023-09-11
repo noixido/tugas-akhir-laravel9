@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <th>Konsentrasi</th>
-                <td>{{ $data->Konsentrasi ?? '-' }}</td>
+                <td>{{ $data->konsentrasi ?? '-' }}</td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align: center   ">

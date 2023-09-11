@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <th>Konsentrasi</th>
-                <td>{{ $data->program_studi->Konsentrasi ?? '-' }}</td>
+                <td>{{ $data->program_studi->konsentrasi ?? '-' }}</td>
             </tr>
             <tr>
                 <th>Email</th>

@@ -14,14 +14,6 @@
             @csrf
             @method('put')
             <div class="col-md-6">
-                <label for="kode_prodi" class="form-label">Kode Jurusan</label>
-                <input type="text" class="form-control @error('kode_prodi') is-invalid @enderror" id="kode_prodi"
-                    name="kode_prodi" value="{{ old('kode_prodi', $data->kode_prodi) }}">
-                @error('kode_prodi')
-                <span class="invalid-feedback">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="col-md-6">
                 <label for="jenjang" class="form-label">Jenjang</label>
                 <select id="jenjang" class="form-select form-control @error('jenjang') is-invalid @enderror"
                     name="jenjang">
