@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\DaftarSidang;
+use App\Models\Grup;
+use App\Models\Mahasiswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +20,22 @@ class AkademikController extends Controller
     public function index()
     {
         //
-        return view('akademik.dashboard');
+        $mulai = now()->startOfWeek();
+        $selesai = now()->endOfWeek();
+        $daftarCount = DaftarSidang::query()
+            ->whereYear('created_at', now()->year)
+            ->count();
+        $weekCount = DaftarSidang::query()
+            ->whereBetween('created_at', [$mulai, $selesai])
+            ->count();
+        $mhsCount = Mahasiswa::query()
+            ->count();
+        $grupCount = Grup::query()
+            ->whereYear('created_at', now()->year)
+            ->where('status_jadwal', 'published')
+            ->count();
+        // dd($daftar);
+        return view('akademik.dashboard', compact('daftarCount', 'weekCount', 'mhsCount', 'grupCount'));
     }
 
     /**

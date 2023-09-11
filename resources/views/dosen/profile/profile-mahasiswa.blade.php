@@ -44,12 +44,6 @@
                 <th>Telepon</th>
                 <td>{{ $data->telepon ?? '-'}}</td>
             </tr>
-            <tr>
-                <td colspan="2" style="text-align: center   ">
-                    <a href="/mahasiswa/edit-profile/{{ Auth::user()->username }}/edit" class="btn btn-warning">Perbarui
-                        Data</a>
-                </td>
-            </tr>
         </table>
     </div>
 </div>

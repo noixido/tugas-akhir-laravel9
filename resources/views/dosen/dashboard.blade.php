@@ -1,6 +1,13 @@
 @extends('layouts.master-dosen')
 @section('title', 'Dashboard')
 @section('content')
+<div class="container">
+    <div class="menu-header">
+        <div style="margin: 0 auto; text-align:center;">
+            <h3><b>Selamat Datang di Dashboard Dosen</b></h3>
+        </div>
+    </div>
+</div>
 @foreach ($grup as $item)
 <div class="container">
     <div class="row" style="height: 100%; margin-bottom: 20px">

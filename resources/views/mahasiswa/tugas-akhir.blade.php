@@ -26,9 +26,13 @@
             </tr>
             <tr>
                 <th>Dosen Pembimbing</th>
+                @if ($data === null)
+                <td>-</td>
+                @else
                 <td style="display: flex; justify-content: space-between">{{ $data->nama_dosen ?? '-'}} <a
-                        href="{{ route('profile-pembimbing', $dosen->id) }}" style="text-decoration: none"><i
+                        href="{{ route('profile-pembimbing', $data->dosen_id) }}" style="text-decoration: none"><i
                             class="fa-solid fa-eye"></i> Profil Dosen</a></td>
+                @endif
             </tr>
             <tr>
                 <th>Judul Tugas Akhir</th>

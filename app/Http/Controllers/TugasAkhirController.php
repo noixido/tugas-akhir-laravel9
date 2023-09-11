@@ -29,11 +29,8 @@ class TugasAkhirController extends Controller
             ->join('mahasiswas', 'mahasiswas.id', '=', 'tugas_akhirs.mahasiswa_id')
             ->where('mahasiswas.user_id', $user)
             ->first();
-        $dosen = Dosen::query()
-            ->where('id', $data->dosen_id)
-            ->first();
         // $dosen = Dosen::orderBy('jurusan_id', 'asc')->orderBy('nama_dosen', 'asc')->get();
-        return view('mahasiswa.tugas-akhir', compact('data', 'mhs', 'dosen'));
+        return view('mahasiswa.tugas-akhir', compact('data', 'mhs'));
     }
 
     public function profilePembimbing($id)
