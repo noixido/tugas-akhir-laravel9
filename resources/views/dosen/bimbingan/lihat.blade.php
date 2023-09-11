@@ -12,9 +12,11 @@
     <div class="menu-header" style="height: 230px; padding: 20px">
         <table class="table table-bordered" style="font-size: 15px">
             <tr>
-                <td>
+                <td class="col-6">
                     <label for="nama">Nama Mahasiswa</label>
-                    <h5><b>{{ $ta->nama_mahasiswa }}</b></h4>
+                    <h5 style="display: flex; justify-content: space-between"><b>{{ $ta->nama_mahasiswa }}</b> <a
+                            href="{{ route('profile-mahasiswa', $ta->mahasiswa_id) }}" style="text-decoration: none"><i
+                                class="fa-solid fa-eye"></i></a></h4>
                 </td>
                 <td>
                     <label for="nim">Nomor Induk Mahasiswa</label>

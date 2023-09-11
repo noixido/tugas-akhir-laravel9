@@ -61,7 +61,7 @@
             @endforeach
         </table>
         <div class="col-12" style="display: flex; justify-content:center">
-            <button class="btn btn-success">Download</button>
+            <a href="{{ route('jadwalPDF', $item->id) }}" class="btn btn-success">Download Jadwal</a>
         </div>
         <p style="font-size: 12px; color: red">*dipublish pada {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
             $item->updated_at)->format('j F Y, H:i') }}</p>

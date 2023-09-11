@@ -7,6 +7,7 @@ use App\Models\Dosen;
 use App\Models\Grup;
 use App\Models\ProgramStudi;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

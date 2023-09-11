@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bimbingan;
 use App\Models\Dosen;
+use App\Models\Mahasiswa;
 use App\Models\TugasAkhir;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,7 @@ class DosenBimbinganController extends Controller
         // dd($bimbingan);
         return view('dosen.bimbingan.bimbingan', compact('bimbingan'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -83,6 +85,17 @@ class DosenBimbinganController extends Controller
             ->onEachSide(2);
         // dd($bimbingan);
         return view('dosen.bimbingan.lihat', compact('bimbingan', 'ta'));
+    }
+
+    public function profileMahasiswa($id)
+    {
+        $data = Mahasiswa::query()
+            ->where('id', $id)
+            ->first();
+        $bimbingan = Bimbingan::query()
+            ->where('mahasiswa_id', $data->id)
+            ->first();
+        return view('dosen.profile.profile-mahasiswa', compact('data', 'bimbingan'));
     }
 
     /**

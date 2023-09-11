@@ -17,6 +17,7 @@ use App\Http\Controllers\DataStaffProdiController;
 use App\Http\Controllers\DosenBimbinganController;
 use App\Http\Controllers\DosenNilaiController;
 use App\Http\Controllers\DraftJadwalController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FinalJadwalController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
@@ -50,6 +51,8 @@ Route::get('daftar', [LoginController::class, 'daftar'])->name('daftar');
 Route::post('registrasi', [LoginController::class, 'registrasi'])->name('registrasi');
 
 Route::get('/bimbingan/mahasiswa/{nim}', [PublicBimbinganController::class, 'show'])->name('public-bimbingan');
+Route::get('/jadwalPDF/{id}', [ExportController::class, 'jadwalPDF'])->name('jadwalPDF');
+
 
 Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(function () {
     // Route::resource('/akademik', AkademikController::class)->middleware(['auth', 'hakakses:akademik']);
@@ -164,6 +167,7 @@ Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(fu
     Route::get('/tugas-akhir', [TugasAkhirController::class, 'index'])->name('tugas-akhir');
     Route::get('/edit-tugas-akhir/{id}/edit', [TugasAkhirController::class, 'edit'])->name('edit-tugas-akhir');
     Route::put('/edit-tugas-akhir/{id}', [TugasAkhirController::class, 'update'])->name('proses-edit-tugas-akhir');
+    Route::get('/profile-pembimbing/{id}', [TugasAkhirController::class, 'profilePembimbing'])->name('profile-pembimbing');
 
     // ========== DATA BERITA ACARA BIMBINGAN ==========
     // Route::get('/bimbingan/{user}', [BimbinganController::class, 'show'])->name('bimbingan');
@@ -174,6 +178,7 @@ Route::middleware(['auth', 'hakakses:mahasiswa'])->prefix('mahasiswa')->group(fu
     Route::get('/edit-bimbingan/{id}/edit', [BimbinganController::class, 'edit'])->name('edit-bimbingan');
     Route::put('/edit-bimbingan/{id}', [BimbinganController::class, 'update'])->name('proses-edit-bimbingan');
     Route::delete('/hapus-bimbingan/{id}', [BimbinganController::class, 'destroy'])->name('hapus-bimbingan');
+
 
     // ========== Pendaftaran Sidang Mahasiswa ==========
     Route::get('/daftar-sidang', [DaftarSidangController::class, 'create'])->name('daftar-sidang');
@@ -203,6 +208,8 @@ Route::middleware(['auth', 'hakakses:dosen'])->prefix('dosen')->group(function (
     //--- ubah status bimbingan mahasiswa ---
     Route::put('/diterima/{id}', [DosenBimbinganController::class, 'diterima'])->name('diterima');
     Route::put('/ditolak/{id}', [DosenBimbinganController::class, 'ditolak'])->name('ditolak');
+    Route::get('/profile-mahasiswa/{id}', [DosenBimbinganController::class, 'profileMahasiswa'])->name('profile-mahasiswa');
+
 
     // ========== MASUKIN NILAI UNTUK PENGUJI DAN PEMBIMBING ==========
     Route::get('/nilai-sidang', [DosenNilaiController::class, 'index'])->name('nilai-sidang');

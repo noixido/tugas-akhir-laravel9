@@ -26,7 +26,7 @@ class DosenNilaiController extends Controller
             ->where('user_id', $user)
             ->first();
 
-        // $now = Carbon::now()->toDateString();
+        $now = Carbon::now()->toDateString();
         $grup = Grup::query()
             ->whereHas('daftar_sidang', function ($q) use ($dosen) {
                 $q->join('tugas_akhirs', 'tugas_akhirs.id', '=', 'daftar_sidangs.tugas_akhir_id')
@@ -35,7 +35,7 @@ class DosenNilaiController extends Controller
                     ->orWhere('penguji_2', $dosen->id);
             })->orderBy('tanggal_sidang', 'desc')
             ->where('status_jadwal', 'published')
-            // ->whereDate('tanggal_sidang', $now)
+            ->whereDate('tanggal_sidang', $now)
             ->paginate(10)
             ->onEachSide(2);
         // dd($grup);

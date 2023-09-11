@@ -35,17 +35,20 @@
     <div class="row" style="height: auto">
         <table class="table table-bordered">
             <tr>
-                <th scope="col" class="col-1">No</th>
+                <th scope="col">No</th>
+                <th scope="col" class="col-1">Waktu Sidang</th>
                 <th scope="col" class="col-1">NIM</th>
-                <th scope="col" class="col-1">Nama Mahasiswa</th>
-                <th scope="col" class="col-2">Judul Tugas Akhir</th>
-                <th scope="col" class="col-1">Moderator</th>
-                <th scope="col" class="col-1">Penguji</th>
+                <th scope="col" class="col-2">Nama Mahasiswa</th>
+                <th scope="col" class="col-3">Judul Tugas Akhir</th>
+                <th scope="col" class="col-2">Moderator</th>
+                <th scope="col" class="col-2">Penguji</th>
                 <th scope="col" class="col-1">Aksi</th>
             </tr>
             @foreach ($daftar as $index => $row)
             <tr>
                 <td>{{ $daftar->firstItem() + $index }}</td>
+                <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $row->jam_mulai_sidang)->format('H:i') }} - {{
+                    \Carbon\Carbon::createFromFormat('H:i:s', $row->jam_selesai_sidang)->format('H:i') }}</td>
                 <td>{{ $row->mahasiswa->nim }}</td>
                 <td>{{ $row->mahasiswa->nama_mahasiswa }}</td>
                 <td>{{ $row->tugas_akhir->judul_tugas_akhir }}</td>
@@ -53,7 +56,8 @@
                 <td>1. {{ $row->penguji1->nama_dosen }} <br>2. {{ $row->penguji2->nama_dosen }}</td>
                 <td>
                     <div style="text-align: center">
-                        <a href="{{ route('input-nilai', $row->id) }}" class="btn btn-primary">Lengkapi Nilai</a>
+                        <a href="{{ route('input-nilai', $row->id) }}" class="btn btn-primary"><i
+                                class="fa-solid fa-eye icon"></i></a>
                     </div>
                 </td>
             </tr>
