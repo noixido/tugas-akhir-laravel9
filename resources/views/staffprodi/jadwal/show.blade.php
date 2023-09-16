@@ -105,6 +105,16 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td colspan="7">
+                    <form action="{{ route('kirim-ke-akademik', $data->id) }}" method="POST"
+                        style="display: flex; justify-content:center">
+                        @csrf
+                        @method('put')
+                        <button type="submit" class="btn btn-success">Kirim ke akademik</button>
+                    </form>
+                </td>
+            </tr>
             @endforeach
         </table>
         {{ $daftar->links() }}

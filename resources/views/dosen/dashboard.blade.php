@@ -75,4 +75,5 @@
     </div>
 </div>
 @endforeach
+<div style="margin-left: 30px ">{{ $grup->links() }}</div>
 @endsection

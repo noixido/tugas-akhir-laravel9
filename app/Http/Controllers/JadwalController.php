@@ -203,6 +203,6 @@ class JadwalController extends Controller
         } else {
             return redirect()->route('detail-jadwal', $grup->id)->with('message', 'Silahkan lengkapi draft jadwal terlebih dahulu sebelum mengirimkan kembali data draft ke Akademik.');
         }
-        return back();
+        return redirect()->route('staff-draft-jadwal');
     }
 }

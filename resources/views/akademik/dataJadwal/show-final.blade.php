@@ -92,6 +92,9 @@
         <div style="text-align:center; margin: 20px auto">
             @if ($grup->status_jadwal == 'published')
             <p class="btn btn-success">Sudah di-publish!</p>
+            <div class="col-12" style="display: flex; justify-content:center">
+                <a href="{{ route('jadwalPDF', $grup->id) }}" class="btn btn-success">Download Jadwal</a>
+            </div>
             @else
             <form action="{{ route('publish-jadwal', $row->grup_id) }}" method="post">
                 @csrf

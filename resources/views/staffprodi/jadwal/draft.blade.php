@@ -28,11 +28,6 @@
                         <div class="kumpulan-tombol" style="display: flex; justify-content:center">
                             <a href="{{ route('detail-jadwal', $row->id) }}" class="btn btn-primary"><i
                                     class="fa-solid fa-eye icon"></i></a>
-                            <form action="{{ route('kirim-ke-akademik', $row->id) }}" method="POST">
-                                @csrf
-                                @method('put')
-                                <button type="submit" class="btn btn-success">Kirim ke akademik</button>
-                            </form>
                         </div>
                     </td>
                 </tr>
