@@ -29,6 +29,24 @@
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
+
+            <div class="col-md-6">
+                <label for="sidang" class="form-label">Tanggal Sidang</label>
+                <input type="date" class="form-control @error('sidang') is-invalid @enderror" id="sidang" name="sidang"
+                    value="{{ old('sidang') }}">
+                @error('sidang')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-6">
+                <label for="revisi" class="form-label">Batas Revisi</label>
+                <input type="date" class="form-control @error('revisi') is-invalid @enderror" id="revisi" name="revisi"
+                    value="{{ old('revisi') }}">
+                @error('revisi')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
+
             <div class="col-md-6">
                 <label for="jurusan" class="form-label">Program Studi</label>
                 <select id="jurusan" class="form-select form-control @error('jurusan') is-invalid @enderror"

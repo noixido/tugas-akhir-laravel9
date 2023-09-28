@@ -3,6 +3,8 @@
         <th rowspan="2" scope="col" class="col-1">No</th>
         <th rowspan="2" scope="col" class="col-1">NIM</th>
         <th rowspan="2" scope="col" class="col-2">Nama Mahasiswa</th>
+        <th rowspan="2" scope="col" class="col-2">Tanggal Sidang</th>
+        <th rowspan="2" scope="col" class="col-2">Program Studi</th>
         <th colspan="5">Nilai</th>
         @if (isset($export))
 
@@ -26,6 +28,8 @@
         @endif
         <td>{{ $row->daftar_sidang->tugas_akhir->mahasiswa->nim }}</td>
         <td>{{ $row->daftar_sidang->tugas_akhir->mahasiswa->nama_mahasiswa }}</td>
+        <td>{{ $row->daftar_sidang->grup->tanggal_sidang }}</td>
+        <td>{{ $row->daftar_sidang->program_studi->jenjang }} {{ $row->daftar_sidang->program_studi->nama_prodi }}</td>
         <td>{{ $row->nilai_pembimbing ?? '-'}}</td>
         <td>{{ $row->nilai_penguji_1 ?? '-'}}</td>
         <td>{{ $row->nilai_penguji_2 ?? '-'}}</td>

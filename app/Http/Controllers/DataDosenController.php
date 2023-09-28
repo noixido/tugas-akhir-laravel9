@@ -182,11 +182,12 @@ class DataDosenController extends Controller
                     'alamat' => $request->alamat,
                 ]);
         } else {
+            // dd($request->all());
             $request->validate([
                 'nama' => ['required', 'min:3'],
                 'username' => ['required'],
                 'password' => ['min:8'],
-                'nidm' => ['required'],
+                'nidn' => ['required'],
                 'jurusan' => ['required', 'integer'],
                 'email' => ['nullable'],
                 'telepon' => ['nullable', 'numeric', 'min:10'],

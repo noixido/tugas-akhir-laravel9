@@ -25,37 +25,38 @@ class DataPendaftaranController extends Controller
     public function index(Request $request)
     {
         //
-        if ($request->has('search')) {
-            $data = DaftarSidang::query()
-                ->sortable()
-                ->orderBy('daftar_sidangs.created_at', 'desc')
-                ->orWhere('created_at', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('status_pendaftaran', 'LIKE', '%' . $request->search . '%')
-                ->orWhereHas('mahasiswa', function ($q) use ($request) {
-                    $q->where('nim', 'LIKE', '%' . $request->search . '%');
-                })
-                ->orWhereHas('mahasiswa', function ($q) use ($request) {
-                    $q->where('nama_mahasiswa', 'LIKE', '%' . $request->search . '%');
-                })
-                ->orWhereHas('program_studi', function ($q) use ($request) {
-                    $q->where('jenjang', 'LIKE', '%' . $request->search . '%');
-                })
-                ->orWhereHas('program_studi', function ($q) use ($request) {
-                    $q->where('nama_prodi', 'LIKE', '%' . $request->search . '%');
-                })
-                ->paginate(10)
-                ->onEachSide(2);
-            FacadesSession::put('halaman_url', request()->fullUrl());
-        } else {
-            $data = DaftarSidang::query()
-                ->sortable()
-                ->orderBy('daftar_sidangs.created_at', 'desc')
-                ->paginate(10)
-                ->onEachSide(2);
-            FacadesSession::put('halaman_url', request()->fullUrl());
-        }
+        $prodi = ProgramStudi::query()
+            ->orderBy('jenjang', 'asc')
+            ->orderBy('nama_prodi', 'asc')
+            ->get();
+        $dataQuery = DaftarSidang::query()
+            ->sortable()
+            ->orderBy('created_at', 'desc')
+            ->where(function ($q) use ($request) {
+                if ($request->jurusan) {
+                    $q->whereHas('program_studi', function ($q) use ($request) {
+                        $q->where('id', $request->jurusan);
+                    });
+                }
+                if ($request->angkatan) {
+                    $q->whereHas('mahasiswa', function ($q) use ($request) {
+                        $q->where('angkatan', $request->angkatan);
+                    });
+                }
+                if ($request->dari) {
+                    $q->whereDate('created_at', '>=', $request->dari);
+                }
+                if ($request->sampai) {
+                    $q->whereDate('created_at', '<=', $request->sampai);
+                }
+            });
 
-        return view('akademik.dataPendaftaran.index', compact('data'));
+        $data = $dataQuery->paginate(10)
+            ->onEachSide(2);
+
+        FacadesSession::put('halaman_url', request()->fullUrl());
+
+        return view('akademik.dataPendaftaran.index', compact('data', 'prodi'));
     }
 
     /**
@@ -217,8 +218,8 @@ class DataPendaftaranController extends Controller
             ->get();
         return view('akademik.dataPendaftaran.tabel-pendaftaran', compact('data'));
     }
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new DaftarSidangExport, 'data-pendaftaran-sidang-mahasiswa.xlsx');
+        return Excel::download(new DaftarSidangExport($request->jurusan, $request->angkatan, $request->dari, $request->sampai), 'data-pendaftaran-sidang-mahasiswa.xlsx');
     }
 }

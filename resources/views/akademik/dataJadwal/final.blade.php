@@ -50,15 +50,13 @@
                 <select id="jurusan" class="form-select form-control" name="jurusan">
                     <option value="" selected disabled>=== Pilih ===</option>
                     @foreach ($prodi as $row)
-                    @if (old('jurusan', \Request::get('jurusan')) == $row->id)
-                    <option value="{{ $row->id }}" selected>{{ $row->jenjang }} {{ $row->nama_prodi }}, {{
-                        $row->konsentrasi ??
-                        "" }}
+                    @if (old('jurusan', \Request::get('jurusan')) == $row->program_studi->id)
+                    <option value="{{ $row->program_studi->id }}" selected>{{ $row->program_studi->jenjang }} {{
+                        $row->program_studi->nama_prodi }}, {{ $row->program_studi->konsentrasi ?? "" }}
                     </option>
                     @else
-                    <option value="{{ $row->id }}">{{ $row->jenjang }} {{ $row->nama_prodi }}, {{ $row->konsentrasi
-                        ??
-                        "" }}
+                    <option value="{{ $row->program_studi->id }}">{{ $row->program_studi->jenjang }} {{
+                        $row->program_studi->nama_prodi }}, {{ $row->program_studi->konsentrasi ?? "" }}
                     </option>
                     @endif
                     @endforeach

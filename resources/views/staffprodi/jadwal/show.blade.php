@@ -105,6 +105,7 @@
                     </div>
                 </td>
             </tr>
+            @endforeach
             <tr>
                 <td colspan="7">
                     <form action="{{ route('kirim-ke-akademik', $data->id) }}" method="POST"
@@ -115,7 +116,6 @@
                     </form>
                 </td>
             </tr>
-            @endforeach
         </table>
         {{ $daftar->links() }}
     </div>

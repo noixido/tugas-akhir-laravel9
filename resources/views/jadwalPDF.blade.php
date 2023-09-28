@@ -8445,12 +8445,25 @@
                                                                     /*# sourceMappingURL=bootstrap.min.css.map */
     </style>
     <div class="row" style="height: 100%; margin: auto 10px;">
-        <div style="margin-top: 20px; margin-left: auto; margin-right: auto; text-align:center;">
-            {{-- <p style="font-size: 12px;">dipublish pada - {{ $grup->updated_at }}</p> --}}
+
+        <div style="display: flex">
+            <div>
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(base_path('public/images/logo-tedc.png'))) }}"
+                    alt="logo poltek tedc" style="margin-left: 30px; width: 90px; height: 90px; ">
+            </div>
+            <div style="text-align:center; margin-top: -70px; margin-bottom: 10px">
+                <div>
+                    <h3 style="font-size: 18px"><b>Jadwal Sidang Tugas Akhir</b></h3>
+                    <h5 style="font-size: 12px">Periode {{ $grup->periode_ke }}</h5>
+                    <h5 style="font-size: 12px">Tahun Akademik 2022/2023</h5>
+                </div>
+            </div>
+        </div>
+        {{-- <div style="margin-top: 20px; margin-left: auto; margin-right: auto; text-align:center;">
             <h3 style="font-size: 18px"><b>Jadwal Sidang Tugas Akhir</b></h3>
             <h5 style="font-size: 12px">Periode {{ $grup->periode_ke }}</h5>
             <h5 style="font-size: 12px">Tahun Akademik 2022/2023</h5>
-        </div>
+        </div> --}}
         <table class="table table-bordered">
             <tr style="font-size: 12px;">
                 <th scope="col" class="col-1">Tanggal Sidang</th>

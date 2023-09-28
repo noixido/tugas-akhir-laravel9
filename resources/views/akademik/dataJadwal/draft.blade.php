@@ -50,15 +50,13 @@
                 <select id="jurusan" class="form-select form-control" name="jurusan">
                     <option value="" selected disabled>=== Pilih ===</option>
                     @foreach ($prodi as $row)
-                    @if (old('jurusan', \Request::get('jurusan')) == $row->id)
-                    <option value="{{ $row->id }}" selected>{{ $row->jenjang }} {{ $row->nama_prodi }}, {{
-                        $row->konsentrasi ??
-                        "" }}
+                    @if (old('jurusan', \Request::get('jurusan')) == $row->program_studi->id)
+                    <option value="{{ $row->program_studi->id }}" selected>{{ $row->program_studi->jenjang }} {{
+                        $row->program_studi->nama_prodi }}, {{ $row->program_studi->konsentrasi ?? "" }}
                     </option>
                     @else
-                    <option value="{{ $row->id }}">{{ $row->jenjang }} {{ $row->nama_prodi }}, {{ $row->konsentrasi
-                        ??
-                        "" }}
+                    <option value="{{ $row->program_studi->id }}">{{ $row->program_studi->jenjang }} {{
+                        $row->program_studi->nama_prodi }}, {{ $row->program_studi->konsentrasi ?? "" }}
                     </option>
                     @endif
                     @endforeach
@@ -102,11 +100,11 @@
                     <td>{{ $row->tahun_akademik - 1 }}/{{ $row->tahun_akademik }}</td>
                     <td>
                         <div class="kumpulan-tombol" style="display: flex; justify-content:center">
-                            <form action="{{ route('kirim-ke-prodi', $row->id) }}" method="POST">
+                            {{-- <form action="{{ route('kirim-ke-prodi', $row->id) }}" method="POST">
                                 @csrf
                                 @method('put')
                                 <button type="submit" class="btn btn-success">Kirim ke prodi</button>
-                            </form>
+                            </form> --}}
                             <a href="{{ route('detail-draft-jadwal', $row->id) }}" class="btn btn-primary"><i
                                     class="fa-solid fa-eye icon"></i></a>
                             <form action="{{ route('hapus-draft', $row->id) }}" method="post">

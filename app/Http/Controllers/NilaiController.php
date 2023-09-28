@@ -41,6 +41,11 @@ class NilaiController extends Controller
                         $q->where('nim', 'LIKE', '%' . $request->nim . '%');
                     });
                 }
+                if ($request->tanggal) {
+                    $q->whereHas('daftar_sidang.grup', function ($q) use ($request) {
+                        $q->where('tanggal_sidang', 'LIKE', '%' . $request->tanggal . '%');
+                    });
+                }
             });
         $nilai = $queryNilai->paginate(10)
             ->onEachSide(2);
@@ -117,8 +122,8 @@ class NilaiController extends Controller
         //
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new NilaiExport, 'nilai-sidang-mahasiswa.xlsx');
+        return Excel::download(new NilaiExport($request->jurusan, $request->tanggal), 'nilai-sidang-mahasiswa.xlsx');
     }
 }

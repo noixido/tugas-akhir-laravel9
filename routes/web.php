@@ -8,7 +8,6 @@ use App\Http\Controllers\BimbinganController;
 use App\Http\Controllers\DaftarSidangController;
 use App\Http\Controllers\DataAdminController;
 use App\Http\Controllers\DataDosenController;
-use App\Http\Controllers\DataJurusan;
 use App\Http\Controllers\DataJurusanController;
 use App\Http\Controllers\DataMahasiswaController;
 use App\Http\Controllers\DataPendaftaranController;
@@ -25,7 +24,6 @@ use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\PublicBimbinganController;
 use App\Http\Controllers\StaffProdiController;
 use App\Http\Controllers\TugasAkhirController;
-use App\Models\Bimbingan;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,6 +139,10 @@ Route::middleware(['auth', 'hakakses:akademik'])->prefix('akademik')->group(func
     // Route::put('/edit-draft/{id}', [DraftJadwalController::class, 'update'])->name('proses-edit-draft');
     Route::get('/detail-draft/{id}', [DraftJadwalController::class, 'show'])->name('detail-draft');
     Route::delete('/hapus-draft/{id}', [DraftJadwalController::class, 'destroy'])->name('hapus-draft');
+
+    Route::get('/lengkapi-jam/{id}', [DraftJadwalController::class, 'lengkapiJam'])->name('lengkapi-jam');
+    Route::put('/lengkapi-jam/{id}', [DraftJadwalController::class, 'prosesLengkapiJam'])->name('proses-lengkapi-jam');
+
     Route::put('/kirim-ke-prodi/{id}', [DraftJadwalController::class, 'kirimKeProdi'])->name('kirim-ke-prodi');
 
     // ==========  JADWAL DARI PRODI UNTUK AKADEMIK (finalisasi)==========

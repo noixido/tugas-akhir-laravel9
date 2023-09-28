@@ -98,6 +98,6 @@ class ExportController extends Controller
         $pdf = Pdf::loadView('jadwalPDF', compact('grup', 'daftar'))->setPaper('a4', 'landscape');
         $jadwalCustomName = str_replace(" ", "-", "P" . $grup->periode_ke . "Y" . $grup->yudisium_ke . "_" . $grup->tanggal_sidang . "_" . $grup->program_studi->nama_prodi . "_" . "Jadwal-Sidang.pdf");
         return $pdf->download($jadwalCustomName);
-        // return view('dosen.jadwalPDF', compact('grup', 'daftar'));
+        // return view('jadwalPDF', compact('grup', 'daftar'));
     }
 }

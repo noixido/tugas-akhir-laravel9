@@ -60,12 +60,16 @@
     @foreach ($grup as $item)
     <div class="container">
         <div class="row" style="height: 100%; margin-bottom: 20px">
-            <div style="margin: 0 auto; text-align:center;">
+            <img class="image-fluid" src="{{ asset('/images/logo-tedc.png') }}" alt="logo poltek tedc"
+                style="width: 115px; height: 110px; margin-left: 30px">
+            <div style="display: flex; justify-content: center; text-align:center; margin-left: 267.5px;">
                 {{-- <p style="font-size: 12px;">dipublish pada - {{ $item->updated_at }}</p> --}}
-                <h3><b>Jadwal Sidang Tugas Akhir</b></h3>
-                <br>
-                <h5>Periode {{ $item->periode_ke }}</h5>
-                <h5>Tahun Akademik 2022/2023</h5>
+                <div>
+                    <h3><b>Jadwal Sidang Tugas Akhir</b></h3>
+                    <br>
+                    <h5>Periode {{ $item->periode_ke }}</h5>
+                    <h5>Tahun Akademik 2022/2023</h5>
+                </div>
             </div>
             <table class="table table-bordered" style="margin-top: 10px;">
                 <tr style="font-size: 16px">

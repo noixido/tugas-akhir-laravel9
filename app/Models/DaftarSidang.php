@@ -13,7 +13,7 @@ class DaftarSidang extends Model
     protected $guarded = [];
 
     public $sortable = [
-        'created_at'
+        'created_at', 'status_pendaftaran'
     ];
 
     public function mahasiswa()

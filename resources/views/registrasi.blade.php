@@ -24,7 +24,7 @@
                 <form action="/registrasi" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="nama">Nama Lengkap</label>
+                        <label for="nama">Nama Mahasiswa</label>
                         <input type="text" name="nama" id="nama"
                             class="form-control @error('nama') is-invalid @enderror">
                         @error('nama')
@@ -32,7 +32,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="nim">NIM</label>
+                        <label for="nim">Nomor Induk Mahasiswa</label>
                         <input type="text" name="nim" id="nim" class="form-control @error('nim') is-invalid @enderror">
                         @error('nim')
                         <span class="invalid-feedback">{{ $message }}</span>

@@ -21,14 +21,12 @@ class FinalJadwalController extends Controller
         $periode = Grup::query()
             ->select('periode_ke')
             ->orderBy('periode_ke', 'asc')
-            ->orderBy('yudisium_ke', 'asc')
             ->where('status_jadwal', '!=', 'sedang dilengkapi')
             ->where('status_jadwal', '!=', 'belum dilengkapi')
             ->groupBy('periode_ke')
             ->get();
         $yudisium = Grup::query()
             ->select('yudisium_ke')
-            ->orderBy('periode_ke', 'asc')
             ->orderBy('yudisium_ke', 'asc')
             ->where('status_jadwal', '!=', 'sedang dilengkapi')
             ->where('status_jadwal', '!=', 'belum dilengkapi')
@@ -41,9 +39,11 @@ class FinalJadwalController extends Controller
             ->where('status_jadwal', '!=', 'belum dilengkapi')
             ->groupBy('tahun_akademik')
             ->get();
-        $prodi = ProgramStudi::query()
-            ->orderBy('jenjang', 'asc')
-            ->orderBy('nama_prodi', 'asc')
+        $prodi = Grup::query()
+            ->select('jurusan_id')
+            ->where('status_jadwal', '!=', 'sedang dilengkapi')
+            ->where('status_jadwal', '!=', 'belum dilengkapi')
+            ->groupBy('jurusan_id')
             ->get();
         $grupQuery = Grup::query()
             ->where('status_jadwal', '!=', 'sedang dilengkapi')
@@ -150,10 +150,16 @@ class FinalJadwalController extends Controller
 
     public function publish($id)
     {
-        Grup::query()
+        $grup = Grup::query()
             ->where('id', $id)
+            ->first();
+        $grup->update([
+            'status_jadwal' => 'published'
+        ]);
+        DaftarSidang::query()
+            ->where('grup_id', $grup->id)
             ->update([
-                'status_jadwal' => 'published'
+                'status_pendaftaran' => 'sudah dijadwalkan'
             ]);
         return back();
     }

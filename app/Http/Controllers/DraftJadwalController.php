@@ -20,24 +20,38 @@ class DraftJadwalController extends Controller
         $periode = Grup::query()
             ->select('periode_ke')
             ->orderBy('periode_ke', 'asc')
-            ->orderBy('yudisium_ke', 'asc')
+            ->where('status_jadwal', '!=', 'sudah dilengkapi')
+            ->where('status_jadwal', '!=', 'sedang dilengkapi')
+            ->where('status_jadwal', '!=', 'published')
             ->groupBy('periode_ke')
             ->get();
         $yudisium = Grup::query()
             ->select('yudisium_ke')
-            ->orderBy('periode_ke', 'asc')
             ->orderBy('yudisium_ke', 'asc')
+            ->where('status_jadwal', '!=', 'sudah dilengkapi')
+            ->where('status_jadwal', '!=', 'sedang dilengkapi')
+            ->where('status_jadwal', '!=', 'published')
             ->groupBy('yudisium_ke')
             ->get();
         $tahun = Grup::query()
             ->select('tahun_akademik')
             ->orderBy('tahun_akademik', 'asc')
+            ->where('status_jadwal', '!=', 'sudah dilengkapi')
+            ->where('status_jadwal', '!=', 'sedang dilengkapi')
+            ->where('status_jadwal', '!=', 'published')
             ->groupBy('tahun_akademik')
             ->get();
-        $prodi = ProgramStudi::query()
-            ->orderBy('jenjang', 'asc')
-            ->orderBy('nama_prodi', 'asc')
+        $prodi = Grup::query()
+            ->select('jurusan_id')
+            ->where('status_jadwal', '!=', 'sudah dilengkapi')
+            ->where('status_jadwal', '!=', 'sedang dilengkapi')
+            ->where('status_jadwal', '!=', 'published')
+            ->groupBy('jurusan_id')
             ->get();
+        // $prodi = ProgramStudi::query()
+        //     ->orderBy('jenjang', 'asc')
+        //     ->orderBy('nama_prodi', 'asc')
+        //     ->get();
         $dataQuery = Grup::query()
             ->where('status_jadwal', 'belum dilengkapi')
             ->orderBy('created_at', 'desc')
@@ -92,9 +106,22 @@ class DraftJadwalController extends Controller
     {
         //
         // dd($request->all());
+        $request->validate([
+            'periode' => ['required'],
+            'yudisium' => ['required'],
+
+            'sidang' => ['required'],
+            'revisi' => ['required'],
+
+            'jurusan' => ['required'],
+        ]);
         $grup = Grup::create([
             'periode_ke' => $request->periode,
             'yudisium_ke' => $request->yudisium,
+
+            'tanggal_sidang' => $request->sidang,
+            'batas_revisi' => $request->revisi,
+
             'jurusan_id' => $request->jurusan,
             'tahun_akademik' => $request->tahun,
             'status_jadwal' => 'belum dilengkapi',
@@ -102,7 +129,8 @@ class DraftJadwalController extends Controller
         DaftarSidang::query()
             ->whereIn('id', $request->daftarSidang)
             ->update([
-                'grup_id' => $grup->id
+                'grup_id' => $grup->id,
+                'status_pendaftaran' => 'sedang dijadwalkan'
             ]);
         return redirect()->route('draft-jadwal');
     }
@@ -120,7 +148,7 @@ class DraftJadwalController extends Controller
             ->where('id', $id)
             ->first();
         $daftar = DaftarSidang::query()
-            ->orderBy('daftar_sidangs.created_at', 'asc')
+            ->orderBy('jam_mulai_sidang', 'asc')
             ->where('grup_id', $data->id)
             ->paginate(10);
         return view('akademik.dataJadwal.show', compact('data', 'daftar'));
@@ -176,6 +204,30 @@ class DraftJadwalController extends Controller
             ->update([
                 'status_jadwal' => 'sedang dilengkapi'
             ]);
-        return back();
+        return redirect()->route('draft-jadwal');
+    }
+
+
+    public function lengkapiJam(Request $request, $id)
+    {
+        $daftar = DaftarSidang::query()
+            ->where('id', $id)
+            ->first();
+        return view('akademik.dataJadwal.lengkapi-jam', compact('daftar'));
+    }
+    public function prosesLengkapiJam(Request $request, $id)
+    {
+        $daftar = DaftarSidang::query()
+            ->where('id', $id)
+            ->first();
+        $request->validate([
+            'mulai' => ['required'],
+            'selesai' => ['required']
+        ]);
+        $daftar->update([
+            'jam_mulai_sidang' => $request->mulai,
+            'jam_selesai_sidang' => $request->selesai,
+        ]);
+        return redirect()->route('detail-draft-jadwal', $daftar->grup_id);
     }
 }

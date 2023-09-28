@@ -29,6 +29,17 @@
                     <h5><b>{{ $data->tahun_akademik - 1 }}/{{ $data->tahun_akademik }}</b></h5>
                 </td>
             </tr>
+
+            <tr>
+                <td>
+                    <label for="sidang">Tanggal Sidang</label>
+                    <h5><b>{{ date('j F Y', strtotime($data->tanggal_sidang))}}</b></h5>
+                </td>
+                <td>
+                    <label for="revisi">Batas Revisi</label>
+                    <h5><b>{{ date('j F Y', strtotime($data->batas_revisi))}}</b></h5>
+                </td>
+            </tr>
         </table>
     </div>
     <div class="row" style="height: auto">
@@ -39,7 +50,10 @@
                 <th scope="col" class="col-2">Nama Mahasiswa</th>
                 <th scope="col" class="col-1">Dosen Pembimbing</th>
                 <th scope="col" class="col-3">Judul Tugas Akhir</th>
-                <th scope="col" class="col-1">Tanggal Daftar</th>
+
+                <th scope="col" class="col-1">Jam Sidang</th>
+                <th scope="col" class="col-1">Aksi</th>
+
             </tr>
             @foreach ($daftar as $index => $row)
             <tr>
@@ -48,9 +62,35 @@
                 <td>{{ $row->mahasiswa->nama_mahasiswa }}</td>
                 <td>{{ $row->tugas_akhir->dosen->nama_dosen }}</td>
                 <td>{{ $row->tugas_akhir->judul_tugas_akhir }}</td>
-                <td>{{ $row->created_at }}</td>
+
+                <td>
+                    @if ($row->jam_mulai_sidang && $row->jam_selesai_sidang != null)
+                    {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->jam_mulai_sidang)->format('H:i') }} - {{
+                    \Carbon\Carbon::createFromFormat('H:i:s', $row->jam_selesai_sidang)->format('H:i') }}
+                    @else
+                    -
+                    @endif
+                </td>
+                <td>
+                    <div class="kumpulan-tombol" style="display: flex; justify-content:center">
+                        <a href="{{ route('lengkapi-jam', $row->id) }}" class="btn btn-primary">Lengkapi</a>
+                    </div>
+                </td>
+
             </tr>
             @endforeach
+            <tr>
+                <td colspan="7">
+                    <div style="display: flex; justify-content:center">
+                        <form action="{{ route('kirim-ke-prodi', $row->grup_id) }}" method="POST">
+                            @csrf
+                            @method('put')
+                            <button type="submit" class="btn btn-success">Kirim ke prodi</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+
         </table>
         {{ $daftar->links() }}
     </div>
